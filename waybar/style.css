@@ -88,7 +88,7 @@ button {
 
 #backlight,
 #battery {
-  border-radius: 0;
+  /*border-radius: 0; */
 }
 
 #pulseaudio {

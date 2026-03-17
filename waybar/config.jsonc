@@ -3,7 +3,7 @@
   "position": "top",
   "modules-left": ["hyprland/workspaces"],
 
-  "modules-center": ["clock", "custom/weather"],
+  "modules-center": ["clock"/*, "custom/weather"*/],
 
   "modules-right": [
     "pulseaudio",
@@ -15,7 +15,7 @@
     "memory",
     "custom/docker",
     "tray",
-    "custom/lock",
+  // "custom/lock",
     "custom/power"
   ],
 
@@ -44,7 +44,7 @@
   "clock": {
     "timezone": "Europe/Stockholm",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:%d/%m/%Y - %I:%M:%S}",
+    "format": "{:%d/%m - %I:%M:%S}",
     "interval": 1
   },
 
@@ -52,7 +52,7 @@
     "format-wifi": "󰤢 {bandwidthDownBits}",
     "format-ethernet": "󰈀 {bandwidthDownBits}",
     "format-disconnected": "󰤠 No Network",
-    "interval": 5,
+    "interval": 1,
     "tooltip": false
   },
 
@@ -99,7 +99,7 @@
   "custom/weather": {
     "format": "{}",
     "tooltip": true,
-    "interval": 1800,
+    "interval": 30,
     "exec": "$(pwd)/scripts/weather-stats/weather-stats",
     "return-type": "json"
   }
