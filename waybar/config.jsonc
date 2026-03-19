@@ -22,29 +22,20 @@
   "hyprland/workspaces": {
     "format": "{name}: {icon}",
     "format-icons": {
-      "active": "",
-      "default": ""
+      "active": "♣",
+      "default": "◯"
     }
   },
 
   "tray": {
-    "icon-size": 16,
+    "icon-size": 14,
     "spacing": 10
-  },
-  "custom/music": {
-    "format": "  {}",
-    "escape": true,
-    "interval": 5,
-    "tooltip": false,
-    "exec": "playerctl metadata --format='{{ artist }} - {{ title }}'",
-    "on-click": "playerctl play-pause",
-    "max-length": 50
   },
 
   "clock": {
     "timezone": "Europe/Stockholm",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:%d/%m - %I:%M:%S}",
+    "format": "{:%d/%m ♥  %I:%M:%S}",
     "interval": 1
   },
 
@@ -53,12 +44,12 @@
     "format-ethernet": "󰈀 {bandwidthDownBits}",
     "format-disconnected": "󰤠 No Network",
     "interval": 1,
-    "tooltip": false
+    "tooltip": true
   },
 
   "cpu": {
     "interval": 1,
-    "format": "  {usage}%",
+    "format": "{icon}  {usage}%",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
   },
 
@@ -66,41 +57,43 @@
     "interval": 1,
     "format": "  {used:0.01f}G"
   },
-
-/*  "custom/uptime": {
-    "format": "{}",
-    "interval": 1600,
-    "exec": "sh -c '(uptime -p)'"
-  },*/
+  "backlight": {
+  "device": "intel_backlight",
+  "format": "{icon} {percent}%",
+  "format-icons": ["❤"]
+  },
 
   "pulseaudio": {
     "format": "{icon} {volume}%",
-    "format-muted": "",
+    "format-muted": " {volume}%",
     "format-icons": {
-      "default": ["", "", " "]
+      "default": ["", "", " ",]
     },
     "on-click": "pavucontrol"
   },
+  "battery": {
+        "interval": 3,
+        "states": {
+            "warning": 25,
+            "critical": 15
+        },
+        "format": "{icon}{capacity: >3}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-full": " {icon}{capacity}%",
+        "format-icons": [" ", " ", " ", " ", " "]},
 
-  "custom/power": {
-    "tooltip": false,
-    "on-click": "shutdown",
-    "format": "⏻"
-  },
-
- /* "custom/docker": {
-    "format": "{}",
-    "return-type": "json",
-    "interval": 10,
-    "exec": "$(pwd)/scripts/docker-stats/docker-stats",
-    "tooltip": true
-  },*/
-
-  "custom/weather": {
+    "custom/weather": {
     "format": "{}",
     "tooltip": true,
-    "interval": 30,
-    "exec": "$(pwd)/scripts/weather-stats/weather-stats",
+    "interval": 1,
+    "exec": "$(pwd)/waybar/scripts/weather-stats/weather-stats",
     "return-type": "json"
-  }
+  },
+    "custom/power": {
+    "tooltip": false,
+    "on-click": "~/.config/hypr/powermenu.sh",
+    "format": "⏻"
+  },
 }
+
