@@ -1,24 +1,23 @@
 {
   "layer": "bottom",
   "position": "top",
-  "modules-left": ["hyprland/workspaces"],
-
-  "modules-center": ["clock"/*, "custom/weather"*/],
-
+  "modules-left": [
+    "hyprland/workspaces" /*, "hyprland/window"*/
+  ],
+  "modules-center": [
+    "clock" /*, "custom/weather"*/
+  ],
   "modules-right": [
     "pulseaudio",
-    "custom/uptime",
     "backlight",
     "battery",
     "network",
     "cpu",
     "memory",
-    "custom/docker",
+    "custom/notification",
     "tray",
-  // "custom/lock",
     "custom/power"
   ],
-
   "hyprland/workspaces": {
     "format": "{name}: {icon}",
     "format-icons": {
@@ -26,19 +25,19 @@
       "default": "◯"
     }
   },
-
-  "tray": {
-    "icon-size": 14,
-    "spacing": 10
+  "hyprland/window": {
+    "separate-outputs": true
   },
-
+  "tray": {
+    "icon-size": 15,
+    "spacing": 0
+  },
   "clock": {
     "timezone": "Europe/Stockholm",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:%d/%m ♥  %I:%M:%S}",
-    "interval": 1
+    "format": "{:%d/%m - %I:%M:%S}",
+    "interval": 0.5
   },
-
   "network": {
     "format-wifi": "󰤢 {bandwidthDownBits}",
     "format-ethernet": "󰈀 {bandwidthDownBits}",
@@ -46,54 +45,88 @@
     "interval": 1,
     "tooltip": true
   },
-
   "cpu": {
     "interval": 1,
     "format": "{icon}  {usage}%",
-    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+    "format-icons": [
+      "▁",
+      "▂",
+      "▃",
+      "▄",
+      "▅",
+      "▆",
+      "▇",
+      "█"
+    ]
   },
-
   "memory": {
     "interval": 1,
     "format": "  {used:0.01f}G"
   },
   "backlight": {
-  "device": "intel_backlight",
-  "format": "{icon} {percent}%",
-  "format-icons": ["❤"]
+    "device": "intel_backlight",
+    "format": "{icon} {percent}%",
+    "format-icons": [
+      "❤"
+    ]
   },
-
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": " {volume}%",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "format-icons": {
-      "default": ["", "", " ",]
+      "default": [
+        "",
+        "",
+        " "
+      ]
     },
     "on-click": "pavucontrol"
   },
   "battery": {
-        "interval": 3,
-        "states": {
-            "warning": 25,
-            "critical": 15
-        },
-        "format": "{icon}{capacity: >3}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-full": " {icon}{capacity}%",
-        "format-icons": [" ", " ", " ", " ", " "]},
-
-    "custom/weather": {
-    "format": "{}",
-    "tooltip": true,
     "interval": 1,
-    "exec": "$(pwd)/waybar/scripts/weather-stats/weather-stats",
-    "return-type": "json"
+    "states": {
+      "warning": 25,
+      "critical": 10
+    },
+    "tooltip-format": "{}",
+    "format": "{icon}{capacity: >3}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-full": " {icon}{capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-icons": [
+      " ",
+      " ",
+      " ",
+      " ",
+      " "
+    ]
   },
-    "custom/power": {
+  "on-click-right": "tuned-gui",
+  "custom/power": {
     "tooltip": false,
     "on-click": "~/.config/hypr/powermenu.sh",
     "format": "⏻"
   },
+  "custom/notification": {
+    "tooltip": true,
+    "format": "<span size='10pt'>{icon}</span>",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "󰂜",
+      "dnd-notification": "󰂠",
+      "dnd-none": "󰪓",
+      "inhibited-notification": "󰂛",
+      "inhibited-none": "󰪑",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none": "󰪑"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  }
 }
-
