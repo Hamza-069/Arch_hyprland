@@ -20,8 +20,14 @@ sudo pacman -S adw-gtk-theme ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg 
 
 
 sudo pacman -S --needed git base-devel
+
+
 git clone https://aur.archlinux.org/yay.git --depth=1
+
+
 cd yay
+
+
 makepkg -si
 
 yay -S vscodium-bin vscodium-bin-marketplace nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack
