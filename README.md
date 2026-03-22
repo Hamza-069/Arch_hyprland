@@ -10,7 +10,7 @@ sudo pacman -S waybar firefox kitty rofi swaync pcmanfm adw-gtk-theme nwg-look l
 sudo pacman -S waybar firefox kitty rofi swaync pcmanfm nwg-look pavucontrol blueman blueman-manager
 
 
-**Fons:**
+**Fonts:**
 sudo pacman -S ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono ttf-dejavu noto-fonts-emoji noto-fonts-cjk noto-fonts-extra ttf-jetbrains-mono ttf-fira-code ttf-source-code-pro
 
 
