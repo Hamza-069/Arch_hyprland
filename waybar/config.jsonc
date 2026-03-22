@@ -1,132 +1,107 @@
 {
-  "layer": "bottom",
+  "layer": "top",
   "position": "top",
-  "modules-left": [
-    "hyprland/workspaces" /*, "hyprland/window"*/
-  ],
-  "modules-center": [
-    "clock" /*, "custom/weather"*/
-  ],
+  "modules-left": ["hyprland/workspaces"],
+
+  "modules-center": ["clock", "custom/weather"],
+
   "modules-right": [
     "pulseaudio",
+    "custom/uptime",
     "backlight",
     "battery",
     "network",
     "cpu",
     "memory",
-    "custom/notification",
+    "custom/docker",
     "tray",
+    "custom/lock",
     "custom/power"
   ],
+
   "hyprland/workspaces": {
     "format": "{name}: {icon}",
     "format-icons": {
-      "active": "♣",
-      "default": "◯"
+      "active": "",
+      "default": ""
     }
   },
-  "hyprland/window": {
-    "separate-outputs": true
-  },
+
   "tray": {
-    "icon-size": 15,
-    "spacing": 0
+    "icon-size": 16,
+    "spacing": 10
   },
+
+  "custom/music": {
+    "format": "  {}",
+    "escape": true,
+    "interval": 5,
+    "tooltip": false,
+    "exec": "playerctl metadata --format='{{ artist }} - {{ title }}'",
+    "on-click": "playerctl play-pause",
+    "max-length": 50
+  },
+
   "clock": {
-    "timezone": "Europe/Stockholm",
+    "timezone": "America/Fortaleza",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:%d/%m - %I:%M:%S}",
-    "interval": 0.5
+    "format": "{:%d/%m/%Y - %H:%M:%S}",
+    "interval": 1
   },
+
   "network": {
     "format-wifi": "󰤢 {bandwidthDownBits}",
     "format-ethernet": "󰈀 {bandwidthDownBits}",
     "format-disconnected": "󰤠 No Network",
-    "interval": 1,
-    "tooltip": true
+    "interval": 5,
+    "tooltip": false
   },
+
   "cpu": {
     "interval": 1,
-    "format": "{icon}  {usage}%",
-    "format-icons": [
-      "▁",
-      "▂",
-      "▃",
-      "▄",
-      "▅",
-      "▆",
-      "▇",
-      "█"
-    ]
+    "format": "  {icon0}{icon1}{icon2}{icon3} {usage:>2}%",
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
   },
+
   "memory": {
-    "interval": 1,
-    "format": "  {used:0.01f}G"
+    "interval": 30,
+    "format": "  {used:0.1f}G/{total:0.1f}G"
   },
-  "backlight": {
-    "device": "intel_backlight",
-    "format": "{icon} {percent}%",
-    "format-icons": [
-      "❤"
-    ]
+
+  "custom/uptime": {
+    "format": "{}",
+    "interval": 1600,
+    "exec": "sh -c '(uptime -p)'"
   },
+
   "pulseaudio": {
     "format": "{icon} {volume}%",
-    "format-muted": " {volume}%",
-    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "format-muted": "",
     "format-icons": {
-      "default": [
-        "",
-        "",
-        " "
-      ]
+      "default": ["", "", " "]
     },
     "on-click": "pavucontrol"
   },
-  "battery": {
-    "interval": 1,
-    "states": {
-      "warning": 25,
-      "critical": 10
-    },
-    "tooltip-format": "{}",
-    "format": "{icon}{capacity: >3}%",
-    "format-charging": " {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-full": " {icon}{capacity}%",
-    "format-alt": "{icon} {time}",
-    "format-icons": [
-      " ",
-      " ",
-      " ",
-      " ",
-      " "
-    ]
-  },
-  "on-click-right": "tuned-gui",
+
   "custom/power": {
     "tooltip": false,
-    "on-click": "~/.config/hypr/powermenu.sh",
+    "on-click": "wlogout &",
     "format": "⏻"
   },
-  "custom/notification": {
-    "tooltip": true,
-    "format": "<span size='10pt'>{icon}</span>",
-    "format-icons": {
-      "notification": "󱅫",
-      "none": "󰂜",
-      "dnd-notification": "󰂠",
-      "dnd-none": "󰪓",
-      "inhibited-notification": "󰂛",
-      "inhibited-none": "󰪑",
-      "dnd-inhibited-notification": "󰂛",
-      "dnd-inhibited-none": "󰪑"
-    },
+
+  "custom/docker": {
+    "format": "{}",
     "return-type": "json",
-    "exec-if": "which swaync-client",
-    "exec": "swaync-client -swb",
-    "on-click": "swaync-client -t -sw",
-    "on-click-right": "swaync-client -d -sw",
-    "escape": true
+    "interval": 10,
+    "exec": "$(pwd)/scripts/docker-stats/docker-stats",
+    "tooltip": true
+  },
+
+  "custom/weather": {
+    "format": "{}",
+    "tooltip": true,
+    "interval": 1800,
+    "exec": "$(pwd)/scripts/weather-stats/weather-stats",
+    "return-type": "json"
   }
 }
