@@ -30,4 +30,4 @@ cd yay
 
 makepkg -si
 
-yay -S vscodium-bin vscodium-bin-marketplace nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack
+yay -S vscodium-bin vscodium-bin-marketplace nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack wlogout
