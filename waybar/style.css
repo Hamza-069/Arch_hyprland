@@ -1,115 +1,118 @@
 * {
-  font-family: JetbrainsMono Nerd Font;
-  font-size: 10px;
-  min-height: 0;
-  padding: 0 2px;
+    font-family: JetbrainsMono Nerd Font Propo;
+    font-size: 10px;
+    min-height: 0;
+    padding: 0 2px;
+    border-radius: 5px;
 }
 
 #waybar {
-  background: transparent;
-  color: #c6d0f5;
-  margin: 0;
+    background: transparent;
+    color: #c6d0f5;
+    margin: 0px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 button {
-  background: transparent;
-}
-
-tooltip {
-  background: red;
-  border: 2px solid yellow;
-  color: white;
-  font-size: 20px;
+    background: transparent;
 }
 
 #workspaces,
 #window {
-  background: #101010;
-  border-radius: 5px;
-  margin: 5px;
-  margin-left: 2px;
+    border-radius: 5px;
+    background: #101010;
+    margin: 5px;
+    margin-left: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 #workspaces button {
-  border-radius: 5px;
-  color: #babbf1;
-  padding: 0.4rem;
+    border-radius: 5px;
+    color: #babbf1;
+    padding: 0.4rem;
 }
 
 #workspaces button.active {
-  color: #99d1db;
+    color: #99d1db;
 }
 
 #workspaces button:hover {
-  background: #1e1e1e;
-  border: 1px solid transparent;
+    background: #1e1e1e;
+    border: 1px solid transparent;
 }
 
 #window {
-  color: #96dc92;
+    color: #96dc92;
 }
 
 #backlight,
 #battery,
 #clock,
 #cpu,
-#custom-docker,
-#custom-lock,
 #custom-music,
 #custom-notification,
-#custom-power,
-#custom-uptime,
 #memory,
 #network,
 #power-profiles-daemon,
 #pulseaudio,
 #tray {
-  background: #101010;
-  border-radius: 5px;
-  margin: 5px 0;
-  padding: 0.4rem 0.8rem;
+    background: #101010;
+    border-radius: 5px;
+    padding: 0.4rem 0.8rem;
+    margin-bottom: 2px;
+    margin-top: 2px;
 }
 
 #backlight {
-  color: #e5c890;
+    color: #e5c890;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 #battery {
-  color: #a6d189;
+    color: #a6d189;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 #battery.charging {
-  color: #a6d189;
+    color: #a6d189;
 }
 
 #battery.warning:not(.charging) {
-  color: #e78284;
+    color: #e78284;
 }
 
 #clock {
-  color: #8caaee;
+    color: #8caaee;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
-#custom-docker {
-  color: #85c1dc;
-}
-
-#custom-lock {
-  color: #babbf1;
-}
-
-#custom-music {
-  color: #ca9ee6;
+#custom-spotify {
+    background-color: #101010;
+    border-radius: 5px;
+    margin: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 #custom-notification {
-  color: #ba9eff;
+    color: #ba9eff;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 #power-profiles-daemon {
-  color: #f38ba8;
+    color: #f38ba8;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 #pulseaudio {
-  color: #ea999c;
+    color: #ea999c;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }

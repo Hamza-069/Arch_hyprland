@@ -1,12 +1,8 @@
 {
   "layer": "bottom",
   "position": "top",
-  "modules-left": [
-    "hyprland/workspaces" /*, "hyprland/window"*/
-  ],
-  "modules-center": [
-    "clock" /*, "custom/weather"*/
-  ],
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["custom/spotify", "custom/media", "clock"],
   "modules-right": [
     "pulseaudio",
     "backlight",
@@ -17,78 +13,63 @@
     "memory",
     "custom/notification",
     "tray",
-    "custom/power"
+    "custom/power",
   ],
   "hyprland/workspaces": {
     "format": "{name}: {icon}",
     "format-icons": {
       "active": "♣",
-      "default": "◯"
-    }
+      "default": "◯",
+    },
   },
   "hyprland/window": {
-    "separate-outputs": true
+    "separate-outputs": true,
   },
   "tray": {
     "icon-size": 15,
-    "spacing": 5
+    "spacing": 5,
   },
   "clock": {
     "timezone": "Europe/Stockholm",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "format": "{:%d/%m - %I:%M:%S}",
-    "interval": 0.5
+    "interval": 0.5,
   },
   "network": {
     "format-wifi": "󰤢 {bandwidthDownBits}",
     "format-ethernet": "󰈀 {bandwidthDownBits}",
     "format-disconnected": "󰤠 No Network",
     "interval": 1,
-    "tooltip": true
+    "tooltip": true,
   },
   "cpu": {
     "interval": 1,
     "format": "{icon}  {usage}%",
-    "format-icons": [
-      "▁",
-      "▂",
-      "▃",
-      "▄",
-      "▅",
-      "▆",
-      "▇",
-      "█"
-    ]
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
   },
   "memory": {
     "interval": 1,
-    "format": "  {used:0.01f}G"
+    "format": "  {used:0.01f}G",
   },
   "backlight": {
     "device": "intel_backlight",
     "format": "{icon} {percent}%",
-    "format-icons": [
-      "❤"
-    ]
+    "format-icons": ["❤"],
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": " {volume}%",
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "format-icons": {
-      "default": [
-        "",
-        "",
-        " "
-      ]
+      "default": ["", "", "", ")", "))"],
     },
-    "on-click": "pavucontrol"
+    "on-click": "pavucontrol",
   },
   "battery": {
     "interval": 1,
     "states": {
       "warning": 30,
-      "critical": 10
+      "critical": 10,
     },
     "tooltip": true,
     "tooltip-format": "{time}",
@@ -97,13 +78,7 @@
     "format-plugged": " {capacity}%",
     "format-full": " {icon}{capacity}%",
     "format-alt": "{icon} {time}",
-    "format-icons": [
-      " ",
-      " ",
-      " ",
-      " ",
-      " "
-    ]
+    "format-icons": [" ", " ", " ", " ", " "],
   },
   "power-profiles-daemon": {
     "format": "{icon} ",
@@ -113,14 +88,14 @@
       "default": "",
       "performance": "",
       "balanced": "",
-      "power-saver": ""
-    }
+      "power-saver": "",
+    },
   },
   "on-click-right": "tuned-gui",
   "custom/power": {
     "tooltip": false,
-    "on-click": "~/.config/hypr/powermenu.sh",
-    "format": "⏻"
+    "on-click": "wlogout",
+    "format": "⏻",
   },
   "custom/notification": {
     "tooltip": true,
@@ -133,13 +108,36 @@
       "inhibited-notification": "󰂛",
       "inhibited-none": "󰪑",
       "dnd-inhibited-notification": "󰂛",
-      "dnd-inhibited-none": "󰪑"
+      "dnd-inhibited-none": "󰪑",
     },
     "return-type": "json",
     "exec-if": "which swaync-client",
     "exec": "swaync-client -swb",
     "on-click": "swaync-client -t -sw",
     "on-click-right": "swaync-client -d -sw",
-    "escape": true
-  }
+    "escape": true,
+  },
+  "custom/spotify": {
+    "interval": 1,
+    "exec": " waybar_media_display ",
+    "return-type": "json",
+    "exec-if": "pgrep spotify",
+    "on-click": "playerctl --player=spotify play-pause",
+    "on-click-right": "playerctl next",
+    "escape": true,
+    "max-length": 30,
+  },
+  "custom/media": {
+    "format": "{icon} {}",
+    "interval": 1,
+    "escape": true,
+    "return-type": "json",
+    "max-length": 40,
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl stop",
+    "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+    "exec": "~/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
+  },
 }
