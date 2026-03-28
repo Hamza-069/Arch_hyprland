@@ -1,8 +1,8 @@
 {
   "layer": "bottom",
   "position": "top",
-  "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["custom/spotify", "custom/media", "clock"],
+  "modules-left": ["hyprland/workspaces", "custom/media"],
+  "modules-center": ["clock"],
   "modules-right": [
     "pulseaudio",
     "backlight",
@@ -41,15 +41,16 @@
     "format-disconnected": "󰤠 No Network",
     "interval": 1,
     "tooltip": true,
+    "min-length": 12,
   },
   "cpu": {
     "interval": 1,
-    "format": "{icon}  {usage}%",
+    "format": "{icon} {usage}%",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
   },
   "memory": {
     "interval": 1,
-    "format": "  {used:0.01f}G",
+    "format": " {used:0.01f}G",
   },
   "backlight": {
     "device": "intel_backlight",
@@ -61,7 +62,7 @@
     "format-muted": " {volume}%",
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "format-icons": {
-      "default": ["", "", "", ")", "))"],
+      "default": ["", "", "", ")"],
     },
     "on-click": "pavucontrol",
   },
@@ -78,10 +79,10 @@
     "format-plugged": " {capacity}%",
     "format-full": " {icon}{capacity}%",
     "format-alt": "{icon} {time}",
-    "format-icons": [" ", " ", " ", " ", " "],
+    "format-icons": ["", "", "", "", ""],
   },
   "power-profiles-daemon": {
-    "format": "{icon} ",
+    "format": "{icon}",
     "tooltip-format": "Power profile:{profile}\nDriver: {driver}",
     "tooltip": true,
     "format-icons": {
@@ -95,7 +96,7 @@
   "custom/power": {
     "tooltip": false,
     "on-click": "wlogout",
-    "format": "⏻",
+    "format": " ⏻ ",
   },
   "custom/notification": {
     "tooltip": true,
@@ -128,16 +129,14 @@
     "max-length": 30,
   },
   "custom/media": {
-    "format": "{icon} {}",
+    "format": "{}",
     "interval": 1,
-    "escape": true,
     "return-type": "json",
     "max-length": 40,
+    "exec": "/home/ham/.config/waybar/mediaplayer.py",
     "on-click": "playerctl play-pause",
     "on-click-right": "playerctl stop",
-    "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
     "on-scroll-up": "playerctl next",
     "on-scroll-down": "playerctl previous",
-    "exec": "~/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
   },
 }
