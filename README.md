@@ -30,4 +30,4 @@ cd yay
 
 makepkg -si
 
-yay -S nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack wlogout
+yay -S nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack wlogout ttf-nerd-fonts-symbols-propo-git
