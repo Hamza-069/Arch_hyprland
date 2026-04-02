@@ -15,7 +15,7 @@ sudo pacman -S ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-mono ttf-jet
 
 
 **Others:**
-sudo pacman -S adw-gtk-theme ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick 
+sudo pacman -S adw-gtk-theme ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick breeze breeze-icons qt6ct qt5ct kvantum kvantum-qt5
 
 
 
