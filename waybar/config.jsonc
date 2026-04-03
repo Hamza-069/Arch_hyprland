@@ -121,7 +121,7 @@
     "escape": true,
   },
   "custom/media": {
-    "exec": "/home/ham/.config/waybar/playerctl.sh",
+    "exec": "~/.config/waybar/playerctl.sh",
     "return-type": "text",
     "on-click": "playerctl play-pause",
     "on-click-right": "playerctl next",
