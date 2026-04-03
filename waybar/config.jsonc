@@ -18,7 +18,7 @@
   "hyprland/workspaces": {
     "format": "{name}: {icon}",
     "format-icons": {
-      "active": "♣",
+      "active": "❤",
       "default": "◯",
     },
   },
@@ -55,7 +55,7 @@
   "backlight": {
     "device": "intel_backlight",
     "format": "{icon} {percent}%",
-    "format-icons": ["❤"],
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",
@@ -95,7 +95,7 @@
   "on-click-right": "tuned-gui",
   "custom/power": {
     "tooltip": false,
-    "on-click": "wlogout",
+    "on-click": "~/.config/rofi/powermenu/type-2/powermenu.sh",
     "format": " ⏻ ",
   },
   "custom/notification": {
