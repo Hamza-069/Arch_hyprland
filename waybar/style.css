@@ -2,9 +2,8 @@
     font-family: JetbrainsMono Nerd Font Propo;
     font-size: 10px;
     min-height: 0;
-    padding: 0 2px;
     border-radius: 5px;
-    margin-left: 1px;
+    margin: 0px 1px;
 }
 
 #waybar {
@@ -16,43 +15,41 @@
 }
 
 tooltip {
-    background-color: #181825;
+    background-color: #101010;
     border: 2px solid #89b4fa;
 }
 
+/* BASE BUTTONS */
 button {
     background: transparent;
+    color: inherit;
 }
 
+/* WORKSPACES + WINDOW */
 #workspaces,
 #window {
     border-radius: 5px;
     background: #101010;
-    margin: 5px;
-    margin-left: 2px;
     margin-top: 2px;
     margin-bottom: 2px;
 }
 
 #workspaces button {
-    border-radius: 5px;
-    color: #babbf1;
+    border-radius: 7px;
+    color: #b4befe;
     padding: 0.4rem;
+    transition: all 150ms ease;
 }
 
 #workspaces button.active {
-    color: #99d1db;
+    color: #a6e3a1;
+    background: rgba(166, 227, 161, 0.12);
+    box-shadow: 0 0 8px rgba(166, 227, 161, 0.25);
 }
 
 #workspaces button:hover {
-    background: #1e1e1e;
-    border: 1px solid transparent;
+    background: rgba(137, 180, 250, 0.2);
 }
-
-#window {
-    color: #96dc92;
-}
-
 #backlight,
 #battery,
 #clock,
@@ -95,6 +92,7 @@ button {
     color: #8caaee;
     margin-top: 2px;
     margin-bottom: 2px;
+    font-weight: bold;
 }
 
 #custom-notification {
@@ -108,13 +106,26 @@ button {
     margin: 5px;
     margin-top: 2px;
     margin-bottom: 2px;
-    color: #f38ba8;
+    color: #f5c2e7;
+    font-weight: bold;
 }
 
 #power-profiles-daemon {
     color: #f38ba8;
     margin-top: 2px;
     margin-bottom: 2px;
+}
+
+#network {
+    color: #94e2d5;
+}
+
+#cpu {
+    color: #8caaee;
+}
+
+#memory {
+    color: #7dc4e4;
 }
 
 #pulseaudio {
