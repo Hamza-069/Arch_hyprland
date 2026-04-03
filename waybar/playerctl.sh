@@ -33,7 +33,7 @@ while true; do
     player=$(get_active_player)
 
     status=$(playerctl -p "$player" status 2>/dev/null)
-    text=$(playerctl -p "$player" metadata --format '{{title}} - {{artist}}' 2>/dev/null)
+    text=$(playerctl -p "$player" metadata --format '{{title}} -{{artist}}' 2>/dev/null)
 
     # 🔥 Fix: Spotify bug (Stopped but actually playing)
     if [[ "$status" == "Stopped" ]]; then

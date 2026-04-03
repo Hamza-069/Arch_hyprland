@@ -56,15 +56,17 @@
     "device": "intel_backlight",
     "format": "{icon} {percent}%",
     "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "min-length": 7,
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": " {volume}%",
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "format-icons": {
-      "default": ["", "", "", ")"],
+      "default": ["", "", ""],
     },
     "on-click": "pavucontrol",
+    "min-length": 7,
   },
   "battery": {
     "interval": 1,
@@ -124,6 +126,5 @@
     "on-click": "playerctl play-pause",
     "on-click-right": "playerctl next",
     "max-length": 25,
-    "min-length": 3,
   },
 }
