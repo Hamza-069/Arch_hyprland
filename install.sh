@@ -26,4 +26,12 @@ echo "Installing AUR packages..."
 
 yay -S --needed nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack ttf-jetbrains-mono-nerd wlogout
 
+
+./install_fish.sh
 echo "Done!"
+
+read -p "Reboot now? (y/N): " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    sudo reboot
+fi
