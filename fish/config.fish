@@ -4,3 +4,5 @@ if status is-interactive
 # Disable Fish welcome message
 set -U fish_greeting ""
 end
+starship init fish | source
+zoxide init fish | source
