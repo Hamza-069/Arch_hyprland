@@ -42,9 +42,9 @@ button {
 }
 
 #workspaces button.active {
-    color: #a6e3a1;
-    background: rgba(166, 227, 161, 0.12);
-    box-shadow: 0 0 8px rgba(166, 227, 161, 0.25);
+    color: #f38ba8;
+    background: rgba(243, 139, 168, 0.12);
+    box-shadow: 0 0 8px rgba(243, 139, 168, 0.25);
 }
 
 #workspaces button:hover {
