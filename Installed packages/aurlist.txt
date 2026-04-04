@@ -1,0 +1,9 @@
+clipvault
+localsend-bin
+redhat-fonts
+sddm-silent-theme-git
+vscode-langservers-extracted
+wlogout
+yay
+yay-debug
+zen-debug
