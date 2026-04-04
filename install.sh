@@ -10,7 +10,8 @@ sudo pacman -S --needed gnome-keyring rofi swaync nwg-look pavucontrol blueman z
   ttf-fira-code ttf-sourcecodepro-nerd \
   adw-gtk-theme ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick \
   breeze breeze-icons qt6ct qt5ct kvantum kvantum-qt5 \
-  git base-devel
+  git base-devel hyprpaper hyprlock hypridle hyprpolkitagent clipvault python-pip polkit-kde-agent \
+  spotify-launcher
 
 echo "Installing yay (AUR helper)..."
 
@@ -28,7 +29,12 @@ yay -S --needed nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack t
 
 
 ./install_fish.sh
-echo "Done!"
+echo "Done Installing!"
+
+cp -r ~/.config ~/Config-backup
+echo "Saved a Config-backup"
+mv ~/Downloads/Arch_hyprland_backup/Config/* ~/.config/
+echo "Config Changed"
 
 read -p "Reboot now? (y/N): " -n 1 -r
 echo
