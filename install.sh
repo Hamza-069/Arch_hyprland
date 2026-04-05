@@ -9,7 +9,7 @@ sudo pacman -S --needed gnome-keyring rofi swaync nwg-look pavucontrol blueman z
   ttf-jetbrains-mono ttf-dejavu noto-fonts-emoji noto-fonts-cjk noto-fonts-extra \
   ttf-fira-code ttf-sourcecodepro-nerd \
   adw-gtk-theme ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick \
-  breeze breeze-icons qt6ct qt5ct kvantum kvantum-qt5 \
+  breeze breeze-icons qt6ct brightnessctl easyeffects  \
   git base-devel hyprpaper hyprlock hypridle hyprpolkitagent python-pip polkit-kde-agent \
   spotify-launcher python pyright lua-language-server
 
@@ -25,9 +25,10 @@ fi
 
 echo "Installing AUR packages..."
 
-yay -S --needed nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack ttf-jetbrains-mono-nerd wlogout clipvault
+yay -S --needed sddm-silent-theme nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack ttf-jetbrains-mono-nerd wlogout clipvault
 
 
+find . -name "install_fish.sh" -execdir bash {} \;
 ./install_fish.sh
 echo "Done Installing!"
 
