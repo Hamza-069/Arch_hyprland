@@ -1,4 +1,5 @@
 #!/bin/bash
+
 if pacman -Q fish &>/dev/null; then
     echo "Fish is already installed"
 else
