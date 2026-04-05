@@ -27,10 +27,17 @@ echo "Installing AUR packages..."
 
 yay -S --needed sddm-silent-theme nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack ttf-jetbrains-mono-nerd wlogout clipvault
 
+echo "sddm-silent-theme nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack ttf-jetbrains-mono-nerd wlogout clipvault
+are Installed"
+
+echo "Running fish install..."
 
 find . -name "install_fish.sh" -execdir bash {} \;
 ./install_fish.sh
 echo "Done Installing!"
+echo
+echo "Changing dotfiles"
+
 
 cp -r ~/.config ~/Config-backup
 echo "Saved a Config-backup"
@@ -43,8 +50,13 @@ if [[ -z "$backup_dir" ]]; then
     exit 1
 fi
 
-mv "$backup_dir/Config/"* ~/.config/
+echo
+echo "Changing dotfiles"
 
+mv "$backup_dir/Config/"* ~/.config/
+hyprctl reload
+hyprctl reload
+hyprctl reload
 read -p "Reboot now? (y/N): " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then

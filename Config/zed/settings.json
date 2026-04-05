@@ -7,10 +7,26 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "scrollbar": {
+    "axes": {
+      "vertical": false,
+      "horizontal": true
+    }
+  },
+  "inline_code_actions": true,
+  "gutter": {
+    "min_line_number_digits": 2,
+    "folds": false,
+    "runnables": true,
+    "line_numbers": true
+  },
+  "vertical_scroll_margin": 5.0,
+  "horizontal_scroll_margin": 0.0,
+  "scroll_beyond_last_line": "vertical_scroll_margin",
   "semantic_tokens": "off",
   "lsp_document_colors": "background",
   "edit_predictions": {
-    "provider": "mercury"
+    "provider": "zed"
   },
   "collaboration_panel": {
     "button": false,
@@ -125,10 +141,11 @@
   },
   "agent": {
     "button": true,
-    "default_profile": "minimal",
+    "default_profile": "ask",
     "default_model": {
-      "provider": "google",
-      "model": "gemini-2.5-flash",
+      "effort": "high",
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4-6",
       "enable_thinking": true,
     },
     "favorite_models": [
@@ -147,8 +164,9 @@
   },
   "base_keymap": "VSCode",
   "minimap": {
+    "display_in": "active_editor",
     "max_width_columns": 60,
-    "show": "auto",
+    "show": "always",
     "thumb": "always",
   },
   "icon_theme": {
