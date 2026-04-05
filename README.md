@@ -1,4 +1,4 @@
-**<ins>Don't</ins> run the _./install.sh_**
+**<ins>Don't</ins> run the _.install.sh_**
 
 
 Working on ReadME
