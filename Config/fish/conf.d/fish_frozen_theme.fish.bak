@@ -5,7 +5,7 @@
 #     man fish-interactive | less +/^SYNTAX.HIGHLIGHTING
 # for appropriate commands to add to ~/.config/fish/config.fish instead.
 
-set --global fish_color_autosuggestion brblack
+set --global fish_color_autosuggestion 808080
 set --global fish_color_cancel --reverse
 set --global fish_color_command normal
 set --global fish_color_comment 5f0000

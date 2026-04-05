@@ -7,6 +7,8 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "semantic_tokens": "off",
+  "lsp_document_colors": "background",
   "edit_predictions": {
     "provider": "mercury"
   },
@@ -25,11 +27,12 @@
     "git_status": true,
     "dock": "left",
   },
-  "hover_popover_delay": 200,
+  "hover_popover_delay": 100,
   "toolbar": {
     "code_actions": true,
   },
   "which_key": {
+    "delay_ms": 1000,
     "enabled": true,
   },
   "git": {},
@@ -148,8 +151,16 @@
     "show": "auto",
     "thumb": "always",
   },
-  "icon_theme": "Material Icon Theme",
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Material Icon Theme",
+    "dark": "Material Icon Theme"
+  },
   "ui_font_size": 16,
   "buffer_font_size": 14.0,
-  "theme": "One Dark Pro Max",
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "One Dark Pro Glass"
+  },
 }

@@ -5,13 +5,12 @@ italic_font auto
 font_size 9
 
 # Window look
-background_opacity 0.2
-window_padding_width 6
+background_opacity 0.5
+window_padding_width 5
 
 # Cursor
 cursor_shape beam
 cursor_blink_interval 0.5
-
 # Scrollback
 scrollback_lines 20000
 
@@ -39,6 +38,6 @@ map ctrl+v paste_from_clipboard
 
 
 # BEGIN_KITTY_THEME
-# 1984 Dark
+# Catppuccin-Mocha
 include current-theme.conf
 # END_KITTY_THEME
