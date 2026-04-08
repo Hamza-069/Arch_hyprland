@@ -13,7 +13,7 @@ sudo pacman -S --needed gnome-keyring rofi swaync nwg-look pavucontrol blueman z
   adw-gtk-theme ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick \
   breeze breeze-icons qt6ct brightnessctl easyeffects \
   git base-devel hyprpaper hyprlock hypridle hyprpolkitagent python-pip polkit-kde-agent \
-  spotify-launcher python pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2 gvfs-smb
+  spotify-launcher python pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2 gvfs-smb hyprshot hyprpicker
 
 echo
 echo "Installing yay (AUR helper)..."
