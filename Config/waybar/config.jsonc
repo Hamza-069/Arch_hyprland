@@ -2,7 +2,7 @@
   "layer": "bottom",
   "position": "top",
   "modules-left": ["hyprland/workspaces", "custom/media"],
-  "modules-center": ["clock"],
+  "modules-center": ["clock", "weather"],
   "modules-right": [
     "pulseaudio",
     "backlight",
@@ -39,6 +39,7 @@
     "format-wifi": "󰤢 {bandwidthDownBits}",
     "format-ethernet": "󰈀 {bandwidthDownBits}",
     "format-disconnected": "󰤠 No Network",
+    "on-click": "kitty -e impala",
     "interval": 1,
     "tooltip": true,
     "min-length": 12,

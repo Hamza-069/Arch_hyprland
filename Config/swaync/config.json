@@ -1,76 +1,61 @@
 {
   "$schema": "/etc/xdg/swaync/configSchema.json",
+
   "positionX": "right",
   "positionY": "top",
-  "cssPriority": "user",
-  "control-center-width": 380,
-  "control-center-height": 565,
-  "control-center-margin-top": 2,
-  "control-center-margin-bottom": 2,
-  "control-center-margin-right": 1,
-  "control-center-margin-left": 0,
-  "notification-window-width": 300,
-  "notification-icon-size": 48,
-  "notification-body-image-height": 160,
-  "notification-body-image-width": 200,
-  "timeout": 3,
-  "timeout-low": 2,
-  "timeout-critical": 6,
+  "control-center-positionX": "none",
+  "control-center-positionY": "none",
+  "control-center-margin-top": 8,
+  "control-center-margin-bottom": 8,
+  "control-center-margin-right": 8,
+  "control-center-margin-left": 8,
+  "control-center-width": 300,
+  "control-center-height": -1,
   "fit-to-screen": false,
+  "layer-shell-cover-screen": true,
+
+  "layer-shell": true,
+  "layer": "overlay",
+  "control-center-layer": "overlay",
+  "cssPriority": "user",
+  "notification-body-image-height": 100,
+  "notification-body-image-width": 200,
+  "notification-inline-replies": true,
+  "timeout": 6,
+  "timeout-low": 3,
+  "timeout-critical": 0,
+  "notification-window-width": 300,
   "keyboard-shortcuts": true,
-  "image-visibility": "when-available",
+  "image-visibility": "always",
   "transition-time": 200,
-  "hide-on-clear": false,
-  "hide-on-action": false,
+  "hide-on-clear": true,
+  "hide-on-action": true,
   "script-fail-notify": true,
-  "scripts": {
-    "example-script": {
-      "exec": "echo 'Do something...'",
-      "urgency": "Normal"
-    }
-  },
-  "notification-visibility": {
-    "example-name": {
-      "state": "muted",
-      "urgency": "Low",
-      "app-name": "Spotify"
-    }
-  },
-  "widgets": [
-    "buttons-grid",
-    "mpris",
-    "title",
-    "notifications"
-  ],
+
+  "widgets": ["inhibitors", "dnd", "mpris", "notifications"],
   "widget-config": {
+    "notifications": {
+      "vexpand": false
+    },
+    "inhibitors": {
+      "text": "Inhibitors",
+      "button-text": "Clear All",
+      "clear-all-button": true
+    },
     "title": {
       "text": "Notifications",
-      "clear-all-button": true,
-      "button-text": "  "
+      "clear-all-button": false,
+      "button-text": "Clear All"
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
     },
     "label": {
-      "max-lines": 1,
-      "text": " "
+      "max-lines": 5,
+      "text": "Label Text"
     },
     "mpris": {
-      "image-size": 72,
-      "image-radius": 5
-    },
-    "volume": {
-      "label": "󰕾",
-      "show-per-app": true
-    },
-    "buttons-grid": {
-      "actions": [
-        {
-          "label": "󰂯",
-          "command": "blueman-manager"
-        },
-        {
-          "label": "󰏘",
-          "command": "nwg-look"
-        }
-      ]
+      "autohide": true
     }
   }
 }

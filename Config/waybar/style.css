@@ -8,7 +8,6 @@
 
 #waybar {
   background: transparent;
-  color: #c6d0f5;
   margin: 0px;
   margin-top: 2px;
   margin-bottom: 2px;
@@ -66,10 +65,11 @@ button {
   padding: 0.4rem 0.8rem;
   margin-bottom: 2px;
   margin-top: 2px;
+  color: #87d5c9;
 }
 
 #backlight {
-  color: #e5c890;
+  color: plum;
   margin-top: 2px;
   margin-bottom: 2px;
 }
@@ -111,7 +111,7 @@ button {
 }
 
 #power-profiles-daemon {
-  color: #f38ba8;
+  color: #e58184;
   margin-top: 2px;
   margin-bottom: 2px;
 }
@@ -137,4 +137,5 @@ button {
   background-color: #101010;
   margin-top: 2px;
   margin-bottom: 2px;
+  color: #e74c3c;
 }

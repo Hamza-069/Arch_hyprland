@@ -13,16 +13,17 @@ sudo pacman -S --needed gnome-keyring rofi swaync nwg-look pavucontrol blueman z
   adw-gtk-theme ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick \
   breeze breeze-icons qt6ct brightnessctl easyeffects \
   git base-devel hyprpaper hyprlock hypridle hyprpolkitagent python-pip polkit-kde-agent \
-  spotify-launcher python pyright lua-language-server
+  spotify-launcher python pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2 gvfs-smb
+
 echo
 echo "Installing yay (AUR helper)..."
 echo
-if ! command -v yay &> /dev/null; then
-git clone https://aur.archlinux.org/yay.git --depth=1
-cd yay
-makepkg -si --noconfirm
-cd ..
-rm -rf yay
+if ! command -v yay &>/dev/null; then
+  git clone https://aur.archlinux.org/yay.git --depth=1
+  cd yay
+  makepkg -si --noconfirm
+  cd ..
+  rm -rf yay
 fi
 echo
 echo "Installing AUR packages..."
@@ -45,7 +46,7 @@ echo
 backup_dir=$(find /home -type d -name "Arch_hyprland_backup" | head -n 1)
 
 if [[ -z "$backup_dir" ]]; then
-    echo "Backup folder not found!"
+  echo "Backup folder not found!"
 fi
 
 echo
@@ -59,10 +60,9 @@ hyprctl reload
 echo "reloading hyprland"
 hyprctl reload
 
-
 read -p "Reboot now? (y/N): " -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    sudo reboot
+  sudo reboot
 fi
