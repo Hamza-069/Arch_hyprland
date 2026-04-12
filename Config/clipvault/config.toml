@@ -1,0 +1,23 @@
+# 📦 Storage
+max_items = 500              # total history entries
+max_size_kb = 1024          # max size per item (1 MB)
+max_age_days = 7            # auto-delete after 7 days
+
+# 🧠 Behavior
+deduplicate = true          # avoid duplicate entries
+store_images = true         # enable image history
+store_binary = true         # allow non-text content
+
+# ⚡ Performance
+trim_on_start = true        # clean old entries on launch
+lazy_load = true            # faster startup
+
+# 📋 Clipboard handling
+primary_selection = false   # disable middle-click clipboard
+watch_clipboard = true      # monitor clipboard changes
+
+# 📂 Storage path (optional)
+data_dir = "~/.local/share/clipvault"
+
+# 🔔 Notifications (optional)
+notify = true

@@ -49,6 +49,7 @@ button {
 #workspaces button:hover {
   background: rgba(137, 180, 250, 0.2);
 }
+
 #backlight,
 #battery,
 #clock,
@@ -100,6 +101,7 @@ button {
   margin-top: 2px;
   margin-bottom: 2px;
 }
+
 #custom-media {
   background-color: #16161d;
   padding: 0 8px;
@@ -133,6 +135,7 @@ button {
   margin-top: 2px;
   margin-bottom: 2px;
 }
+
 #custom-power {
   background-color: #101010;
   margin-top: 2px;

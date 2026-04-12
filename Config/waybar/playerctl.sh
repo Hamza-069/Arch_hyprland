@@ -1,7 +1,7 @@
 #!/bin/bash
 
 max=22
-delay=0.09
+delay=0.03
 sep="  •  "
 
 # 🔥 Find the real active player

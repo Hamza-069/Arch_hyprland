@@ -13,7 +13,8 @@ sudo pacman -S --needed gnome-keyring rofi swaync nwg-look pavucontrol blueman z
   adw-gtk-theme ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick \
   breeze breeze-icons qt6ct brightnessctl easyeffects \
   git base-devel hyprpaper hyprlock hypridle hyprpolkitagent python-pip polkit-kde-agent \
-  spotify-launcher python pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2 gvfs-smb hyprshot hyprpicker
+  spotify-launcher python pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2 gvfs-smb hyprshot hyprpicker neovim \
+  lsp-plugins lazygit luarocks lua51 plasma-workspace kde-cli-tools
 
 echo
 echo "Installing yay (AUR helper)..."
@@ -28,7 +29,7 @@ fi
 echo
 echo "Installing AUR packages..."
 echo
-yay -S --needed sddm-silent-theme nerd-fonts-jetbrains-mono nerd-fonts-fira-code nerd-fonts-hack ttf-jetbrains-mono-nerd wlogout clipvault
+yay -S --needed --noconfirm sddm-silent-theme ttf-jetbrains-mono-nerd wlogout clipvault tree-sitter-cli
 
 echo "Running fish install..."
 echo
@@ -59,6 +60,8 @@ echo "reloading hyprland"
 hyprctl reload
 echo "reloading hyprland"
 hyprctl reload
+
+kbuildsycoca6
 
 read -p "Reboot now? (y/N): " -n 1 -r
 echo

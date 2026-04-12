@@ -9,8 +9,8 @@ if status is-interactive
     set -g fish_cursor_default block
     set -g fish_cursor_insert block
     set -g fish_cursor_replace_one block
-    fish_vi_key_bindings 
-    
+    # fish_vi_key_bindings 
+
     # Custom prompt
     function fish_prompt
         set_color --bold blue

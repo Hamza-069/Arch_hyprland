@@ -121,12 +121,12 @@
     "on-click-right": "swaync-client -d -sw",
     "escape": true,
   },
-  "custom/media": {
-    "exec": "~/.config/waybar/playerctl.sh",
-    "return-type": "text",
-    "on-click": "playerctl play-pause",
-    "on-click-right": "playerctl next",
-    "on-click-middle": "playerctl previous",
-    "max-length": 25,
-  },
+   "custom/media": {
+     "exec": "~/.config/waybar/playerctl.sh",
+     "return-type": "text",
+     "on-click": "playerctl play-pause",
+     "on-click-right": "playerctl next",
+     "on-click-middle": "playerctl previous",
+     "max-length": 25,
+   },
 }
