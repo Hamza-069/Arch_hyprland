@@ -16,6 +16,7 @@
 tooltip {
   background-color: #101010;
   border: 2px solid #89b4fa;
+  margin: 0px 0px;
 }
 
 /* BASE BUTTONS */
@@ -28,7 +29,7 @@ button {
 #workspaces,
 #window {
   border-radius: 5px;
-  background: #101010;
+  background: #16161d;
   margin-top: 2px;
   margin-bottom: 2px;
 }
@@ -61,7 +62,7 @@ button {
 #power-profiles-daemon,
 #pulseaudio,
 #tray {
-  background: #101010;
+  background: #16161d;
   border-radius: 5px;
   padding: 0.4rem 0.8rem;
   margin-bottom: 2px;
@@ -137,8 +138,8 @@ button {
 }
 
 #custom-power {
-  background-color: #101010;
+  background-color: #16161d;
   margin-top: 2px;
   margin-bottom: 2px;
-  color: #e74c3c;
+  color: indianred;
 }

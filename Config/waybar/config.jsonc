@@ -1,8 +1,14 @@
 {
-  "layer": "bottom",
+  "layer": "top",
   "position": "top",
-  "modules-left": ["hyprland/workspaces", "custom/media"],
-  "modules-center": ["clock", "weather"],
+  "modules-left": [
+    "hyprland/workspaces",
+    "custom/media"
+  ],
+  "modules-center": [
+    "clock",
+    "weather"
+  ],
   "modules-right": [
     "pulseaudio",
     "backlight",
@@ -47,16 +53,36 @@
   "cpu": {
     "interval": 1,
     "format": "{icon} {usage}%",
-    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    "format-icons": [
+      "▁",
+      "▂",
+      "▃",
+      "▄",
+      "▅",
+      "▆",
+      "▇",
+      "█"
+    ],
   },
   "memory": {
     "interval": 1,
     "format": " {used:0.01f}G",
   },
   "backlight": {
+    "interval": 1,
     "device": "intel_backlight",
     "format": "{icon} {percent}%",
-    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
     "min-length": 7,
   },
   "pulseaudio": {
@@ -64,7 +90,11 @@
     "format-muted": " {volume}%",
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "format-icons": {
-      "default": ["", "", ""],
+      "default": [
+        "",
+        "",
+        ""
+      ],
     },
     "on-click": "pavucontrol",
     "min-length": 7,
@@ -82,7 +112,13 @@
     "format-plugged": " {capacity}%",
     "format-full": " {icon}{capacity}%",
     "format-alt": "{icon} {time}",
-    "format-icons": ["", "", "", "", ""],
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
   },
   "power-profiles-daemon": {
     "format": "{icon}",
@@ -94,8 +130,8 @@
       "balanced": "",
       "power-saver": "",
     },
+    "on-click-right": "tuned-gui",
   },
-  "on-click-right": "tuned-gui",
   "custom/power": {
     "tooltip": false,
     "on-click": "~/.config/rofi/powermenu/type-2/powermenu.sh",
@@ -121,12 +157,12 @@
     "on-click-right": "swaync-client -d -sw",
     "escape": true,
   },
-   "custom/media": {
-     "exec": "~/.config/waybar/playerctl.sh",
-     "return-type": "text",
-     "on-click": "playerctl play-pause",
-     "on-click-right": "playerctl next",
-     "on-click-middle": "playerctl previous",
-     "max-length": 25,
-   },
+  "custom/media": {
+    "exec": "~/.config/waybar/playerctl.sh",
+    "return-type": "text",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous",
+    "max-length": 25,
+  },
 }

@@ -15,8 +15,8 @@
         ],
         "equalizer#0": {
             "balance": 0.0,
-            "bypass": false,
-            "input-gain": -8.43,
+            "bypass": true,
+            "input-gain": -8.1,
             "left": {
                 "band0": {
                     "frequency": 35.0,
@@ -297,10 +297,10 @@
             "bypass": false,
             "equal-mode": "IIR",
             "frequency": 2000.0,
-            "gain": 0.96,
-            "input-gain": 0.7,
-            "mode": "RLC (BT)",
-            "output-gain": 1.3,
+            "gain": 1.2,
+            "input-gain": 0.3,
+            "mode": "RLC (MT)",
+            "output-gain": 1.2,
             "quality": 0.8,
             "slope": "x1",
             "type": "Low-shelf",
