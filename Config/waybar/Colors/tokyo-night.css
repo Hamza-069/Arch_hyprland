@@ -1,0 +1,48 @@
+@define-color bg #1a1b26;
+@define-color bg_alt #16161e;
+@define-color bg_highlight #292e42;
+
+@define-color fg #c0caf5;
+@define-color fg_dark #a9b1d6;
+@define-color fg_gutter #3b4261;
+
+@define-color border #414868;
+@define-color tooltip_border #7aa2f7;
+
+/* accents (no yellow/orange) */
+@define-color blue #7aa2f7;
+@define-color cyan #7dcfff;
+@define-color teal #2ac3de;
+@define-color green #9ece6a;
+@define-color red #f7768e;
+@define-color magenta #bb9af7;
+
+/* workspace */
+@define-color ws_text @blue;
+@define-color ws_active @magenta;
+@define-color ws_hover rgba(122, 162, 247, 0.20);
+@define-color ws_active_bg rgba(187, 154, 247, 0.14);
+@define-color ws_active_shadow rgba(187, 154, 247, 0.28);
+
+/* modules */
+@define-color module_text @fg;
+@define-color backlight_text @cyan;
+@define-color battery_text @green;
+@define-color battery_warning @red;
+@define-color clock_text @cyan;
+@define-color notification_text @magenta;
+@define-color notification_border @magenta;
+@define-color media_bg @bg_alt;
+@define-color media_text @red;
+@define-color power_profiles_text @magenta;
+@define-color network_text @teal;
+@define-color cpu_text @blue;
+@define-color memory_text @magenta;
+@define-color pulse_text #fea98c;
+@define-color power_text @red;
+
+/* semantic */
+@define-color success @green;
+@define-color warning @magenta;
+@define-color error @red;
+@define-color info @blue;
