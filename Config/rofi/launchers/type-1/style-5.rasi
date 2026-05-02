@@ -64,7 +64,7 @@ window {
     enabled:                     true;
     margin:                      0px;
     padding:                     0px;
-    border:                      0px solid;
+    border:                      2px solid;
     border-radius:               5px;
     border-color:                @border-colour;
     cursor:                      "default";
@@ -126,7 +126,7 @@ entry {
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 "Search...";
+    placeholder:                 "Search..";
     placeholder-color:           inherit;
 }
 num-filtered-rows {
@@ -190,7 +190,7 @@ element {
     spacing:                     10px;
     margin:                      0px;
     padding:                     5px 10px;
-    border:                      0px solid;
+    border:                      1px solid;
     border-radius:               5px;
     border-color:                @border-colour;
     background-color:            transparent;
@@ -262,7 +262,7 @@ mode-switcher{
 }
 button {
     padding:                     5px 10px;
-    border:                      0px solid;
+    border:                      1px solid;
     border-radius:               5px;
     border-color:                @border-colour;
     background-color:            @alternate-background;

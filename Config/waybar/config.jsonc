@@ -33,25 +33,27 @@
   },
   "tray": {
     "icon-size": 15,
-    "spacing": 5,
+    "spacing": 2,
   },
   "clock": {
     "timezone": "Europe/Stockholm",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "format": "{:%d/%m - %I:%M:%S}",
-    "interval": 0.5,
+    "interval": 1,
   },
   "network": {
     "format-wifi": "󰤢 {bandwidthDownBits}",
     "format-ethernet": "󰈀 {bandwidthDownBits}",
-    "format-disconnected": "󰤠 No Network",
+    "format-disconnected": "󰤭 No Network",
     "on-click": "kitty -e impala",
     "interval": 1,
     "tooltip": true,
     "min-length": 12,
+    "tooltip-format": "{essid} ({signalStrength}%)",
   },
   "cpu": {
     "interval": 1,
+    "on-click": "kitty -e btop",
     "format": "{icon} {usage}%",
     "format-icons": [
       "▁",
@@ -83,9 +85,10 @@
       "",
       ""
     ],
-    "min-length": 7,
+    "min-length": 6,
   },
   "pulseaudio": {
+    "interval": 1,
     "format": "{icon} {volume}%",
     "format-muted": " {volume}%",
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
@@ -107,11 +110,11 @@
     },
     "tooltip": true,
     "tooltip-format": "{time}",
-    "format": "{icon}{capacity: >3}%",
+    "format": "{icon} {capacity: >3}%",
     "format-charging": " {capacity}%",
     "format-plugged": " {capacity}%",
-    "format-full": " {icon}{capacity}%",
-    "format-alt": "{icon} {time}",
+    "format-full": " {capacity}%",
+    "format-alt": "{time}",
     "format-icons": [
       "",
       "",
@@ -121,6 +124,7 @@
     ],
   },
   "power-profiles-daemon": {
+    "interval": 1,
     "format": "{icon}",
     "tooltip-format": "Power profile:{profile}\nDriver: {driver}",
     "tooltip": true,
@@ -133,6 +137,7 @@
     "on-click-right": "tuned-gui",
   },
   "custom/power": {
+    "interval": 1,
     "tooltip": false,
     "on-click": "~/.config/rofi/powermenu/type-2/powermenu.sh",
     "format": " ⏻ ",

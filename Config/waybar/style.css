@@ -1,3 +1,5 @@
+@import "Colors/Normal.css";
+
 * {
   font-family: JetbrainsMono Nerd Font Propo;
   font-size: 10px;
@@ -14,41 +16,40 @@
 }
 
 tooltip {
-  background-color: #101010;
-  border: 2px solid #89b4fa;
-  margin: 0px 0px;
+  background-color: @bg;
+  border: 1px solid @tooltip_border;
+  border-radius: 5px;
+  margin: 0px;
 }
 
-/* BASE BUTTONS */
 button {
   background: transparent;
   color: inherit;
 }
 
-/* WORKSPACES + WINDOW */
 #workspaces,
 #window {
   border-radius: 5px;
-  background: #16161d;
+  background: @bg;
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
 #workspaces button {
-  border-radius: 7px;
-  color: #b4befe;
+  border-radius: 10px;
+  color: @ws_text;
   padding: 0.4rem;
   transition: all 150ms ease;
 }
 
 #workspaces button.active {
-  color: #f38ba8;
-  background: rgba(243, 139, 168, 0.12);
-  box-shadow: 0 0 8px rgba(243, 139, 168, 0.25);
+  color: @ws_active;
+  background: @ws_active_bg;
+  box-shadow: 0 0 8px @ws_active_shadow;
 }
 
 #workspaces button:hover {
-  background: rgba(137, 180, 250, 0.2);
+  background: @ws_hover;
 }
 
 #backlight,
@@ -62,84 +63,94 @@ button {
 #power-profiles-daemon,
 #pulseaudio,
 #tray {
-  background: #16161d;
+  background: @bg;
   border-radius: 5px;
   padding: 0.4rem 0.8rem;
   margin-bottom: 2px;
   margin-top: 2px;
-  color: #87d5c9;
+  color: @module_text;
 }
 
 #backlight {
-  color: plum;
+  color: @backlight_text;
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
 #battery {
-  color: #a6d189;
+  color: @battery_text;
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
 #battery.charging {
-  color: #a6d189;
+  color: @battery_text;
 }
 
 #battery.warning:not(.charging) {
-  color: #e78284;
+  color: @battery_warning;
+  border: 1px solid @tooltip_border;
+  background: @power_text;
 }
 
 #clock {
-  color: #8caaee;
+  color: @clock_text;
   margin-top: 2px;
   margin-bottom: 2px;
   font-weight: bold;
+  border: 1px solid @tooltip_border;
 }
 
 #custom-notification {
-  color: #ba9eff;
+  color: @notification_text;
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
+#custom-notification.notification {
+  color: @notification_text;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border: 1px solid @notification_border;
+}
+
 #custom-media {
-  background-color: #16161d;
+  background-color: @media_bg;
   padding: 0 8px;
   margin: 5px;
   margin-top: 2px;
   margin-bottom: 2px;
-  color: #f5c2e7;
+  color: @media_text;
   font-weight: bold;
 }
 
 #power-profiles-daemon {
-  color: #e58184;
+  color: @power_profiles_text;
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
 #network {
-  color: #94e2d5;
+  color: @network_text;
 }
 
 #cpu {
-  color: #8caaee;
+  color: @cpu_text;
 }
 
 #memory {
-  color: #cba6f7;
+  color: @memory_text;
 }
 
 #pulseaudio {
-  color: #ea999c;
+  color: @pulse_text;
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
 #custom-power {
-  background-color: #16161d;
+  background-color: @bg;
   margin-top: 2px;
   margin-bottom: 2px;
-  color: indianred;
+  color: @power_text;
 }

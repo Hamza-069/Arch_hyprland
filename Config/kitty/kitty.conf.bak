@@ -5,7 +5,7 @@ italic_font auto
 font_size 9
 
 # Window look
-background_opacity 0.5
+background_opacity 0.4
 window_padding_width 5
 
 # Cursor
@@ -13,6 +13,8 @@ cursor_shape beam
 cursor_blink_interval 0.5
 # Scrollback
 scrollback_lines 20000
+cursor_trail 3
+# cursor_trail_decay 2
 
 # Disable bell
 enable_audio_bell no
@@ -32,9 +34,6 @@ map ctrl+v paste_from_clipboard
 #map ctrl+shift+enter new_window
 #map ctrl+shift+t new_tab
 
-
-
-#include current-theme.conf
 
 
 # BEGIN_KITTY_THEME
