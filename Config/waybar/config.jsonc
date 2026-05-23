@@ -7,7 +7,6 @@
   ],
   "modules-center": [
     "clock",
-    "weather"
   ],
   "modules-right": [
     "pulseaudio",
@@ -103,7 +102,7 @@
     "min-length": 7,
   },
   "battery": {
-    "interval": 1,
+    "interval": 3,
     "states": {
       "warning": 30,
       "critical": 10,
@@ -124,7 +123,6 @@
     ],
   },
   "power-profiles-daemon": {
-    "interval": 1,
     "format": "{icon}",
     "tooltip-format": "Power profile:{profile}\nDriver: {driver}",
     "tooltip": true,
@@ -137,7 +135,6 @@
     "on-click-right": "tuned-gui",
   },
   "custom/power": {
-    "interval": 1,
     "tooltip": false,
     "on-click": "~/.config/rofi/powermenu/type-2/powermenu.sh",
     "format": " ⏻ ",

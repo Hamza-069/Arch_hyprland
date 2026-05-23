@@ -88,7 +88,7 @@ button {
 }
 
 #battery.warning:not(.charging) {
-  color: @battery_warning;
+  color: white;
   border: 1px solid @tooltip_border;
   background: @power_text;
 }
