@@ -40,8 +40,6 @@ hyprctl reload
 echo "reloading hyprland"
 hyprctl reload
 
-kbuildsycoca6
-
 read -p "Reboot now? (y/N): " -n 1 -r
 echo
 
