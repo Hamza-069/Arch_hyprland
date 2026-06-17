@@ -11,7 +11,7 @@ hl.config({
 		border_size = 2,
 
 		col = {
-			active_border = "rgb(57c5fd)",
+			active_border = "rgb(f7768e)",
 			inactive_border = "rgb(595959)",
 		},
 
@@ -23,14 +23,13 @@ hl.config({
 
 		layout = "dwindle",
 	},
-
 	decoration = {
 		rounding = 5,
 		rounding_power = 2,
 
 		-- Change transparency of focused and unfocused windows
 		active_opacity = 1.0,
-		inactive_opacity = 1.3,
+		inactive_opacity = 0.3,
 
 		shadow = {
 			enabled = false,

@@ -11,7 +11,7 @@
   "modules-right": [
     "pulseaudio",
     "backlight",
-    "power-profiles-daemon",
+    // "power-profiles-daemon",
     "battery",
     "network",
     "cpu",
@@ -24,7 +24,7 @@
     "format": "{name}: {icon}",
     "format-icons": {
       "active": "❤",
-      "default": "◯",
+      "default": "◯"
     },
   },
   "hyprland/window": {

@@ -22,6 +22,9 @@ hl.config({
 			scroll_factor = 0.8,
 		},
 	},
+	gestures = {
+		workspace_swipe_invert = false,
+	},
 })
 
 hl.gesture({
@@ -37,6 +40,14 @@ hl.gesture({
 	action = "special",
 	workspace_name = "magic",
 	disable_inhibit = true,
+})
+
+hl.gesture({
+	fingers = 3,
+	direction = "up",
+	action = function()
+		hl.exec_cmd("swaync-client -t -sw")
+	end,
 })
 
 hl.gesture({

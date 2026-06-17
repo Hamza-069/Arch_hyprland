@@ -6,9 +6,9 @@
 local terminal = "kitty"
 local fileManager = "dolphin"
 local menu = "~/.config/rofi/launchers/type-1/launcher.sh"
-local editor = "vscodium"
+local editor = "kitty -e nvim"
 local browser = "firefox"
-local music = "spotify-launcher"
+local music = "LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify-launcher"
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -18,16 +18,18 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
-closeWindowBind = hl.bind(mainMod .. " + w", hl.dsp.window.close())
--- closeWindowBind:set_enabled(false)
+hl.bind(mainMod .. " + w", hl.dsp.window.close())
 hl.bind(
 	mainMod .. " + SHIFT + M",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("sh -c 'pkill rofi || exec " .. menu .. "'"))
+hl.bind(mainMod .. " + P", function()
+	hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+	hl.dispatch(hl.dsp.window.pin())
+end)
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
 -- Move focus with mainMod + arrow keys
@@ -46,24 +48,27 @@ end
 
 --Custom
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
-hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(editor))
+hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(editor))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(music))
-hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("kitty -e nvim"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("playerctl play-pause"))
+--Clipboard
 hl.bind(
 	mainMod .. " + V",
 	hl.dsp.exec_cmd(
 		"clipvault list | rofi -dmenu -theme ~/.config/rofi/launchers/type-1/style-5.rasi | cut -f1 | clipvault get | wl-copy"
 	)
 )
+
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("~/.config/hypr/scripts/reload.sh | hyprctl reload"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind("XF86FullScreen", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind("XF86Poweroff", hl.dsp.exec_cmd("~/.config/rofi/powermenu/type-2/powermenu.sh"))
+
 --Hyprshot
 hl.bind("XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m output --output-folder  ~/Screenshots/"))
 hl.bind(mainMod .. " + XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m region --output-folder  ~/Screenshots/"))
 hl.bind("CTRL + XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m window --output-folder  ~/Screenshots/"))
+
 --hyprpicker
 hl.bind(mainMod .. " + XF86FullScreen", hl.dsp.exec_cmd("hyprpicker -u 65 -s 9 -a -b -l -n"))
 

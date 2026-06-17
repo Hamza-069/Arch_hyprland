@@ -1,0 +1,35 @@
+╭──────────────────────────────────────────────────────╮
+│     ham@archlinux
+│
+│    SYSTEM
+│  ────────────────────────────────────────────────
+│    OS  Arch Linux x86_64
+│    Kernel  Linux 7.0.10-arch1-1
+│    Uptime  1 day, 9 hours, 21 mins
+│  󰏖  Packages  916 (pacman)
+│    Shell  fish
+│
+│  󰍹  HARDWARE
+│  ────────────────────────────────────────────────
+│    PC  Apel (rev4)
+│    CPU  Intel(R) Celeron(R) N4020 (2) @ 2.80 GHz - 68.0°C
+│  󰾲  GPU  Intel UHD Graphics 600 @ 0.65 GHz [Integrated]
+│    RAM  [█████████░░░] 2.84 GiB / 3.68 GiB (77%)
+│  󰓡  Swap  [██░░░░░░░░░░] 532.40 MiB / 4.00 GiB (13%)
+│    Disk  [██████░░░░░░] 13.43 GiB / 27.51 GiB (49%) - ext4
+│  󰍹  Monitor  1366x768 in 12", 60 Hz [Built-in]
+│    Battery  [██████░░░░░░] (49%) (2 hours, 49 mins remaining) [Discharging]
+│
+│    DESKTOP
+│  ────────────────────────────────────────────────
+│    WM  Hyprland (Wayland)
+│  󰉼  Theme  Breeze [Qt], adw-gtk3-dark [GTK2/3/4]
+│    Icons  breeze [Qt], Adwaita [GTK2/3/4]
+│    Font  Sans Serif (9pt) [Qt], Adwaita Sans (11pt) [GTK2/3/4]
+│  󰆿  Cursor  default (24px)
+│    Terminal  kitty
+│    Term Font  JetBrainsMonoNF-Regular (9pt)
+│
+│  󰒍  NETWORK
+│  ────────────────────────────────────────────────
+│  󰩟  IP  192.168.10.186/24
