@@ -4,7 +4,7 @@
 
 -- Set programs that you use
 local terminal = "kitty"
-local fileManager = "dolphin"
+local fileManager = "kitty -e yazi"
 local menu = "~/.config/rofi/launchers/type-1/launcher.sh"
 local editor = "kitty -e nvim"
 local browser = "firefox"

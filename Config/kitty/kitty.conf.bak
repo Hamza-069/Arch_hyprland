@@ -5,7 +5,7 @@ italic_font auto
 font_size 9
 
 # Window look
-background_opacity 0.4
+background_opacity 0.3
 window_padding_width 1
 
 # Cursor
@@ -38,6 +38,6 @@ map ctrl+v paste_from_clipboard
 
 
 # BEGIN_KITTY_THEME
-# 3024 Night
+# Tokyo Night
 include current-theme.conf
 # END_KITTY_THEME

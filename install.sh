@@ -6,7 +6,7 @@ sudo pacman -Syu
 echo
 echo "Installing official repo packages..."
 echo
-sudo pacman -S --needed gnome-keyring rofi swaync nwg-look pavucontrol blueman zed \
+sudo pacman -S --needed gnome-keyring rofi swaync nwg-look pavucontrol blueman \
   ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-mono \
   ttf-jetbrains-mono ttf-dejavu noto-fonts-emoji noto-fonts-cjk noto-fonts-extra \
   ttf-fira-code ttf-sourcecodepro-nerd \
