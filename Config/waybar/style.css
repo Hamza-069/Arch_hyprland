@@ -1,4 +1,4 @@
-@import "Colors/tokyo-night.css";
+@import "Colors/nord.css";
 
 * {
   font-family: JetbrainsMono Nerd Font Propo;
@@ -87,6 +87,12 @@ button {
   color: @battery_text;
 }
 
+#battery.critical:not(.charging){
+  color: white;
+  border: 1px solid @tooltip_border;
+  background: @power_text;
+}
+
 #battery.warning:not(.charging) {
   color: white;
   border: 1px solid @tooltip_border;
@@ -99,6 +105,8 @@ button {
   margin-bottom: 2px;
   font-weight: bold;
   border: 1px solid @tooltip_border;
+  text-shadow: 0 0 6px @clock_text;
+
 }
 
 #custom-notification {
@@ -111,7 +119,7 @@ button {
   color: @notification_text;
   margin-top: 1px;
   margin-bottom: 1px;
-  border: 1px solid @notification_border;
+  border: 1px solid @notification_text;
 }
 
 #custom-media {

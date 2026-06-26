@@ -1,0 +1,39 @@
+/* Nord: Polar Night (Backgrounds & Borders) */
+@define-color bg #2e3440; /* Nord0 */
+@define-color tooltip_border #81a1c1; /* Nord3 */
+
+/* Nord: Snow Storm & Frost (Workspaces) */
+@define-color ws_text #d8dee9; /* Nord4 */
+@define-color ws_active #88c0d0; /* Nord8 (Ice Blue) */
+@define-color ws_hover rgba(136, 192, 208, 0.15);
+@define-color ws_active_bg rgba(136, 192, 208, 0.18);
+@define-color ws_active_shadow rgba(136, 192, 208, 0.32);
+
+/* General Text */
+@define-color module_text #e5e9f0; /* Nord5 */
+
+/* Nord: Aurora (Hardware & System) */
+@define-color backlight_text #ebcb8b; /* Nord13 (Yellow) */
+@define-color battery_text #a3be8c;   /* Nord14 (Green) */
+@define-color battery_warning #bf616a; /* Nord11 (Red) */
+
+@define-color clock_text #81a1c1;      /* Nord9 (Glacier Blue) */
+
+/* Notifications */
+@define-color notification_text #e5e9f0; /* Nord5 */
+@define-color notification_border #d8dee9; /* Nord15 (Purple) */
+
+/* Media */
+@define-color media_bg #3b4252;   /* Nord1 (Lighter Polar Night) */
+@define-color media_text #8fbcbb; /* Nord7 (Teal) */
+
+/* Profiles & Hardware Stats */
+@define-color power_profiles_text #d08770; /* Nord12 (Orange) */
+
+@define-color network_text #5e81ac; /* Nord10 (Deep Frost Blue) */
+@define-color cpu_text #bf616a;     /* Nord11 (Red) */
+@define-color memory_text #ebcb8b;  /* Nord13 (Yellow) */
+@define-color pulse_text #88c0d0;   /* Nord8 (Ice Blue) */
+
+/* Power Button */
+@define-color power_text #bf616a;   /* Nord11 (Red) */
