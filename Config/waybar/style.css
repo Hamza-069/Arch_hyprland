@@ -97,6 +97,7 @@ button {
   color: white;
   border: 1px solid @tooltip_border;
   background: @power_text;
+  text-shadow: 0 0 4px white;
 }
 
 #clock {
@@ -105,7 +106,6 @@ button {
   margin-bottom: 2px;
   font-weight: bold;
   border: 1px solid @tooltip_border;
-  text-shadow: 0 0 6px @clock_text;
 
 }
 
@@ -120,6 +120,7 @@ button {
   margin-top: 1px;
   margin-bottom: 1px;
   border: 1px solid @notification_text;
+  text-shadow: 0 0 4px @notification_text;
 }
 
 #custom-media {
@@ -130,6 +131,8 @@ button {
   margin-bottom: 2px;
   color: @media_text;
   font-weight: bold;
+  text-shadow: 0 0 4px @media_text;
+
 }
 
 #power-profiles-daemon {

@@ -13,9 +13,9 @@ fi
 rm -rf ~/Downloads/arch_hyprland_backup/Config/*
 
 cp -a \
-  "$HOME/.config/fish" \
   "$HOME/.config/clipvault" \
   "$HOME/.config/fastfetch" \
+  "$HOME/.config/fish" \
   "$HOME/.config/hypr" \
   "$HOME/.config/kitty" \
   "$HOME/.config/nvim" \
@@ -38,7 +38,7 @@ read -rp "Commit and push these changes? [y/N] " answer
 
 if [[ "$answer" =~ ^[Yy]$ ]]; then
   if ! git diff --cached --quiet; then
-    git commit -m "Update dotfiles: $(date '+%Y-%m-%d %H:%M')"
+    git commit -m "Update dotfiles: $(date '+%Y-%m-%d %I:%M')"
     git pull --rebase
     git push
   else
