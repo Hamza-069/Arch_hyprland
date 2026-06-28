@@ -38,6 +38,6 @@ map ctrl+v paste_from_clipboard
 
 
 # BEGIN_KITTY_THEME
-# Catppuccin-Mocha
+# One Dark
 include current-theme.conf
 # END_KITTY_THEME
