@@ -31,18 +31,6 @@ echo "Installing AUR packages..."
 echo
 yay -S --needed --noconfirm ttf-jetbrains-mono-nerd wlogout clipvault tree-sitter-cli
 
-echo "Running fish install..."
-echo
-find . -name "install_fish.sh" -execdir bash {} \;
-echo
 echo "reloading hyprland"
 hyprctl reload
-echo "reloading hyprland"
 hyprctl reload
-
-read -p "Reboot now? (y/N): " -n 1 -r
-echo
-
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-  sudo reboot
-fi
