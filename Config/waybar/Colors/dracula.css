@@ -1,0 +1,31 @@
+@define-color bg #1e1f29;
+@define-color tooltip_border #bd93f9;
+
+@define-color ws_text #ffffff;
+@define-color ws_active #bd93f9;
+@define-color ws_hover rgba(189, 147, 249, 0.15);
+@define-color ws_active_bg rgba(189, 147, 249, 0.18);
+@define-color ws_active_shadow rgba(189, 147, 249, 0.35);
+
+@define-color module_text #ffffff;
+
+@define-color backlight_text #f1fa8c;
+@define-color battery_text #50fa7b;
+@define-color battery_warning #ff5555;
+
+@define-color clock_text #8be9fd;
+
+@define-color notification_text #ffffff;
+@define-color notification_border #bd93f9;
+
+@define-color media_bg #282a36;
+@define-color media_text #ff79c6;
+
+@define-color power_profiles_text #f1fa8c;
+
+@define-color network_text #8be9fd;
+@define-color cpu_text #ff5555;
+@define-color memory_text #bd93f9;
+@define-color pulse_text #ff79c6;
+
+@define-color power_text #ff5555;
