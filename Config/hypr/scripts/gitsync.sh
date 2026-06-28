@@ -27,8 +27,6 @@ cp -a \
 
 cd "$REPO"
 
-git add .
-
 echo
 echo "=== Git Status ==="
 git status
@@ -37,7 +35,8 @@ echo
 read -rp "Commit and push these changes? [y/N] " answer
 
 if [[ "$answer" =~ ^[Yy]$ ]]; then
-  if ! git diff --cached --quiet; then
+  if [ -n "$(git status --porcelain)" ]; then
+    git add .
     git commit -m "Update dotfiles: $(date '+%Y-%m-%d %I:%M')"
     git pull --rebase
     git push
