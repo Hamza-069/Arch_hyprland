@@ -9,19 +9,21 @@ ROFI_SHARED=(
   "$HOME/.config/rofi/applets/shared/colors.rasi"
   "$HOME/.config/rofi/powermenu/type-2/shared/colors.rasi"
 )
+WALLPAPER_DIR="$HOME/.config/hypr/theme-wallpapers"
 
 icon=$'⏎'
 
-# Theme definitions: rofi_key="Display|waybar_css|hypr_active|kitten_name"
+# Theme definitions: rofi_key="Display|waybar_css|hypr_active|kitten_name|wallpaper"
 declare -A THEMES
-THEMES["nord"]="${icon} Nord|nord.css|5e81ac|Nord"
-THEMES["tokyonight"]="${icon} Tokyo Night|tokyo-night.css|bb9af7|Tokyo\ Night\ Storm"
-THEMES["catppuccin"]="${icon} Catppuccin|catppuccin.css|dda0dd|Catppuccin-Mocha"
-THEMES["gruvbox"]="${icon} Gruvbox|gruvbox.css|83a598|Gruvbox\ Dark\ Soft"
-THEMES["dracula"]="${icon} Dracula|dracula.css|bd93f9|Dracula"
-THEMES["everforest"]="${icon} Everforest|everforest.css|7fbbb3|Everforest\ Dark\ Medium"
-THEMES["onedark"]="${icon} One Dark|onedark.css|61afef|One Dark"
-THEMES["solarized"]="${icon} Solarized|solarized.css|268bd2|Solarized Dark"
+THEMES["nord"]="${icon} Nord|nord.css|5e81ac|Nord|${WALLPAPER_DIR}/nord.png"
+THEMES["tokyonight"]="${icon} Tokyo Night|tokyo-night.css|f7768e|Tokyo\ Night\ Storm|${WALLPAPER_DIR}/tokyonight.png"
+THEMES["catppuccin"]="${icon} Catppuccin|catppuccin.css|dda0dd|Catppuccin-Mocha|${WALLPAPER_DIR}/catppuccin.png"
+THEMES["rosepine"]="${icon} Rosé Pine|rosepine.css|c4a7e7|Rosé Pine|${WALLPAPER_DIR}/rosepine.png"
+THEMES["gruvbox"]="${icon} Gruvbox|gruvbox.css|83a598|Gruvbox\ Dark\ Soft|${WALLPAPER_DIR}/gruvbox.png"
+THEMES["dracula"]="${icon} Dracula|dracula.css|bd93f9|Dracula|${WALLPAPER_DIR}/dracula.png"
+THEMES["everforest"]="${icon} Everforest|everforest.css|7fbbb3|Everforest\ Dark\ Medium|${WALLPAPER_DIR}/everforest.png"
+THEMES["onedark"]="${icon} One Dark|onedark.css|61afef|One Dark|${WALLPAPER_DIR}/onedark.png"
+THEMES["solarized"]="${icon} Solarized|solarized.css|268bd2|Solarized Dark|${WALLPAPER_DIR}/solarized.png"
 
 # Build menu from rofi colors that have a matching waybar file
 names=()
@@ -41,7 +43,7 @@ selected=$(printf "%s\n" "${names[@]}" | rofi -dmenu -p "Theme" -theme "$HOME/.c
 
 # Find and apply
 for key in "${!THEMES[@]}"; do
-  IFS='|' read -r display waybar_css active kitten_name <<<"${THEMES[$key]}"
+  IFS='|' read -r display waybar_css active kitten_name wallpaper <<<"${THEMES[$key]}"
   [[ "$display" != "$selected" ]] && continue
 
   # Waybar
@@ -60,6 +62,14 @@ for key in "${!THEMES[@]}"; do
 
   # Kitty
   kitten themes "$kitten_name" 2>/dev/null
+
+  # Wallpaper
+  if [[ -n "$wallpaper" && -f "$wallpaper" ]]; then
+    hyprctl hyprpaper unload all 2>/dev/null || true
+    hyprctl hyprpaper preload "$wallpaper" 2>/dev/null || true
+    hyprctl hyprpaper wallpaper "eDP-1,$wallpaper" 2>/dev/null || true
+    sed -i "s|path = .*|path = $wallpaper|" "$HOME/.config/hypr/hyprpaper.conf"
+  fi
 
   pkill waybar 2>/dev/null || true
   waybar &
