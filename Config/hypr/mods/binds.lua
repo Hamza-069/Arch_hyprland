@@ -17,18 +17,26 @@ local music = "LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify-launcher"
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("hyprctl kill"))
 hl.bind(mainMod .. " + w", hl.dsp.window.close())
+hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(
 	mainMod .. " + SHIFT + M",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + F", function()
+	hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+	hl.dispatch(hl.dsp.window.center({ window = "activewindow" }))
+	hl.dispatch(hl.dsp.window.resize({ x = "1340", y = "700" }))
+end)
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("sh -c 'pkill rofi || exec " .. menu .. "'"))
 hl.bind(mainMod .. " + P", function()
 	hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
 	hl.dispatch(hl.dsp.window.pin())
+	hl.dispatch(hl.dsp.window.resize({ x = "1240", y = "600" }))
+	hl.dispatch(hl.dsp.window.center({ window = "activewindow" }))
+	hl.dispatch(hl.dsp.window.set_prop({ prop = "opacity_inactive_override", value = "1" }))
 end)
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
@@ -37,6 +45,14 @@ hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+
+-- Move active window around current workspace
+hl.bind(mainMod .. " + SHIFT + Right", hl.dsp.window.move({ direction = "r" }))
+hl.bind(mainMod .. " + SHIFT + Left", hl.dsp.window.move({ direction = "l" }))
+hl.bind(mainMod .. " + SHIFT + Up", hl.dsp.window.move({ direction = "u" }))
+hl.bind(mainMod .. " + SHIFT + Down", hl.dsp.window.move({ direction = "d" }))
+hl.bind(mainMod .. " + CONTROL + SHIFT + Right", hl.dsp.window.move({ workspace = "r+1" }))
+hl.bind(mainMod .. " + CONTROL + SHIFT + Left", hl.dsp.window.move({ workspace = "r-1" }))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
