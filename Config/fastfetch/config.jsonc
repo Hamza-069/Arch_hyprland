@@ -11,6 +11,7 @@
     }
   },
   "display": {
+    "disableLinewrap": true,
     "temp": {
       "unit": "D"
     },
