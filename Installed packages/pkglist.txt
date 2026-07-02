@@ -1,5 +1,6 @@
 7zip
 adw-gtk-theme
+archlinux-xdg-menu
 base
 base-devel
 bat
@@ -17,6 +18,7 @@ dolphin
 dunst
 easyeffects
 efibootmgr
+exfatprogs
 eza
 fastfetch
 fd
@@ -25,6 +27,7 @@ fish
 fzf
 git
 gnome-keyring
+gptfdisk
 grim
 grub
 gst-plugin-pipewire
@@ -42,6 +45,7 @@ hyprpolkitagent
 hyprshot
 imagemagick
 impala
+imv
 intel-media-driver
 intel-ucode
 iwd
@@ -50,6 +54,8 @@ kde-cli-tools
 kio-admin
 kitty
 lazygit
+legacy-launcher
+libnewt
 libpulse
 libva-intel-driver
 linux
@@ -60,12 +66,15 @@ lua-language-server
 lua51
 luarocks
 ly
+mda.lv2
 nano
 ncdu
 neovim
 noto-fonts-cjk
 noto-fonts-emoji
 noto-fonts-extra
+npm
+ntfs-3g
 nwg-look
 opencode
 openssh
@@ -83,6 +92,7 @@ qt6-wayland
 qt6ct
 resvg
 rofi
+sl
 slurp
 smartmontools
 sof-firmware
@@ -105,7 +115,6 @@ tuned
 tuned-ppd
 uwsm
 vim
-vscodium-bin
 vulkan-intel
 waybar
 wev

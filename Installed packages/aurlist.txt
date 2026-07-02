@@ -1,4 +1,5 @@
 clipvault
+legacy-launcher
 localsend
 localsend-debug
 wlogout

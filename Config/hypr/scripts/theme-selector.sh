@@ -59,6 +59,7 @@ for key in "${!THEMES[@]}"; do
 
   # Hyprland
   sed -i "s/active_border = \"rgb([^)]*)\"/active_border = \"rgb($active)\"/" "$HYPR_MODS/Look_n_Feel.lua"
+  sed -i "s/inactive_border = \"rgb([^)]*)\"/inactive_border = \"rgb(595959)\"/" "$HYPR_MODS/Look_n_Feel.lua"
 
   # Kitty
   kitten themes "$kitten_name" 2>/dev/null
