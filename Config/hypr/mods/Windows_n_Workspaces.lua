@@ -60,11 +60,17 @@ hl.window_rule({
 	size = "1115 615",
 	center = true,
 })
--- hl.window_rule({
--- 	name = "pinned",
--- 	match = { pin = true },
--- 	opacity = "1.0 override",
--- })
+
+--This is for Picture-in-Picture
+hl.window_rule({
+	name = "Picture-in-Picture",
+	match = { class = "^firefox$", title = "Picture-in-Picture" },
+	float = true,
+	size = "340 192", -- screensize/4
+	pin = true,
+	opacity = "1.0 override",
+	move = "4 35",
+})
 
 hl.window_rule({
 	name = "fix-xwayland-drags",

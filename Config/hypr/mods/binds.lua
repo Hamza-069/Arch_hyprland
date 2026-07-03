@@ -67,7 +67,7 @@ end
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(editor))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(music))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("playerctl play-pause"))
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("playerctl play-pause -p spotify"))
 --Clipboard
 hl.bind(
 	mainMod .. " + V",
