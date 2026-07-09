@@ -73,6 +73,15 @@ hl.window_rule({
 })
 
 hl.window_rule({
+	name = "Firefox-sign",
+	match = { class = "^firefox$", title = "Sign in - Google Accounts — Mozilla Firefox" },
+	float = true,
+	size = "485 60",
+	center = true,
+	opacity = "1.0 override",
+})
+
+hl.window_rule({
 	name = "fix-xwayland-drags",
 	match = {
 		class = "^$",

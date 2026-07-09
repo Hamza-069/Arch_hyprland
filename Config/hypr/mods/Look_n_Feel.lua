@@ -11,7 +11,7 @@ hl.config({
 		border_size = 2,
 
 		col = {
-			active_border = "rgb(268bd2)",
+			active_border = "rgb(61afef)",
 			inactive_border = "rgb(595959)",
 		},
 
@@ -33,9 +33,6 @@ hl.config({
 
 		shadow = {
 			enabled = false,
-			range = 4,
-			render_power = 3,
-			color = 0xee1a1a1a,
 		},
 
 		blur = {

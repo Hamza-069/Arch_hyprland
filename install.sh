@@ -14,7 +14,7 @@ sudo pacman -S --needed gnome-keyring rofi swaync nwg-look pavucontrol blueman \
   breeze breeze-icons qt6ct brightnessctl easyeffects \
   git base-devel hyprpaper hyprlock hypridle hyprpolkitagent python-pip polkit-kde-agent \
   spotify-launcher python pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2 gvfs-smb hyprshot hyprpicker neovim \
-  lsp-plugins lazygit luarocks lua51 plasma-workspace kde-cli-tools btop eza imv
+  lsp-plugins lazygit luarocks lua51 plasma-workspace kde-cli-tools btop eza imv tesseract tesseract-data-eng grim slurp tesseract-data-swe
 
 echo
 echo "Installing yay (AUR helper)..."

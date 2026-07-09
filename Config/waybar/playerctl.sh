@@ -58,7 +58,7 @@ while true; do
 
   if [ ${#text} -le $max ]; then
     echo "$icon $text"
-    sleep 0.3
+    sleep 0.1
     continue
   fi
 

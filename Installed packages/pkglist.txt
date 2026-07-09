@@ -22,7 +22,6 @@ exfatprogs
 eza
 fastfetch
 fd
-firefox
 fish
 fzf
 git
@@ -53,6 +52,8 @@ jq
 kde-cli-tools
 kio-admin
 kitty
+kvantum
+kvantum-qt5
 lazygit
 legacy-launcher
 libnewt
@@ -100,6 +101,9 @@ spotify-launcher
 sudo
 swaync
 sxiv
+tesseract
+tesseract-data-eng
+tesseract-data-swe
 tree-sitter-cli
 ttf-dejavu
 ttf-fira-code
@@ -113,10 +117,11 @@ ttf-profont-nerd
 ttf-sourcecodepro-nerd
 tuned
 tuned-ppd
+usbmon
 uwsm
 vim
 vulkan-intel
-waybar
+waybar-git
 wev
 wget
 wireless_tools
@@ -130,5 +135,6 @@ xorg-xinit
 yay
 yay-debug
 yazi
+zen-browser-bin
 zoxide
 zram-generator

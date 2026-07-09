@@ -7,7 +7,7 @@ local terminal = "kitty"
 local fileManager = "kitty -e yazi"
 local menu = "~/.config/rofi/launchers/type-1/launcher.sh"
 local editor = "kitty -e nvim"
-local browser = "firefox"
+local browser = "zen-browser"
 local music = "LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify-launcher"
 
 ---------------------
@@ -68,6 +68,8 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(editor))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(music))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("playerctl play-pause -p spotify"))
+hl.bind("CONTROL + XF86FullScreen", hl.dsp.exec_cmd("~/.config/hypr/scripts/text-extractor.sh"))
+
 --Clipboard
 hl.bind(
 	mainMod .. " + V",

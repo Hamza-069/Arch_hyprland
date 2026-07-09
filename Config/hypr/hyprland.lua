@@ -13,5 +13,3 @@ require("mods.Look_n_Feel")
 require("mods.Misc")
 require("mods.Monitors")
 require("mods.Windows_n_Workspaces")
-
-
