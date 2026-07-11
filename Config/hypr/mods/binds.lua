@@ -34,7 +34,7 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("sh -c 'pkill rofi || exec " .. menu 
 hl.bind(mainMod .. " + P", function()
 	hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
 	hl.dispatch(hl.dsp.window.pin())
-	hl.dispatch(hl.dsp.window.resize({ x = "1240", y = "600" }))
+	hl.dispatch(hl.dsp.window.resize({ x = "830", y = "480" }))
 	hl.dispatch(hl.dsp.window.center({ window = "activewindow" }))
 	hl.dispatch(hl.dsp.window.set_prop({ prop = "opacity_inactive_override", value = "1" }))
 end)

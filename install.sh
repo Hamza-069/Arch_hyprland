@@ -31,6 +31,12 @@ echo "Installing AUR packages..."
 echo
 yay -S --needed --noconfirm ttf-jetbrains-mono-nerd wlogout clipvault tree-sitter-cli
 
+cd /tmp/
+git clone https://github.com/abba23/spotify-adblock.git
+cd spotify-adblock
+make
+cd ~
+
 echo "reloading hyprland"
 hyprctl reload
 hyprctl reload
