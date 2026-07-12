@@ -4,7 +4,6 @@ pkill waybar
 waybar &
 pkill hyprpaper
 hyprpaper &
-hypridle &
 
 sleep 1
 if pgrep waybar >/dev/null && pgrep hyprpaper >/dev/null; then

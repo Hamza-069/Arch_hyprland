@@ -52,7 +52,14 @@ hl.window_rule({
 hl.window_rule({ name = "float-sxiv", match = { class = "^Sxiv$" }, float = true, center = true })
 hl.window_rule({ name = "float-Savefile", match = { title = "^Save File$" }, float = true, center = true })
 hl.window_rule({ name = "float-blueman-manager", match = { class = "^blueman-manager$" }, float = true, center = true })
-hl.window_rule({ name = "float-pavucontrol", match = { class = "^org\\.pulseaudio\\.pavucontrol$" }, float = true })
+hl.window_rule({
+	name = "float-pavucontrol",
+	match = { class = "^org\\.pulseaudio\\.pavucontrol$" },
+	float = true,
+	center = true,
+	size = "600 380",
+	opacity = "1.0 override",
+})
 hl.window_rule({
 	name = "float-spotify",
 	match = { class = "^Spotify$" },
