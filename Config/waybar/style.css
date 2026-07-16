@@ -1,4 +1,4 @@
-@import "Colors/tokyo-night.css";
+@import "Colors/rosepine.css";
 
 * {
   font-family: JetbrainsMono Nerd Font Propo;
@@ -45,7 +45,7 @@ button {
 #workspaces button.active {
   color: @ws_active;
   background: @ws_active_bg;
-  box-shadow: 0 0 8px @ws_active_shadow;
+  box-shadow: 0 0 5px @ws_active_shadow;
 }
 
 #workspaces button:hover {

@@ -42,13 +42,13 @@ hl.gesture({
 	disable_inhibit = true,
 })
 
-hl.gesture({
-	fingers = 3,
-	direction = "up",
-	action = function()
-		hl.exec_cmd("swaync-client -t -sw")
-	end,
-})
+-- hl.gesture({
+-- 	fingers = 3,
+-- 	direction = "up",
+-- 	action = function()
+-- 		hl.exec_cmd("swaync-client -t -sw")
+-- 	end,
+-- })
 
 -- hl.gesture({
 -- 	fingers = 4,

@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-REPO="$HOME/Downloads/arch_hyprland_backup"
+REPO="$HOME/Downloads/arch_hyprland"
 CONFIG="$REPO/Config"
 
 if [ ! -d "$REPO/.git" ]; then
@@ -10,7 +10,7 @@ if [ ! -d "$REPO/.git" ]; then
   exit 1
 fi
 
-rm -rf ~/Downloads/arch_hyprland_backup/Config/*
+rm -rf ~/Downloads/arch_hyprland/Config/*
 
 cp -a \
   "$HOME/.config/clipvault" \

@@ -20,8 +20,6 @@ THEMES["tokyonight"]="${icon} Tokyo Night|tokyo-night.css|f7768e|Tokyo\ Night\ S
 THEMES["catppuccin"]="${icon} Catppuccin|catppuccin.css|dda0dd|Catppuccin-Mocha|${WALLPAPER_DIR}/catppuccin.png"
 THEMES["rosepine"]="${icon} Rosé Pine|rosepine.css|c4a7e7|Rosé Pine|${WALLPAPER_DIR}/rosepine.png"
 THEMES["gruvbox"]="${icon} Gruvbox|gruvbox.css|83a598|Gruvbox\ Dark\ Soft|${WALLPAPER_DIR}/gruvbox.png"
-THEMES["dracula"]="${icon} Dracula|dracula.css|bd93f9|Dracula|${WALLPAPER_DIR}/dracula.png"
-THEMES["everforest"]="${icon} Everforest|everforest.css|7fbbb3|Everforest\ Dark\ Medium|${WALLPAPER_DIR}/everforest.png"
 THEMES["onedark"]="${icon} One Dark|onedark.css|61afef|One Dark|${WALLPAPER_DIR}/onedark.png"
 THEMES["solarized"]="${icon} Solarized|solarized.css|268bd2|Solarized Dark|${WALLPAPER_DIR}/solarized.png"
 

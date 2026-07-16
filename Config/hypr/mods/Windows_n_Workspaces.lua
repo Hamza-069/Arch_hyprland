@@ -71,9 +71,9 @@ hl.window_rule({
 --This is for Picture-in-Picture
 hl.window_rule({
 	name = "Picture-in-Picture",
-	match = { class = "^firefox$", title = "Picture-in-Picture" },
+	match = { title = "Picture-in-Picture" },
 	float = true,
-	size = "340 192", -- screensize/4
+	size = "510 288", -- screensize/4
 	pin = true,
 	opacity = "1.0 override",
 	move = "4 35",
