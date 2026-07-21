@@ -48,7 +48,7 @@ hl.window_rule({
 	float = true,
 })
 
---Make some app FLOAST
+--Make some app FLOAT
 hl.window_rule({ name = "float-sxiv", match = { class = "^Sxiv$" }, float = true, center = true })
 hl.window_rule({ name = "float-Savefile", match = { title = "^Save File$" }, float = true, center = true })
 hl.window_rule({ name = "float-blueman-manager", match = { class = "^blueman-manager$" }, float = true, center = true })
