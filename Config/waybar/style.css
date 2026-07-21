@@ -1,4 +1,4 @@
-@import "Colors/rosepine.css";
+@import "Colors/tokyo-night.css";
 
 * {
   font-family: JetbrainsMono Nerd Font Propo;
@@ -8,18 +8,16 @@
   margin: 0px 1px;
 }
 
+
 #waybar {
   background: transparent;
   margin: 0px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 10px;
 }
 
 tooltip {
   background-color: @bg;
-  border: 1px solid @tooltip_border;
-  border-radius: 5px;
-  margin: 0px;
+  border: 2px solid @tooltip_border;
 }
 
 button {
@@ -31,8 +29,8 @@ button {
 #window {
   border-radius: 5px;
   background: @bg;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 #workspaces button {
@@ -66,21 +64,21 @@ button {
   background: @bg;
   border-radius: 5px;
   padding: 0.4rem 0.8rem;
-  margin-bottom: 2px;
-  margin-top: 2px;
+  margin-bottom: 1px;
+  margin-top: 1px;
   color: @module_text;
 }
 
 #backlight {
   color: @backlight_text;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 #battery {
   color: @battery_text;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 #battery.charging {
@@ -102,8 +100,8 @@ button {
 
 #clock {
   color: @clock_text;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
   font-weight: bold;
   border: 1px solid @tooltip_border;
 
@@ -111,8 +109,8 @@ button {
 
 #custom-notification {
   color: @notification_text;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 #custom-notification.notification {
@@ -127,8 +125,8 @@ button {
   background-color: @media_bg;
   padding: 0 8px;
   margin: 5px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
   color: @media_text;
   font-weight: bold;
   text-shadow: 0 0 4px @media_text;
@@ -137,8 +135,6 @@ button {
 
 #power-profiles-daemon {
   color: @power_profiles_text;
-  margin-top: 2px;
-  margin-bottom: 2px;
 }
 
 #network {
@@ -155,13 +151,11 @@ button {
 
 #pulseaudio {
   color: @pulse_text;
-  margin-top: 2px;
-  margin-bottom: 2px;
 }
 
 #custom-power {
   background-color: @bg;
-  margin-top: 2px;
-  margin-bottom: 2px;
   color: @power_text;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }

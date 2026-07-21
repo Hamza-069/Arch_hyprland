@@ -68,6 +68,7 @@
   "memory": {
     "interval": 1,
     "format": " {used:0.01f}G",
+    "on-click": "kitty -e btop",
   },
   "backlight": {
     "interval": 1,
