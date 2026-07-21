@@ -14,8 +14,9 @@ sudo pacman -S --needed gnome-keyring rofi swaync nwg-look pavucontrol blueman \
   breeze breeze-icons qt6ct brightnessctl easyeffects \
   git base-devel hyprpaper hyprlock hypridle hyprpolkitagent python-pip polkit-kde-agent \
   spotify-launcher python pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2 gvfs-smb hyprshot hyprpicker neovim \
-  lsp-plugins lazygit luarocks lua51 plasma-workspace kde-cli-tools btop eza imv tesseract tesseract-data-eng grim slurp tesseract-data-swe \
-  rofi-emoji wtype
+  lsp-plugins lazygit luarocks lua51 plasma-workspace kde-cli-tools btop eza imv tesseract \
+  tesseract-data-eng grim slurp tesseract-data-swe rofi-emoji wtype 
+  
 echo
 echo "Installing yay (AUR helper)..."
 echo
@@ -29,7 +30,7 @@ fi
 echo
 echo "Installing AUR packages..."
 echo
-yay -S --needed --noconfirm ttf-jetbrains-mono-nerd wlogout clipvault tree-sitter-cli
+yay -S --needed --noconfirm ttf-jetbrains-mono-nerd wlogout clipvault tree-sitter-cli apple-fonts
 
 cd /tmp/
 git clone https://github.com/abba23/spotify-adblock.git
@@ -39,4 +40,4 @@ cd ~
 
 echo "reloading hyprland"
 hyprctl reload
-hyprctl reload
+
