@@ -44,5 +44,5 @@ if [[ "$answer" =~ ^[Yy]$ ]]; then
     echo "No changes to commit."
   fi
 else
-  echo "Aborted."
+  echo "exited."
 fi
