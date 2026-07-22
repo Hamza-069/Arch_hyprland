@@ -66,6 +66,7 @@ hl.window_rule({
 	float = true,
 	size = "1115 615",
 	center = true,
+	opacity = "1.0 override",
 })
 
 --This is for Picture-in-Picture
@@ -73,15 +74,15 @@ hl.window_rule({
 	name = "Picture-in-Picture",
 	match = { title = "Picture-in-Picture" },
 	float = true,
-	size = "510 288", -- screensize/4
+	size = "monitor_w / 2.5, monitor_h / 2.5", -- screensize/2.5
 	pin = true,
 	opacity = "1.0 override",
 	move = "4 35",
 })
 
 hl.window_rule({
-	name = "Firefox-sign",
-	match = { class = "^firefox$", title = "Sign in - Google Accounts — Mozilla Firefox" },
+	name = "browser-sign",
+	match = { title = "Sign in - Google Accounts — Zen Browser" },
 	float = true,
 	size = "485 60",
 	center = true,

@@ -115,16 +115,18 @@ hl.bind(
 	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
 	{ locked = true, repeating = true }
 )
+
 hl.bind(
 	mainMod .. " + XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 1%+"),
-	{ locked = true, repeating = true }
+	hl.dsp.exec_cmd("playerctl -p spotify next"),
+	{ locked = true, repeating = false }
 )
 hl.bind(
 	mainMod .. " + XF86AudioLowerVolume",
-	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"),
-	{ locked = true, repeating = true }
+	hl.dsp.exec_cmd("playerctl -p spotify previous"),
+	{ locked = true, repeating = false }
 )
+
 hl.bind(
 	"XF86AudioMute",
 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
