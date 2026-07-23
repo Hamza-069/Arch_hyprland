@@ -1,6 +1,7 @@
 7zip
 adw-gtk-theme
 archlinux-xdg-menu
+astroterm
 base
 base-devel
 bat
@@ -11,7 +12,9 @@ bluez-utils
 breeze
 brightnessctl
 btop
+cava
 chafa
+cliphist
 clipvault
 cmatrix
 dolphin
@@ -24,6 +27,7 @@ fastfetch
 fd
 fish
 fzf
+gifski
 git
 gnome-keyring
 gptfdisk
@@ -47,6 +51,7 @@ impala
 imv
 intel-media-driver
 intel-ucode
+iw
 iwd
 jq
 kde-cli-tools
@@ -88,11 +93,15 @@ plasma-workspace
 polkit-kde-agent
 pyright
 python-pip
+qrc
 qt5-wayland
 qt6-wayland
 qt6ct
+quickshell
 resvg
 rofi
+rofi-emoji
+rofimoji
 sl
 slurp
 smartmontools
@@ -103,6 +112,7 @@ swaync
 sxiv
 tesseract
 tesseract-data-eng
+tesseract-data-hin
 tesseract-data-swe
 tree-sitter-cli
 ttf-dejavu
@@ -117,6 +127,7 @@ ttf-profont-nerd
 ttf-sourcecodepro-nerd
 tuned
 tuned-ppd
+unicode-emoji
 usbmon
 uwsm
 vim
@@ -126,14 +137,14 @@ wev
 wget
 wireless_tools
 wireplumber
-wlogout
 wofi
+wtype
 xdg-desktop-portal-hyprland
 xdg-utils
+xdotool
 xorg-server
 xorg-xinit
 yay
-yay-debug
 yazi
 zen-browser-bin
 zoxide

@@ -2,11 +2,11 @@ clipvault
 legacy-launcher
 localsend
 localsend-debug
+qrc
 usbmon
 usbmon-debug
 waybar-git
 waybar-git-debug
-wlogout
 wlogout-debug
 yay
 yay-debug
