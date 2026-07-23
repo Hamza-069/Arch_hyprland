@@ -19,7 +19,7 @@ OFFICIAL_PACKAGES=(
 )
 
 AUR_PACKAGES=(
-  ttf-jetbrains-mono-nerd clipvault tree-sitter-cli qrc
+  ttf-jetbrains-mono-nerd clipvault tree-sitter-cli qrc waybar-git
 )
 
 BOLD="\033[1m"
