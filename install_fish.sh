@@ -1,9 +1,10 @@
 #!/bin/bash
 
 if pacman -Q fish &>/dev/null; then
-    echo "Fish is already installed"
+  echo "Fish is already installed"
 else
-    sudo pacman -S fish
+  sudo pacman -S fish --noconfirm
 fi
 
 chsh -s /usr/bin/fish
+echo "Reboot."

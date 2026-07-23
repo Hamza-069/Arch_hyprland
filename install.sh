@@ -15,7 +15,7 @@ OFFICIAL_PACKAGES=(
   git base-devel hyprpaper hyprlock hypridle hyprpolkitagent python-pip polkit-kde-agent
   spotify-launcher python pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2 gvfs-smb hyprshot hyprpicker neovim
   lsp-plugins lazygit luarocks lua51 plasma-workspace kde-cli-tools btop eza imv tesseract
-  tesseract-data-eng grim slurp tesseract-data-swe rofi-emoji wtype
+  tesseract-data-eng grim slurp tesseract-data-swe rofi-emoji wtype fastfetch bat
 )
 
 AUR_PACKAGES=(
