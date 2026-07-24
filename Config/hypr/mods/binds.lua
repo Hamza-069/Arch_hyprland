@@ -28,6 +28,7 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + F", function()
 	hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
 	hl.dispatch(hl.dsp.window.center({ window = "activewindow" }))
+	hl.dispatch(hl.dsp.window.set_prop({ prop = "opacity_inactive_override", value = "1" }))
 end)
 
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("sh -c 'pkill rofi || exec " .. menu .. "'"))

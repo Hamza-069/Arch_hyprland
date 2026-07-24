@@ -151,15 +151,58 @@ yun() {
         xargs -r yay -Rns
 }
 
+# Load Zsh datetime module
+zmodload zsh/datetime
 
+# Store command start time
+preexec() {
+    cmd_start=$EPOCHREALTIME
+}
 
-# Prompt
-setopt prompt_subst
-
+# Build prompt
 precmd() {
-    if [[ $? -eq 0 ]]; then
-        PROMPT='%B%F{blue}%~%f%b %F{green}>%f '
-    else
-        PROMPT='%B%F{blue}%~%f%b %B%F{red}>%f%b '
+    local exit_code=$?
+
+    # Calculate elapsed time
+    local elapsed="0.00"
+
+    if [[ -n "$cmd_start" ]]; then
+        elapsed=$(awk -v start="$cmd_start" -v end="$EPOCHREALTIME" \
+            'BEGIN { printf "%.2f", end - start }')
     fi
+
+    # Shortened path
+    local path="${PWD/#$HOME/~}"
+    local -a parts
+    local short_path=""
+
+    if [[ "$path" == "~" ]]; then
+        short_path="~"
+    else
+        parts=("${(@s:/:)path}")
+
+        for part in "${parts[@]}"; do
+            [[ -z "$part" ]] && continue
+
+            if [[ "$part" == "~" ]]; then
+                short_path="~"
+            else
+                short_path+="/${part[1]}"
+            fi
+        done
+
+        short_path="${short_path%/${parts[-1][1]}}/${parts[-1]}"
+    fi
+
+    # Left side
+    if (( exit_code == 0 )); then
+        PROMPT="%B%F{blue}${short_path}%f%b %F{green}>%f "
+    else
+        PROMPT="%B%F{blue}${short_path}%f%b %B%F{red}>%f%b "
+    fi
+
+    # Right side
+    RPROMPT="%B%F{blue}${elapsed}s%f%b  %B%F{red}%D{%I:%M}%f%b"
+    # Reset
+    cmd_start=""
 }
