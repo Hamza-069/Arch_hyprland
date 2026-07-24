@@ -23,6 +23,7 @@ cp -a \
   "$HOME/.config/swaync" \
   "$HOME/.config/waybar" \
   "$HOME/.config/yazi" \
+  "$HOME/.config/zsh/" \
   "$CONFIG"
 
 cd "$REPO"

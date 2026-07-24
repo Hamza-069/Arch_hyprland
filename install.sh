@@ -9,17 +9,20 @@ OFFICIAL_PACKAGES=(
   gnome-keyring rofi swaync nwg-look pavucontrol blueman
   ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-mono
   ttf-jetbrains-mono ttf-dejavu noto-fonts-emoji noto-fonts-cjk noto-fonts-extra
-  ttf-fira-code ttf-sourcecodepro-nerd
-  adw-gtk-theme ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick
-  breeze breeze-icons qt6ct brightnessctl easyeffects
-  git base-devel hyprpaper hyprlock hypridle hyprpolkitagent python-pip polkit-kde-agent
-  spotify-launcher python pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2 gvfs-smb hyprshot hyprpicker neovim
-  lsp-plugins lazygit luarocks lua51 plasma-workspace kde-cli-tools btop eza imv tesseract
-  tesseract-data-eng grim slurp tesseract-data-swe rofi-emoji wtype fastfetch bat
+  ttf-fira-code ttf-sourcecodepro-nerd adw-gtk-theme ffmpeg 7zip jq poppler
+  fd ripgrep fzf zoxide resvg imagemagick breeze breeze-icons qt6ct
+  brightnessctl easyeffects git base-devel hyprpaper hyprlock hypridle
+  hyprpolkitagent python-pip polkit-kde-agent spotify-launcher python
+  pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2
+  gvfs-smb hyprshot hyprpicker neovim lsp-plugins lazygit luarocks lua51
+  plasma-workspace kde-cli-tools btop eza imv tesseract tesseract-data-eng
+  grim slurp tesseract-data-swe rofi-emoji wtype fastfetch bat bluetui
+  cmatrix calf mda.lv2 zam-plugins-lv2 x42-plugins-lv2 kio-admin kvantum-qt5 rust
+
 )
 
 AUR_PACKAGES=(
-  ttf-jetbrains-mono-nerd clipvault tree-sitter-cli qrc waybar-git
+  ttf-jetbrains-mono-nerd clipvault tree-sitter-cli qrc waybar-git localsend
 )
 
 BOLD="\033[1m"
@@ -90,12 +93,23 @@ run_step "${YELLOW}Installing yay (AUR helper)${RESET}" bash -c '
 run_step "${YELLOW}Installing AUR packages${RESET}" yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
 
 run_step "${YELLOW}Building spotify-adblock${RESET}" bash -c '
-  cd /tmp/
+  cd ~
   git clone https://github.com/abba23/spotify-adblock.git
   cd spotify-adblock
   make
-  cd ~
+  cd ..
+  rm -rf spotify-adblock/
 '
+sudo sed -i \
+  -e 's/^#\?HandlePowerKey=.*/HandlePowerKey=ignore/' \
+  -e 's/^#\?HandlePowerKeyLongPress=.*/HandlePowerKeyLongPress=poweroff/' \
+  /etc/systemd/logind.conf
+
+grep -q '^HandlePowerKey=' /etc/systemd/logind.conf ||
+  echo 'HandlePowerKey=ignore' | sudo tee -a /etc/systemd/logind.conf >/dev/null
+
+grep -q '^HandlePowerKeyLongPress=' /etc/systemd/logind.conf ||
+  echo 'HandlePowerKeyLongPress=poweroff' | sudo tee -a /etc/systemd/logind.conf >/dev/null
 
 echo
 echo -e "Reloading Hyprland..."
