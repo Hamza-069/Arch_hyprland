@@ -12,3 +12,17 @@ prepend_rules = [
   { mime = "text/*", use = "edit" },
   { mime = "image/*", use = "image" },
 ]
+
+[preview]
+wrap = "yes"
+tab_size = 2
+max_width = 2000
+max_height = 2000
+cache_dir = ""
+
+[mgr]
+ratio = [1, 2, 3]
+
+prepend_keymap = [
+    { on = "<Enter>", run = "plugin --sync smart-enter", desc = "Smart open" },
+]

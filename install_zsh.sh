@@ -8,7 +8,7 @@ fi
 
 echo 'source "$HOME/.config/zsh/.zshrc"' >~/.zshrc
 
-mv ~/Downloads/arch_hyprland/Config/zsh/ ~/.config/zsh/.zshrc
+mv ~/Downloads/arch_hyprland/Config/zsh/* ~/.config/zsh/.zshrc
 
 chsh -s /bin/zsh
 echo "Reboot."
