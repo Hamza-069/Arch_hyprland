@@ -177,27 +177,28 @@ My customized Rofi launcher:
 
 
 
-⌨️ Shortcuts
+## ⌨️ Shortcuts
 
 Here are some of the main keyboard shortcuts configured in my Hyprland setup:
 
-Shortcut	Action
-SUPER + Q	Open terminal
-SUPER + W	Close active window
-SUPER + E	Open file manager
-SUPER + R	Open application launcher
-SUPER + V	Toggle floating mode
-SUPER + F	Toggle fullscreen
-SUPER + M	Exit Hyprland
-SUPER + L	Lock screen
-SUPER + 1–9	Switch workspace
-SUPER + SHIFT + 1–9	Move window to workspace
-SUPER + Arrow Keys	Move focus
-SUPER + SHIFT + Arrow Keys	Move window
-SUPER + Mouse Drag	Move / resize windows
+| Shortcut                     | Action                    |
+| ---------------------------- | ------------------------- |
+| `SUPER + Q`                  | Open terminal             |
+| `SUPER + W`                  | Close active window       |
+| `SUPER + E`                  | Open file manager         |
+| `SUPER + R`                  | Open application launcher |
+| `SUPER + V`                  | Toggle floating mode      |
+| `SUPER + F`                  | Toggle fullscreen         |
+| `SUPER + M`                  | Exit Hyprland             |
+| `SUPER + L`                  | Lock screen               |
+| `SUPER + 1–9`                | Switch workspace          |
+| `SUPER + SHIFT + 1–9`        | Move window to workspace  |
+| `SUPER + Arrow Keys`         | Move focus                |
+| `SUPER + SHIFT + Arrow Keys` | Move window               |
+| `SUPER + Mouse Drag`         | Move / resize windows     |
 
-Note: Shortcuts may change as the configuration evolves. Check the Hyprland configuration files in Config/hypr for the latest keybindings.
-  
+> **Note:** Shortcuts may change as the configuration evolves. Check the Hyprland configuration files in [`Config/hypr`](https://github.com/Hamza-069/Arch_hyprland/tree/main/Config/hypr) for the latest keybindings.
+
   
 ---
 ## 🛠️ Customization
