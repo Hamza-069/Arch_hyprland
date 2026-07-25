@@ -29,7 +29,7 @@ Save a backup for your configs for
 ├──  waybar
 ├──  yazi
 └──  zsh
-``
+```
 
 ### 3. Apply the configuration
 
