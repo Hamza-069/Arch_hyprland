@@ -170,6 +170,12 @@ My customized Rofi launcher:
 
 ---
 
+
+## Powermenu (Rofi)
+
+<img width="978" height="334" alt="image" src="https://github.com/user-attachments/assets/39d9b660-76d1-46dc-924e-d5ea36e70dc1" />
+
+
 ## 🛠️ Customization
 
 Feel free to take inspiration from anything in this repository.
