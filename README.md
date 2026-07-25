@@ -111,8 +111,11 @@ Config/
 
 Your setup doesn't need to look exactly like mine — take what you like and make it your own.
 
-Made with AI
 ## Feedback
 
 Suggestions/improvements 
 [welcome](https://github.com/Hamza-069/Arch_hyprland/issues)!
+
+
+
+<p align="center"> Made with ❤️ and way too much time spent tweaking configs. </p>
