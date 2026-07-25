@@ -13,10 +13,11 @@ if status is-interactive
 
     # Custom prompt
     function fish_prompt
+        set -l last_status $status
         set_color --bold blue
         echo -n (prompt_pwd) ""
 
-        if test $status -ne 0
+        if test $last_status -ne 0
             set_color --bold red
             echo -n "> "
         else
