@@ -197,7 +197,7 @@ Here are some of the main keyboard shortcuts configured in my Hyprland setup:
 | `SUPER + SHIFT + Arrow Keys` | Move window               |
 | `SUPER + Mouse Drag`         | Move / resize windows     |
 
-> **Note:** Shortcuts may change as the configuration evolves. Check the Hyprland configuration files in [`Config/hypr`](https://github.com/Hamza-069/Arch_hyprland/tree/main/Config/hypr/mods/binds.lua) for the latest keybindings.
+> **Note:** Shortcuts may change as the configuration evolves. Check the Hyprland configuration files in [`Config/hypr/mods/binds`](https://github.com/Hamza-069/Arch_hyprland/tree/main/Config/hypr/mods/binds.lua) for the latest keybindings.
 
   
 ---
