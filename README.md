@@ -3,7 +3,7 @@
 Suggestions/improvements 
 [welcome](https://github.com/Hamza-069/Arch_hyprland/issues)!
 
-**<ins>Don't</ins> run the _.install.sh_**
+## **<ins>Don't</ins> run the _.install.sh_**
 
 You can copy my config
 
