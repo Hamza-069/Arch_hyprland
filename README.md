@@ -1,15 +1,64 @@
 
-## Feedback
-
-Suggestions/improvements 
-[welcome](https://github.com/Hamza-069/Arch_hyprland/issues)!
-## **<ins>Don't</ins> run the _.install.sh_**
+##  🟥 <ins> Don't</ins> run the _.install.sh_
 
 You can copy my config
-## Install 
+## 🚀 Installation
 
-    git clone https://github.com/Hamza-069/Arch_hyprland.git
+### 1. Clone the repository
 
+```
+git clone https://github.com/Hamza-069/Arch_hyprland.git
+cd Arch_hyprland
+```
+
+### 2. ⚠️ Review the configuration
+
+Before copying anything, inspect the files and adjust paths, usernames, hardware-specific settings, and applications to match your system.
+
+### 3. Apply the configuration
+
+Copy the configuration files you need from the `Config` directory into your `~/.config` directory.
+
+```
+cp -r Config/* ~/.config/
+```
+
+**Do not blindly copy everything.** Some files may depend on packages or hardware that are specific to my setup.
+
+----------
+
+## 🐚 Shell Setup
+
+This repository includes separate setup scripts for different shells:
+
+```
+./install_zsh.sh
+```
+
+or:
+
+```
+./install_fish.sh
+```
+
+Review the scripts before running them and make sure you understand what they change.
+
+----------
+
+## ⚠️ Important
+
+This repository is **not a universal Arch Linux installer**.
+
+These dotfiles are tailored to my personal system and may contain:
+
+-   Hardware-specific settings
+-   Personal paths
+-   Package dependencies
+-   Wayland-specific configuration
+-   Hyprland-specific settings
+-   Scripts that expect certain applications to be installed
+
+**Always review the configuration before applying it to your system.**
 
 .
 
@@ -26,7 +75,28 @@ Waybar:
 
 Media player (for waybar):
 <img width="1280" height="269" alt="mediaplayer" src="https://github.com/user-attachments/assets/1b0dc46c-9c5a-4616-b715-a79003a9931c" />
-*(It is a bit **slow** for the GIF)*
+*(It is a bit **slow** for the GIF)*	
 
+	 
+## 🛠️ Customization
 
-Made with AI 
+Feel free to take inspiration from anything here.
+
+You can copy individual configurations instead of using the entire setup:
+
+```
+Config/
+├── hypr/
+├── waybar/
+├── kitty/
+├── yazi/
+└── ...
+```
+
+Your setup doesn't need to look exactly like mine — take what you like and make it your own.
+
+Made with AI
+## Feedback
+
+Suggestions/improvements 
+[welcome](https://github.com/Hamza-069/Arch_hyprland/issues)!
