@@ -51,7 +51,7 @@ The main configurations included in this repository are:
 For example:
 
 ```bash
-cp -r ~/.config/hypr ~/.config/hypr.backup
+cp -r ~/.config/waybar ~/.config/waybar.backup
 ```
 
 Do the same for any other configuration you plan to replace.
@@ -73,6 +73,13 @@ Or, if you know that the entire configuration is compatible with your system:
 ```bash
 cp -r Config/* ~/.config/
 ```
+
+
+A simple script is included to reload Waybar and Hyprpaper:
+```bash
+/Arch_hyprland/Config/hypr/scripts/reload.sh
+```
+
 
 > **⚠️ Do not blindly copy everything.** Some configurations may depend on packages, hardware, or paths specific to my system.
 
