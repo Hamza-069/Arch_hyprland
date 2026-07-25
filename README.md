@@ -184,7 +184,7 @@ If you find something that could be improved, feel free to [open an issue](https
 
 ## 🙏 Credits
 
-* **Rofi configuration:** [Aditya Shakya (adi1090x)](https://github.com/adi1090x) — thank you for the inspiration and work!
+* **Rofi configuration:** [Aditya Shakya (adi1090x)](https://github.com/adi1090x/rofi) — thank you for the inspiration and work!
 
 
 <p align="center">
