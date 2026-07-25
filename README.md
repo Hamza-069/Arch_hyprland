@@ -187,8 +187,8 @@ Here are some of the main keyboard shortcuts configured in my Hyprland setup:
 | `SUPER + W`                  | Close active window       |
 | `SUPER + E`                  | Open file manager         |
 | `SUPER + R`                  | Open application launcher |
-| `SUPER + V`                  | Toggle floating mode      |
-| `SUPER + F`                  | Toggle fullscreen         |
+| `SUPER + F`                  | Toggle floating mode      |
+| `SUPER + Fullscreen`                  | Toggle fullscreen         |
 | `SUPER + M`                  | Exit Hyprland             |
 | `SUPER + L`                  | Lock screen               |
 | `SUPER + 1–9`                | Switch workspace          |
