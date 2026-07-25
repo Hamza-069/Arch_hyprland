@@ -1,5 +1,15 @@
 ## 🟥 <ins>Don't</ins> Run `install.sh`
 
+## 📑 Table of Contents
+
+- [Installation](#-installation)
+- [Shell Setup](#-shell-setup)
+- [Showcase](#-showcase)
+- [Customization](#️-customization)
+- [Credits](#-credits)
+- [Feedback](#-feedback)
+
+---
 > ⚠️ **Do not run `install.sh` unless you have reviewed the script and understand what it does.**
 
 These are my personal dotfiles, and the installation script is **not intended to be a universal Arch Linux installer**.
