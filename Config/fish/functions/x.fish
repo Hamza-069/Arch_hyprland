@@ -1,3 +1,3 @@
-function x --wraps='camtriz -u 6' --wraps='cmatrix -u 6' --description 'alias x=cmatrix -u 6'
+function x --wraps='cmatrix -u 6' --description 'matrix screensaver'
     cmatrix -u 6 $argv
 end

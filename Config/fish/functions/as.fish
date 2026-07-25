@@ -1,3 +1,3 @@
-function as --wraps=fastfetch --description 'alias as=fastfetch'
+function as --wraps=fastfetch --description 'system info'
     fastfetch $argv
 end

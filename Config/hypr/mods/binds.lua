@@ -9,6 +9,7 @@ local menu = "~/.config/rofi/launchers/type-1/launcher.sh"
 local editor = "kitty -e nvim"
 local browser = "zen-browser"
 local music = "LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify-launcher"
+local colorpicker = "kcolorchooser --print | wl-copy "
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -92,6 +93,7 @@ hl.bind("CTRL + XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m window --output-folde
 
 --hyprpicker
 hl.bind(mainMod .. " + XF86FullScreen", hl.dsp.exec_cmd("hyprpicker -u 65 -s 9 -a -b -l -n"))
+hl.bind(mainMod .. " + SHIFT + XF86FullScreen", hl.dsp.exec_cmd(colorpicker))
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))

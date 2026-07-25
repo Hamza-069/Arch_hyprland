@@ -28,7 +28,7 @@ if status is-interactive
         set_color normal
     end
     function fish_right_prompt
-        set_color --bold blue
+        set_color blue
         if test $CMD_DURATION -gt 0
             set -l ms $CMD_DURATION
             set -l mins (math --scale=0 "$ms / 60000")

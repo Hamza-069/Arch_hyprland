@@ -88,6 +88,11 @@ hl.window_rule({
 	center = true,
 	opacity = "1.0 override",
 })
+hl.window_rule({
+	match = { class = "^org\\.kde\\.kcolorchooser$", title = "Select Color — KColorChooser" },
+	move = "813 33",
+	opacity = "1.0 override",
+})
 
 hl.window_rule({
 	name = "fix-xwayland-drags",

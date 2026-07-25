@@ -1,3 +1,3 @@
-function q --wraps=exit --description 'alias q=exit'
+function q --wraps=exit --description 'exit shell'
     exit $argv
 end

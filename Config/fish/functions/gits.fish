@@ -1,3 +1,3 @@
-function gits --wraps=/home/ham/.config/hypr/scripts/gitsync.sh --description 'alias gits /home/ham/.config/hypr/scripts/gitsync.sh'
+function gits --wraps=/home/ham/.config/hypr/scripts/gitsync.sh --description 'git sync'
     /home/ham/.config/hypr/scripts/gitsync.sh $argv
 end
