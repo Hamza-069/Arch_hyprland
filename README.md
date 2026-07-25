@@ -17,18 +17,18 @@ Before copying anything, inspect the files and adjust paths, usernames, hardware
 
 Save a backup for your configs for 
 ```
-├──  Config
-├──  clipvault
-├──  fastfetch
-├──  fish
-├──  hypr
-├──  kitty
-├──  nvim
-├──  rofi
-├──  swaync
-├──  waybar
-├──  yazi
-└──  zsh
+├──  Config
+├──  clipvault
+├──  fastfetch
+├──  fish
+├──  hypr
+├──  kitty
+├──  nvim
+├──  rofi
+├──  swaync
+├──  waybar
+├──  yazi
+└──  zsh
 ``
 
 ### 3. Apply the configuration
