@@ -129,11 +129,27 @@ I'm still working on the README, but here are some parts of my setup.
 
 ## 🎵 Media Player
 
-A custom media player integrated into Waybar:
+A custom media player integrated directly into Waybar:
 
 <img width="1280" height="269" alt="Media Player" src="https://github.com/user-attachments/assets/1b0dc46c-9c5a-4616-b715-a79003a9931c" />
 
 > *The GIF preview may appear a little slow on GitHub.*
+
+---
+
+## 🚀 Fastfetch
+
+My customized Fastfetch setup:
+
+<img width="754" height="394" alt="Fastfetch" src="https://github.com/user-attachments/assets/0018d127-0cf4-42e8-a388-41b69302ec68" />
+
+---
+
+## 🔎 Rofi
+
+My customized Rofi launcher:
+
+<img width="605" height="369" alt="Rofi" src="https://github.com/user-attachments/assets/accb27d3-08af-434d-8334-cdc41c4347ed" />
 
 ---
 
