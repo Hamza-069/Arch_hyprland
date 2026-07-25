@@ -182,7 +182,7 @@ My customized Rofi launcher:
 Here are some of the main keyboard shortcuts configured in my Hyprland setup:
 
 Shortcut	Action
-SUPER + Q	Open terminal
+```SUPER + Q	```Open terminal
 SUPER + W	Close active window
 SUPER + E	Open file manager
 SUPER + R	Open application launcher
