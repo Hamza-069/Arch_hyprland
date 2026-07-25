@@ -16,4 +16,4 @@ Waybar:
 
 Media player (for waybar):
 <img width="1280" height="269" alt="mediaplayer" src="https://github.com/user-attachments/assets/1b0dc46c-9c5a-4616-b715-a79003a9931c" />
-
+*(It is a bit **slow** for the GIF)*
