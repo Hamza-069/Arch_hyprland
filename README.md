@@ -15,6 +15,22 @@ cd Arch_hyprland
 
 Before copying anything, inspect the files and adjust paths, usernames, hardware-specific settings, and applications to match your system.
 
+Save a backup for your configs for 
+```
+├──  Config
+├──  clipvault
+├──  fastfetch
+├──  fish
+├──  hypr
+├──  kitty
+├──  nvim
+├──  rofi
+├──  swaync
+├──  waybar
+├──  yazi
+└──  zsh
+``
+
 ### 3. Apply the configuration
 
 Copy the configuration files you need from the `Config` directory into your `~/.config` directory.
