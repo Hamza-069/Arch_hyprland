@@ -1,3 +1,7 @@
+## Feedback
+
+Suggestions/improvements 
+[welcome](https://github.com/Hamza-069/Arch_hyprland/issues)!
 
 **<ins>Don't</ins> run the _.install.sh_**
 
@@ -17,3 +21,6 @@ Waybar:
 Media player (for waybar):
 <img width="1280" height="269" alt="mediaplayer" src="https://github.com/user-attachments/assets/1b0dc46c-9c5a-4616-b715-a79003a9931c" />
 *(It is a bit **slow** for the GIF)*
+
+
+Made with AI 
