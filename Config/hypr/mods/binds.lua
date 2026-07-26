@@ -9,7 +9,7 @@ local menu = "~/.config/rofi/launchers/type-1/launcher.sh"
 local editor = "kitty -e nvim"
 local browser = "zen-browser"
 local music = "LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify-launcher"
-local colorpicker = "kcolorchooser --print | wl-copy "
+local colorpicker = "kcolorchooser --color $(hyprpicker -u 60 -c) | wl-copy "
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -70,7 +70,7 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(editor))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(music))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("playerctl play-pause -p spotify"))
-hl.bind("CONTROL + XF86FullScreen", hl.dsp.exec_cmd("~/.config/hypr/scripts/text-extractor.sh"))
+hl.bind("CONTROL + XF86FullScreen", hl.dsp.exec_cmd("~/.config/hypr/scripts/ocr_accurate.sh"))
 
 --Clipboard
 hl.bind(
@@ -82,7 +82,7 @@ hl.bind(
 
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/theme-selector.sh"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("~/.config/hypr/scripts/reload.sh | hyprctl reload"))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("~/.config/hypr/scripts/spotify_hlock.sh && sleep 0.2 && hyprlock"))
 hl.bind("XF86FullScreen", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind("XF86Poweroff", hl.dsp.exec_cmd("~/.config/rofi/powermenu/type-2/powermenu.sh"))
 

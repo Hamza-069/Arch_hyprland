@@ -33,6 +33,9 @@
   "tray": {
     "icon-size": 15,
     "spacing": 2,
+    "icons": {
+        "easyeffects": "com.github.wwmm.easyeffects-symbolic",
+    }
   },
   "clock": {
     "timezone": "Europe/Stockholm",

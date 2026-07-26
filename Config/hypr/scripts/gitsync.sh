@@ -24,6 +24,7 @@ cp -a \
   "$HOME/.config/waybar" \
   "$HOME/.config/yazi" \
   "$HOME/.config/zsh/" \
+  "$HOME/.config/mpv" \
   "$CONFIG"
 
 cd "$REPO"
