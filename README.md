@@ -1,4 +1,4 @@
-## 🟥 <ins>Don't</ins> Run `install.sh`
+## :x: <ins>Don't</ins> Run `install.sh`
 
 ## 📑 Table of Contents
 
