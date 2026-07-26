@@ -189,7 +189,7 @@ My customized Hyprlock:
 ⚠️ Check this Script before use:
 
 ```bash
-Config/hypr/scripts/theme-selector.sh
+./Config/hypr/scripts/theme-selector.sh
 ```
 
 
