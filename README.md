@@ -175,6 +175,11 @@ My customized Rofi launcher:
 
 <img width="978" height="334" alt="image" src="https://github.com/user-attachments/assets/39d9b660-76d1-46dc-924e-d5ea36e70dc1" />
 
+## Hyprlock
+
+My customized Hyprlock:
+
+<img width="598" height="400" alt="image" src="https://github.com/user-attachments/assets/f0103005-1dd1-4aa0-83b7-d81582483f00" />
 
 
 ## ⌨️ Shortcuts
