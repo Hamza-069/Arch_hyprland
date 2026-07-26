@@ -40,9 +40,9 @@ if [[ "$answer" =~ ^[Yy]$ ]]; then
   if [ -n "$(git status --porcelain)" ]; then
     git add .
     git commit -m "Update dotfiles: $(date '+%Y-%m-%d %I:%M')"
-    echo "      ========== git pull ==========    "
+    echo "==================== git pull ===================="
     git pull --rebase
-    echo "      ========== git push ==========    "
+    echo "==================== git push ===================="
     git push
   else
     echo "No changes to commit."
