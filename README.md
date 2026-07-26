@@ -181,6 +181,17 @@ My customized Hyprlock:
 
 <img width="598" height="400" alt="image" src="https://github.com/user-attachments/assets/f0103005-1dd1-4aa0-83b7-d81582483f00" />
 
+## Theme-Selector
+
+<img width="612" height="369" alt="image" src="https://github.com/user-attachments/assets/d5cc78e6-a8fc-4824-b8ee-546a182d09c5" />
+  
+  
+⚠️ Check this Script before use:
+
+```bash
+Config/hypr/scripts/theme-selector.sh
+```
+
 
 ## ⌨️ Shortcuts
 
