@@ -23,7 +23,7 @@ enable_audio_bell no
 copy_on_select yes
 
 #Run a cmd on launch
-#shell fish -lc 'fastfetch; exec fish'
+shell fish -lc 'fastfetch; exec fish'
 
 # Performance
 repaint_delay 10
@@ -35,9 +35,14 @@ sync_to_monitor no
 map ctrl+shift+c copy_to_clipboard
 map ctrl+v paste_from_clipboard
 
+# Enable the tab bar
+tab_bar_style powerline
+tab_bar_edge bottom
+
+tab_bar_min_tabs 1
 
 
 # BEGIN_KITTY_THEME
-# Tokyo Night Storm
+# Gruvbox Dark Soft
 include current-theme.conf
 # END_KITTY_THEME

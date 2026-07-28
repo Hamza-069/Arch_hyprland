@@ -3,7 +3,9 @@
   "position": "top",
   "modules-left": [
     "hyprland/workspaces",
-    "custom/media"
+    "custom/media",
+    "image#album-art",
+    "custom/image"
   ],
   "modules-center": [
     "clock",
@@ -171,4 +173,16 @@
     "on-click-middle": "playerctl previous",
     "max-length": 25,
   },
+  "image#album-art": {
+    "path": "/tmp/spotify_cover.jpg",
+    "size": 30,
+    "interval": 1,
+    "on-click": "~/.config/hypr/scripts/spotify_hlock.sh"
+  },
+  "custom/image":{
+    "format": "",
+    "exec": "~/.config/hypr/scripts/spotify_hlock.sh",
+    "interval": 1,
+    "return-type": "json",
+  }
 }

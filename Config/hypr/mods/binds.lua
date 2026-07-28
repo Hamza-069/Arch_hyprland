@@ -7,7 +7,7 @@ local terminal = "kitty"
 local fileManager = "kitty -e yazi"
 local menu = "~/.config/rofi/launchers/type-1/launcher.sh"
 local editor = "kitty -e nvim"
-local browser = "zen-browser"
+local browser = "vivaldi"
 local music = "LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify-launcher"
 local colorpicker = "kcolorchooser --color $(hyprpicker -u 60 -c) | wl-copy "
 

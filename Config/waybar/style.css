@@ -1,4 +1,4 @@
-@import "Colors/rosepine.css";
+@import "Colors/nord.css";
 
 * {
   font-family: JetbrainsMono Nerd Font Propo;
@@ -124,7 +124,6 @@ button {
 #custom-media {
   background-color: @media_bg;
   padding: 0 8px;
-  margin: 5px;
   margin-top: 1px;
   margin-bottom: 1px;
   color: @media_text;

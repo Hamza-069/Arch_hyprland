@@ -49,17 +49,20 @@ hl.window_rule({
 })
 
 --Make some app FLOAT
-hl.window_rule({ name = "float-sxiv", match = { class = "^Sxiv$" }, float = true, center = true })
-hl.window_rule({ name = "float-Savefile", match = { title = "^Save File$" }, float = true, center = true })
-hl.window_rule({ name = "float-blueman-manager", match = { class = "^blueman-manager$" }, float = true, center = true })
+hl.window_rule({ match = { class = "^Sxiv$" }, float = true, center = true })
+hl.window_rule({ match = { title = "^Save File$" }, float = true, center = true })
+hl.window_rule({ match = { class = "^blueman-manager$" }, float = true, center = true })
+hl.window_rule({ match = { class = "^org\\.freedesktop\\.impl\\.portal\\.desktop\\.kde$" }, opacity = "1.0 override" })
+
 hl.window_rule({
 	name = "float-pavucontrol",
 	match = { class = "^org\\.pulseaudio\\.pavucontrol$" },
 	float = true,
 	center = true,
-	size = "600 380",
+	size = "600 400",
 	opacity = "1.0 override",
 })
+
 hl.window_rule({
 	name = "float-spotify",
 	match = { class = "^Spotify$" },
