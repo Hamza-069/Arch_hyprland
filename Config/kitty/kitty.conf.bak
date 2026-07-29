@@ -43,6 +43,6 @@ tab_bar_min_tabs 1
 
 
 # BEGIN_KITTY_THEME
-# Gruvbox Dark Soft
+# One Dark
 include current-theme.conf
 # END_KITTY_THEME
