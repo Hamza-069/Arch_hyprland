@@ -41,8 +41,8 @@ if [[ "$answer" =~ ^[Yy]$ ]]; then
     git add .
     read -rp "Write a custom commit message? [y/N] " custom_msg
     if [[ "$custom_msg" =~ ^[Yy]$ ]]; then
-      read -rp "Enter commit message: " msg
-      git commit -m "$msg"
+      read -rp "Enter commit message: " msg || true
+      git commit -m "${msg:-Update dotfiles: $(date '+%Y-%m-%d %I:%M')}"
     else
       git commit -m "Update dotfiles: $(date '+%Y-%m-%d %I:%M')"
     fi
