@@ -43,6 +43,6 @@ tab_bar_min_tabs 1
 
 
 # BEGIN_KITTY_THEME
-# One Dark
+# Tokyo Night Storm
 include current-theme.conf
 # END_KITTY_THEME

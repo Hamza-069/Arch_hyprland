@@ -41,11 +41,20 @@
   },
   "clock": {
     "timezone": "Europe/Stockholm",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:%d/%m - %I:%M:%S}",
     "interval": 1,
-
-  },
+    "format": "{:%d/%m • %I:%M:%S}",
+    "tooltip-format": "<big><b>{:%A,%d/%m}</b></big>\n\n<tt>{calendar}</tt>",
+    "calendar": {
+        "weeks-pos": "left",
+        "format": {
+            "today": "<span color='#ff4040'><b><u>{}</u></b></span>",
+            "weeks": "<span color='#99ffdd'><b>W.{}</b></span>",
+            "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+            "months":     "<span><b>{}</b></span>",
+		      	"days":       "<span><b>{}</b></span>",
+        }
+    }
+},
   "network": {
     "format-wifi": "󰤢 {bandwidthDownBits}",
     "format-ethernet": "󰈀 {bandwidthDownBits}",

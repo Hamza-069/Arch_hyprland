@@ -39,7 +39,13 @@ read -rp "Commit and push these changes? [y/N] " answer
 if [[ "$answer" =~ ^[Yy]$ ]]; then
   if [ -n "$(git status --porcelain)" ]; then
     git add .
-    git commit -m "Update dotfiles: $(date '+%Y-%m-%d %I:%M')"
+    read -rp "Write a custom commit message? [y/N] " custom_msg
+    if [[ "$custom_msg" =~ ^[Yy]$ ]]; then
+      read -rp "Enter commit message: " msg
+      git commit -m "$msg"
+    else
+      git commit -m "Update dotfiles: $(date '+%Y-%m-%d %I:%M')"
+    fi
     echo
     echo "==================== git pull ===================="
     git pull --rebase

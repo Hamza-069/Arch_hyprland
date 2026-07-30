@@ -18,11 +18,11 @@ OFFICIAL_PACKAGES=(
   plasma-workspace kde-cli-tools btop eza imv tesseract tesseract-data-eng
   grim slurp tesseract-data-swe rofi-emoji wtype fastfetch bat bluetui
   cmatrix calf mda.lv2 zam-plugins-lv2 x42-plugins-lv2 kio-admin kvantum-qt5 rust
-  kcolorchooser github-cli
+  kcolorchooser github-cli yazi mpv
 )
 
 AUR_PACKAGES=(
-  ttf-jetbrains-mono-nerd clipvault tree-sitter-cli qrc waybar-git 
+  ttf-jetbrains-mono-nerd clipvault tree-sitter-cli qrc waybar-git localsend-bin
 )
 
 BOLD="\033[1m"
@@ -97,6 +97,7 @@ run_step "${YELLOW}Building spotify-adblock${RESET}" bash -c '
   git clone https://github.com/abba23/spotify-adblock.git
   cd spotify-adblock
   make
+  sudo make install
   cd ..
   rm -rf spotify-adblock/
 '
@@ -110,6 +111,30 @@ grep -q '^HandlePowerKey=' /etc/systemd/logind.conf ||
 
 grep -q '^HandlePowerKeyLongPress=' /etc/systemd/logind.conf ||
   echo 'HandlePowerKeyLongPress=poweroff' | sudo tee -a /etc/systemd/logind.conf >/dev/null
+
+xdg-mime default nvim.desktop text/plain
+xdg-mime default nvim.desktop text/markdown
+xdg-mime default nvim.desktop text/x-c
+xdg-mime default nvim.desktop text/x-c++src
+xdg-mime default nvim.desktop text/x-python
+xdg-mime default nvim.desktop text/x-shellscript
+xdg-mime default nvim.desktop text/x-lua
+xdg-mime default nvim.desktop text/css
+xdg-mime default nvim.desktop text/html
+
+xdg-mime default nvim.desktop application/json
+xdg-mime default nvim.desktop application/xml
+
+xdg-mime default imv.desktop image/jpeg
+xdg-mime default imv.desktop image/png
+xdg-mime default imv.desktop image/gif
+xdg-mime default imv.desktop image/webp
+
+xdg-mime default mpv.desktop video/mp4
+xdg-mime default mpv.desktop video/x-matroska
+xdg-mime default mpv.desktop video/webm
+
+XDG_MENU_PREFIX=plasma- kbuildsycoca6
 
 echo
 echo -e "Reloading Hyprland..."
