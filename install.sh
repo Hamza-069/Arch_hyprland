@@ -16,13 +16,14 @@ OFFICIAL_PACKAGES=(
   pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2
   gvfs-smb hyprshot hyprpicker neovim lsp-plugins lazygit luarocks lua51
   plasma-workspace kde-cli-tools btop eza imv tesseract tesseract-data-eng
-  grim slurp tesseract-data-swe rofi-emoji wtype fastfetch bat bluetui
+  grim slurp rofi-emoji wtype fastfetch bat bluetui
   cmatrix calf mda.lv2 zam-plugins-lv2 x42-plugins-lv2 kio-admin kvantum-qt5 rust
   kcolorchooser github-cli yazi mpv
 )
 
 AUR_PACKAGES=(
   ttf-jetbrains-mono-nerd clipvault tree-sitter-cli qrc waybar-git localsend-bin
+  rofi-calc
 )
 
 BOLD="\033[1m"
