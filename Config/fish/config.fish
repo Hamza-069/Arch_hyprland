@@ -11,7 +11,7 @@ if status is-interactive
     set -g fish_cursor_replace_one block
     # fish_vi_key_bindings 
 
-    # Custom prompt
+    # Custom left prompt
     function fish_prompt
         set -l last_status $status
         set_color --bold blue
@@ -27,6 +27,7 @@ if status is-interactive
 
         set_color normal
     end
+    # Custom right prompt
     function fish_right_prompt
         set_color blue
         if test $CMD_DURATION -gt 0

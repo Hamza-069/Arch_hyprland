@@ -43,6 +43,6 @@ tab_bar_min_tabs 1
 
 
 # BEGIN_KITTY_THEME
-# Tokyo Night Storm
+# Rosé Pine
 include current-theme.conf
 # END_KITTY_THEME
