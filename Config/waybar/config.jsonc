@@ -43,8 +43,10 @@
     "timezone": "Europe/Stockholm",
     "interval": 1,
     "format": "{:%d/%m • %I:%M:%S}",
-    "tooltip-format": "<big><b>{:%A,%d/%m}</b></big>\n\n<tt>{calendar}</tt>",
+    "tooltip-format": "<big><b>{:%A, %d/%m-%y}</b></big>\n\n<tt>{calendar}</tt>",
     "calendar": {
+        "iso8601": true,
+        "mode": "month",
         "weeks-pos": "left",
         "format": {
             "today": "<span color='#ff4040'><b><u>{}</u></b></span>",
@@ -120,8 +122,8 @@
   "battery": {
     "interval": 3,
     "states": {
-      "warning": 30,
-      "critical": 10,
+      "warning": 35,
+      "critical": 15,
     },
     "tooltip": true,
     "tooltip-format": "{time}",
