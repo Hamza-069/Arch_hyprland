@@ -5,6 +5,9 @@ waybar &
 pkill hyprpaper
 hyprpaper &
 
+XDG_MENU_PREFIX=plasma- kbuildsycoca6
+fc-cache
+
 sleep 1
 if pgrep waybar >/dev/null && pgrep hyprpaper >/dev/null; then
   notify-send -i /usr/share/icons/breeze-dark/status/64/dialog-positive.svg "SYSTEM" "Successfully reloaded waybar and hyprpaper"
