@@ -81,6 +81,7 @@ hl.bind(
 )
 
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/theme-selector.sh"))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-selector.sh"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("~/.config/hypr/scripts/reload.sh | hyprctl reload"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("~/.config/hypr/scripts/spotify_hlock.sh && sleep 0.2 && hyprlock"))
 hl.bind("XF86FullScreen", hl.dsp.window.fullscreen({ action = "toggle" }))
