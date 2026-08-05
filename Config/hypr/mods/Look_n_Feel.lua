@@ -40,7 +40,7 @@ hl.config({
 			size = 5,
 			passes = 3,
 			noise = 0.01,
-			brightness = 0.82,
+			brightness = 0.8,
 			popups = true,
 		},
 	},
