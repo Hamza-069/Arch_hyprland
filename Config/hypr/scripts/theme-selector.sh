@@ -15,13 +15,13 @@ icon=$'⏎'
 
 # Theme definitions: rofi_key="Display|waybar_css|hypr_active|kitten_name|wallpaper"
 declare -A THEMES
-THEMES["nord"]="${icon} Nord|nord.css|5e81ac|Nord|${WALLPAPER_DIR}/nord.png"
+THEMES["nord"]="${icon} Nord|nord.css|5e81ac|Nord|${WALLPAPER_DIR}/nord.jpg"
 THEMES["tokyonight"]="${icon} Tokyo Night|tokyo-night.css|f7768e|Tokyo\ Night\ Storm|${WALLPAPER_DIR}/tokyonight.png"
-THEMES["catppuccin"]="${icon} Catppuccin|catppuccin.css|dda0dd|Catppuccin-Mocha|${WALLPAPER_DIR}/catppuccin.png"
+THEMES["catppuccin"]="${icon} Catppuccin|catppuccin.css|dda0dd|Catppuccin-Mocha|${WALLPAPER_DIR}/catppuccin.jpg"
 THEMES["rosepine"]="${icon} Rosé Pine|rosepine.css|c4a7e7|Rosé Pine|${WALLPAPER_DIR}/rosepine.png"
 THEMES["gruvbox"]="${icon} Gruvbox|gruvbox.css|83a598|Gruvbox\ Dark\ Soft|${WALLPAPER_DIR}/gruvbox.png"
 THEMES["onedark"]="${icon} One Dark|onedark.css|61afef|One Dark|${WALLPAPER_DIR}/onedark.png"
-THEMES["solarized"]="${icon} Solarized|solarized.css|268bd2|Solarized Dark|${WALLPAPER_DIR}/solarized.png"
+THEMES["solarized"]="${icon} Solarized|solarized.css|268bd2|Solarized Dark|${WALLPAPER_DIR}/solarized.jpg"
 
 # Build menu from rofi colors that have a matching waybar file
 names=()
