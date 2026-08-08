@@ -1,5 +1,5 @@
 function un --wraps=pacman --description 'uninstall pacman packages'
-    pacman -Qqe | fzf -i --multi --ansi --border \
+    pacman -Qq | fzf -i --multi --ansi --border \
         --prompt="󰮯 Remove > " \
         --preview-window="down,60%,wrap" \
         --preview 'bash -lc "pacman -Qi -- \"\$1\"" _ {}' \

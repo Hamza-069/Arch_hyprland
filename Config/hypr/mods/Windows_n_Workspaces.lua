@@ -97,6 +97,8 @@ hl.window_rule({
 	opacity = "1.0 override",
 })
 
+hl.window_rule({ match = { class = "^gimp$" }, opacity = "1.0 override" })
+
 hl.window_rule({
 	name = "fix-xwayland-drags",
 	match = {
