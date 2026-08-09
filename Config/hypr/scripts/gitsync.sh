@@ -47,10 +47,10 @@ if [[ "$answer" =~ ^[Yy]$ ]]; then
       git commit -m "Update dotfiles: $(date '+%Y-%m-%d %I:%M')"
     fi
     echo
-    echo "==================== git pull ===================="
+    echo "=== git pull ==="
     git pull --rebase
     echo
-    echo "==================== git push ===================="
+    echo "=== git push ==="
 
     git push
   else
