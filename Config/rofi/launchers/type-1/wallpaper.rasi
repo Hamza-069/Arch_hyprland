@@ -120,7 +120,7 @@ listview {
     lines:                       2;
     cycle:                       true;
     dynamic:                     true;
-    scrollbar:                   false;
+    scrollbar:                   true;
     flow:                        horizontal;
     reverse:                     false;
     fixed-height:                true;
