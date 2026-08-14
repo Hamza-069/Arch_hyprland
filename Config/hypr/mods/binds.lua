@@ -10,6 +10,7 @@ local editor = "kitty -e nvim"
 local browser = "firefox"
 local music = "LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify-launcher"
 local colorpicker = "kcolorchooser --color $(hyprpicker -u 60 -c) | wl-copy "
+local calc = "rofi -show calc -modi calc -no-show-match -no-sort -no-history -lines 0"
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -68,6 +69,7 @@ end
 --Custom
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(editor))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(calc))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(music))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("playerctl play-pause -p spotify"))
 hl.bind("CONTROL + XF86FullScreen", hl.dsp.exec_cmd("~/.config/hypr/scripts/ocr_accurate.sh"))

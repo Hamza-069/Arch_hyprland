@@ -18,7 +18,7 @@ OFFICIAL_PACKAGES=(
   plasma-workspace kde-cli-tools btop eza imv tesseract tesseract-data-eng
   grim slurp rofi-emoji wtype fastfetch bat bluetui
   cmatrix calf mda.lv2 zam-plugins-lv2 x42-plugins-lv2 kio-admin kvantum-qt5 rust
-  kcolorchooser github-cli yazi mpv
+  kcolorchooser github-cli yazi mpv gimp
 )
 
 AUR_PACKAGES=(

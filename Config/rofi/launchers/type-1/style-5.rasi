@@ -9,7 +9,7 @@
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun,emoji,calc";
+	modi:                       "drun,emoji";
     show-icons:                 true;
     display-drun:               "";
     display-run:                "";

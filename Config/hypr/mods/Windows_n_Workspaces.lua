@@ -67,7 +67,7 @@ hl.window_rule({
 	name = "float-spotify",
 	match = { class = "^Spotify$" },
 	float = true,
-	size = "1115 615",
+	size = "1115 600",
 	center = true,
 	opacity = "1.0 override",
 })
