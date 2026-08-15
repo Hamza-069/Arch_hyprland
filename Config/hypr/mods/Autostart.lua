@@ -9,6 +9,7 @@
 --
 hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar & hyprpaper & swaync")
+	hl.exec_cmd("python3 ~/sync-lyrics-v2.py --notify >/dev/null 2>&1 &")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("systemctl --user start hyprpolkitagent")
 	hl.exec_cmd("wl-paste --watch clipvault store")

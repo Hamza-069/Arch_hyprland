@@ -11,7 +11,7 @@ ROFI_SHARED=(
 )
 WALLPAPER_DIR="$HOME/.config/hypr/theme-wallpapers"
 
-icon=$'⏎'
+icon=$''
 
 # Theme definitions: rofi_key="Display|waybar_css|hypr_active|kitten_name|wallpaper"
 declare -A THEMES
