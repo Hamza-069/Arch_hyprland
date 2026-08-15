@@ -135,6 +135,8 @@ xdg-mime default mpv.desktop video/mp4
 xdg-mime default mpv.desktop video/x-matroska
 xdg-mime default mpv.desktop video/webm
 
+kwriteconfig6 --file kdeglobals --group General --key TerminalApplication kitty
+
 XDG_MENU_PREFIX=plasma- kbuildsycoca6
 
 echo

@@ -9,10 +9,12 @@
 --
 hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar & hyprpaper & swaync")
-	hl.exec_cmd("python3 ~/sync-lyrics-v2.py --notify >/dev/null 2>&1 &")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("systemctl --user start hyprpolkitagent")
+	-- clipvault
+	--
 	hl.exec_cmd("wl-paste --watch clipvault store")
+	hl.exec_cmd("wl-paste --primary --watch wl-copy")
 	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland")
 	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 	hl.exec_cmd("easyeffects -w")
