@@ -11,8 +11,6 @@
 
 #waybar {
   background: transparent;
-  margin: 0px;
-  margin-top: 10px;
 }
 
 tooltip {
@@ -29,14 +27,14 @@ button {
 #window {
   border-radius: 5px;
   background: @bg;
-  margin-top: 1px;
-  margin-bottom: 1px;
+  margin: 1px 0px;
+
 }
 
 #workspaces button {
   border-radius: 10px;
   color: @ws_text;
-  padding: 0.4rem;
+  padding: 0.1rem 0.2rem;
   transition: all 150ms ease;
 }
 
@@ -60,25 +58,21 @@ button {
 #network,
 #power-profiles-daemon,
 #pulseaudio,
+#custom-power,
 #tray {
   background: @bg;
   border-radius: 5px;
-  padding: 0.4rem 0.8rem;
-  margin-bottom: 1px;
-  margin-top: 1px;
+  padding: 0rem 0.4rem;
   color: @module_text;
+  margin: 1px;
 }
 
 #backlight {
   color: @backlight_text;
-  margin-top: 1px;
-  margin-bottom: 1px;
 }
 
 #battery {
   color: @battery_text;
-  margin-top: 1px;
-  margin-bottom: 1px;
 }
 
 #battery.charging {
@@ -100,8 +94,6 @@ button {
 
 #clock {
   color: @clock_text;
-  margin-top: 1px;
-  margin-bottom: 1px;
   font-weight: bold;
   border: 1px solid @tooltip_border;
 }
@@ -112,14 +104,10 @@ button {
 
 #custom-notification {
   color: @notification_text;
-  margin-top: 1px;
-  margin-bottom: 1px;
 }
 
 #custom-notification.notification {
   color: @notification_text;
-  margin-top: 1px;
-  margin-bottom: 1px;
   border: 1px solid @notification_text;
   text-shadow: 0 0 4px @notification_text;
 }
@@ -127,11 +115,10 @@ button {
 #custom-media {
   background-color: @media_bg;
   padding: 0 8px;
-  margin-top: 1px;
-  margin-bottom: 1px;
   color: @media_text;
   font-weight: bold;
   text-shadow: 0 0 4px @media_text;
+  margin: 1px 1px;
 
 }
 
@@ -158,6 +145,4 @@ button {
 #custom-power {
   background-color: @bg;
   color: @power_text;
-  margin-top: 1px;
-  margin-bottom: 1px;
 }

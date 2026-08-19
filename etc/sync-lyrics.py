@@ -1317,6 +1317,11 @@ def format_time(seconds):
 # =============================================================================
 
 def notify(title, body):
+    # swaync ignores notify-send replace ids (-r), so stale lyric
+    # notifications pile up. Clear the list first to keep a single
+    # live lyric notification. No-op if swaync-client is absent.
+    run(["swaync-client", "-C"])
+
     run(
         [
             "notify-send",

@@ -5,6 +5,7 @@
     "hyprland/workspaces",
     "custom/media",
     "image#album-art",
+    "custom/image"
   ],
   "modules-center": [
     "clock",
@@ -57,14 +58,14 @@
     }
 },
   "network": {
-    "format-wifi": "󰤢 {bandwidthDownBits}",
+    "format-wifi": "󰤢 {bandwidthTotalBits}",
     "format-ethernet": "󰈀 {bandwidthDownBits}",
     "format-disconnected": "󰤭 No Network",
     "on-click": "kitty -e impala",
     "interval": 1,
     "tooltip": true,
-    "min-length": 12,
-    "tooltip-format": "{essid} ({signalStrength}%)",
+    "min-length": 11,
+    "tooltip-format": "{essid} {frequency}: ({signalStrength}%) ",
   },
   "cpu": {
     "interval": 1,
@@ -154,7 +155,7 @@
   "custom/power": {
     "tooltip": false,
     "on-click": "~/.config/rofi/powermenu/type-2/powermenu.sh",
-    "format": " ⏻ ",
+    "format": "⏻",
   },
   "custom/notification": {
     "tooltip": true,
@@ -191,7 +192,7 @@
   },
   "image#album-art": {
     "path": "/tmp/spotify_cover.jpg",
-    "size": 30,
+    "size": 22,
     "interval": 1,
     "on-click": "~/.config/hypr/scripts/spotify_hlock.sh"
   },

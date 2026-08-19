@@ -17,7 +17,9 @@ sudo journalctl --rotate --vacuum-time=3d
 echo "Cleaning /tmp..."
 sudo find /tmp -mindepth 1 -atime +1 -delete 2>/dev/null || true
 
+echo "==="
 echo "$(pacman -Qtdq)"
+echo "==="
 
 notify-send "SYSTEM" "Cleanup Complete!!"
 echo "Cleanup complete!"

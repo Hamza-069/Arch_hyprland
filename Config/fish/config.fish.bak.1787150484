@@ -49,7 +49,3 @@ if status is-interactive
     end
 end
 export PATH="$HOME/.local/bin:$PATH"
-
-# >>> grok installer >>>
-fish_add_path $HOME/.grok/bin
-# <<< grok installer <<<
