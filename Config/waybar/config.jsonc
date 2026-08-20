@@ -127,7 +127,7 @@
     },
     "tooltip": true,
     "tooltip-format": "{time}",
-    "format": "{icon} {capacity: >3}%",
+    "format": "{icon}{capacity: >3}%",
     "format-charging": " {capacity}%",
     "format-plugged": " {capacity}%",
     "format-full": " {capacity}%",

@@ -892,6 +892,7 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
                 curses.init_pair(9,  238, -1)
                 curses.init_pair(10, 235, -1)
                 curses.init_pair(11, 233, -1)
+                curses.init_pair(12, curses.COLOR_CYAN, 235)
             except curses.error:
                 pass
 
@@ -967,7 +968,8 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
                         elif is_selected:
                             attr = curses.A_BOLD | curses.color_pair(5)
                         elif is_playing:
-                            attr = curses.A_BOLD | curses.A_UNDERLINE
+                            attr = (curses.A_BOLD | curses.A_UNDERLINE
+                                    | curses.color_pair(12))
                         else:
                             attr = line_color(dist)
                         stdscr.addstr(
@@ -1041,6 +1043,11 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
                     sel_idx = -1
             elif key == curses.KEY_RESIZE:
                 pass
+            if key != -1:
+                stdscr.timeout(0)
+                while stdscr.getch() != -1:
+                    pass
+                stdscr.timeout(150)
 
     try:
         curses.wrapper(draw)
