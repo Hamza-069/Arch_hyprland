@@ -17,11 +17,13 @@ import re
 import shutil
 import subprocess
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 from abc import ABC, abstractmethod
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from typing import Sequence
 
@@ -103,102 +105,347 @@ def parse_plain_lyrics(text: str, title: str = "", artist: str = "",
 
 
 # ──────────────────────────── transliteration ────────────────────────
+# Table-driven Indic → casual Latin. Each script occupies a 128-codepoint
+# block, so classification is an array index (ord(ch) - base) rather than
+# a chain of dict lookups. Schwa (inherent "a") is dropped at word end
+# and before a later syllable that already has an explicit matra.
 
-@dataclass
-class IndicMaps:
-    consonants: dict[str, str]
-    vowels: dict[str, str]
-    matras: dict[str, str]
-    signs: dict[str, str]
-    halant: str
-    consonant_chars: set[str] = field(default_factory=set)
-    multi_consonants: dict[str, str] = field(default_factory=dict)
-    vowel_signs: tuple[str, ...] = ()
-    script_range: tuple[str, str] = ("", "")
-    multi_consonants: dict[str, str] = field(default_factory=dict)
-    vowel_signs: tuple[str, ...] = ()
-    script_range: tuple[str, str] = ("", "")
+_OTHER, _CONS, _VOWEL, _MATRA, _NASAL, _SIGN, _HALANT, _ADDAK, _NUKTA = range(9)
+_SCRIPT_SIZE = 128
+_WORD_BREAK = frozenset(" \t\n\r.,!?;:'\"-—–…()[]{}।॥?/\\~`")
+_FORMAT_CHARS = frozenset("\u200c\u200d")  # ZWNJ, ZWJ
 
 
-def _next_is_vowel(text: str, pos: int, maps: IndicMaps) -> bool:
-    if pos >= len(text):
+@dataclass(slots=True)
+class _Script:
+    base: int
+    lo: str
+    hi: str
+    kinds: list[int]
+    vals: list[str]
+    nukta_vals: list[str]
+    yu_vowel: str
+    labials: str
+    gy: bool  # Devanagari ज्ञ → gy
+
+
+def _put(kinds: list[int], vals: list[str], base: int,
+         ch: str, kind: int, val: str) -> None:
+    idx = ord(ch) - base
+    if 0 <= idx < _SCRIPT_SIZE:
+        kinds[idx] = kind
+        vals[idx] = val
+
+
+def _make_script(
+    base: int,
+    consonants: dict[str, str],
+    vowels: dict[str, str],
+    matras: dict[str, str],
+    nasals: dict[str, str],
+    signs: dict[str, str],
+    halant: str,
+    nukta: str,
+    addak: str = "",
+    nukta_forms: dict[str, str] | None = None,
+    yu_vowel: str = "",
+    labials: str = "",
+    gy: bool = False,
+) -> _Script:
+    kinds = [_OTHER] * _SCRIPT_SIZE
+    vals = [""] * _SCRIPT_SIZE
+    nukta_vals = [""] * _SCRIPT_SIZE
+    for ch, val in consonants.items():
+        _put(kinds, vals, base, ch, _CONS, val)
+    for ch, val in vowels.items():
+        _put(kinds, vals, base, ch, _VOWEL, val)
+    for ch, val in matras.items():
+        _put(kinds, vals, base, ch, _MATRA, val)
+    for ch, val in nasals.items():
+        _put(kinds, vals, base, ch, _NASAL, val)
+    for ch, val in signs.items():
+        _put(kinds, vals, base, ch, _SIGN, val)
+    _put(kinds, vals, base, halant, _HALANT, "")
+    if nukta:
+        _put(kinds, vals, base, nukta, _NUKTA, "")
+    if addak:
+        _put(kinds, vals, base, addak, _ADDAK, "")
+    if nukta_forms:
+        for ch, val in nukta_forms.items():
+            idx = ord(ch) - base
+            if 0 <= idx < _SCRIPT_SIZE:
+                nukta_vals[idx] = val
+    return _Script(
+        base=base, lo=chr(base), hi=chr(base + _SCRIPT_SIZE - 1),
+        kinds=kinds, vals=vals, nukta_vals=nukta_vals,
+        yu_vowel=yu_vowel, labials=labials, gy=gy,
+    )
+
+
+def _cons_has_matra(text: str, pos: int, n: int,
+                    base: int, kinds: list[int]) -> bool:
+    """True if the consonant at pos is followed by a matra (after nukta)."""
+    pos += 1
+    if pos >= n:
         return False
-    ch = text[pos]
-    return (ch in maps.matras or ch in maps.vowels
-            or ch == maps.halant or ch in maps.vowel_signs)
+    idx = ord(text[pos]) - base
+    if not (0 <= idx < _SCRIPT_SIZE):
+        return False
+    k = kinds[idx]
+    if k == _NUKTA:
+        pos += 1
+        if pos >= n:
+            return False
+        idx = ord(text[pos]) - base
+        if not (0 <= idx < _SCRIPT_SIZE):
+            return False
+        k = kinds[idx]
+    return k == _MATRA
 
 
-def transliterate_indic(text: str, maps: IndicMaps) -> str:
-    lo, hi = maps.script_range
-    if not any(lo <= c <= hi for c in text):
-        return text
-    result: list[str] = []
+def _geminate(val: str) -> str:
+    if len(val) == 1:
+        return val + val
+    return val[0] + val  # kh → kkh, sh → ssh
+
+
+def transliterate_indic(text: str, script: _Script) -> str:
+    lo, hi = script.lo, script.hi
+    n = len(text)
+    # Fast reject: no characters in this script.
     i = 0
-    while i < len(text):
-        two = text[i:i + 2]
-        if two in maps.multi_consonants:
-            result.append(maps.multi_consonants[two])
-            nxt = i + 2
-            if not (nxt < len(text) and text[nxt] == maps.halant) \
-                    and not _next_is_vowel(text, nxt, maps):
-                result.append("a")
-            i += 2
-            continue
+    while i < n:
+        if lo <= text[i] <= hi:
+            break
+        i += 1
+    else:
+        return text
+
+    kinds = script.kinds
+    vals = script.vals
+    nukta_vals = script.nukta_vals
+    base = script.base
+    yu_vowel = script.yu_vowel
+    labials = script.labials
+    gy = script.gy
+    out: list[str] = []
+    # Copy the leading non-script prefix we already scanned.
+    if i:
+        out.append(text[:i])
+    seen_vowel = False
+
+    while i < n:
         ch = text[i]
-        if ch == maps.halant:
-            if i + 1 < len(text) and text[i + 1] in maps.consonant_chars:
-                result.append(maps.consonants[text[i + 1]])
-                i += 2
+        idx = ord(ch) - base
+        if idx < 0 or idx >= _SCRIPT_SIZE:
+            if ch in _FORMAT_CHARS:
+                i += 1
                 continue
+            if ch in _WORD_BREAK or ch.isspace():
+                seen_vowel = False
+            out.append(ch)
             i += 1
             continue
-        if ch in maps.consonant_chars:
-            result.append(maps.consonants[ch])
-            nxt = i + 1
-            if not (nxt < len(text) and text[nxt] == maps.halant) \
-                    and not _next_is_vowel(text, nxt, maps):
-                result.append("a")
+
+        kind = kinds[idx]
+        val = vals[idx]
+        geminate = False
+
+        if kind == _ADDAK:
+            i += 1
+            if i >= n:
+                continue
+            ch = text[i]
+            idx = ord(ch) - base
+            if not (0 <= idx < _SCRIPT_SIZE) or kinds[idx] != _CONS:
+                continue
+            kind = _CONS
+            val = vals[idx]
+            geminate = True
+
+        if kind == _CONS:
+            # ज्ञ (j + virama + nya) → gy
+            if gy and ch == "ज" and i + 2 < n and text[i + 1] == "्" \
+                    and text[i + 2] == "ञ":
+                val = "gy"
+                i += 3
+            else:
+                i += 1
+                if i < n:
+                    nidx = ord(text[i]) - base
+                    if 0 <= nidx < _SCRIPT_SIZE and kinds[nidx] == _NUKTA:
+                        alt = nukta_vals[idx]
+                        if alt:
+                            val = alt
+                        i += 1
+            if geminate:
+                val = _geminate(val)
+
+            nxt_kind = _OTHER
+            if i < n:
+                nidx = ord(text[i]) - base
+                if 0 <= nidx < _SCRIPT_SIZE:
+                    nxt_kind = kinds[nidx]
+
+            if nxt_kind == _HALANT:
+                out.append(val)
+                seen_vowel = True
+                continue
+            if nxt_kind == _MATRA:
+                out.append(val)
+                mval = vals[ord(text[i]) - base]
+                if mval == "i" and yu_vowel and i + 1 < n \
+                        and text[i + 1] == yu_vowel:
+                    out.append("yu")
+                    i += 2
+                else:
+                    # Casual Hinglish: drop word-final schwa (inherent "a")
+                    # after a consonant with matra ぁ. If the consonant+matra
+                    # sequence is at word end, output just the consonant without
+                    # the "aa" vowel. Otherwise keep the "aa" for medial position.
+                    if mval == "aa":
+                        # Check what follows the matra: if word end or word break,
+                        # this is word-final schwa → drop it. Otherwise keep "aa"
+                        # for medial vowels (e.g., किताब → kitaab).
+                        j = i + 1  # position of the matra itself
+                        after_matraj = j + 1  # position after matra
+                        if after_matraj >= n or text[after_matraj] in _WORD_BREAK \
+                                or text[after_matraj].isspace():
+                            # Word-final: drop the schwa → just the consonant
+                            pass  # don't append mval ("aa")
+                        else:
+                            # Medial: keep the "aa"
+                            out.append(mval)
+                    else:
+                        out.append(mval)
+                    i += 1
+                seen_vowel = True
+                continue
+
+            add_a = False
+            if i >= n:
+                add_a = not seen_vowel
+            else:
+                nxt = text[i]
+                nidx = ord(nxt) - base
+                if nidx < 0 or nidx >= _SCRIPT_SIZE:
+                    # Mixed romanization (ਫ਼iran): Latin already supplies the vowel.
+                    if nxt.isalpha() or nxt.isdigit():
+                        add_a = False
+                    else:
+                        add_a = not seen_vowel
+                elif nxt_kind == _NASAL or nxt_kind == _ADDAK:
+                    add_a = True
+                elif nxt_kind == _CONS:
+                    add_a = (not seen_vowel) or (
+                        not _cons_has_matra(text, i, n, base, kinds))
+                elif nxt_kind in (_MATRA, _HALANT, _VOWEL):
+                    add_a = False
+                else:
+                    add_a = not seen_vowel
+            out.append(val)
+            if add_a:
+                out.append("a")
+                seen_vowel = True
+            continue
+
+        if kind == _VOWEL:
+            out.append(val)
+            seen_vowel = True
             i += 1
             continue
-        if ch in maps.matras:
-            result.append(maps.matras[ch]); i += 1; continue
-        if ch in maps.vowels:
-            result.append(maps.vowels[ch]); i += 1; continue
-        if ch in maps.signs:
-            result.append(maps.signs[ch]); i += 1; continue
-        result.append(ch); i += 1
-    return "".join(result)
+
+        if kind == _MATRA:
+            if val == "i" and yu_vowel and i + 1 < n \
+                    and text[i + 1] == yu_vowel:
+                out.append("yu")
+                i += 2
+            else:
+                out.append(val)
+                i += 1
+            seen_vowel = True
+            continue
+
+        if kind == _NASAL:
+            emit = "n"
+            if i + 1 < n and text[i + 1] in labials:
+                emit = "m"
+            out.append(emit)
+            i += 1
+            continue
+
+        if kind == _HALANT:
+            i += 1
+            if i < n:
+                nidx = ord(text[i]) - base
+                if 0 <= nidx < _SCRIPT_SIZE and kinds[nidx] == _CONS:
+                    nv = vals[nidx]
+                    i += 1
+                    if i < n:
+                        nnidx = ord(text[i]) - base
+                        if 0 <= nnidx < _SCRIPT_SIZE and kinds[nnidx] == _NUKTA:
+                            alt = nukta_vals[nidx]
+                            if alt:
+                                nv = alt
+                            i += 1
+                    out.append(nv)
+                    seen_vowel = True
+            continue
+
+        if kind == _SIGN:
+            if val:
+                out.append(val)
+            i += 1
+            continue
+
+        if kind == _NUKTA:
+            i += 1
+            continue
+
+        out.append(ch)
+        i += 1
+
+    return "".join(out)
 
 
-_DV_MAPS = IndicMaps(
+_DV_MAPS = _make_script(
+    base=0x0900,
     consonants={
         "क": "k", "ख": "kh", "ग": "g", "घ": "gh", "ङ": "ng",
         "च": "ch", "छ": "chh", "ज": "j", "झ": "jh", "ञ": "ny",
         "ट": "t", "ठ": "th", "ड": "d", "ढ": "dh", "ण": "n",
         "त": "t", "थ": "th", "द": "d", "ध": "dh", "न": "n",
         "प": "p", "फ": "ph", "ब": "b", "भ": "bh", "म": "m",
-        "य": "y", "र": "r", "ल": "l", "व": "v", "श": "sh",
-        "ष": "sh", "स": "s", "ह": "h",
+        "य": "y", "र": "r", "ल": "l", "ळ": "l", "व": "v",
+        "श": "sh", "ष": "sh", "स": "s", "ह": "h",
+        "क़": "q", "ख़": "kh", "ग़": "gh", "ज़": "z",
+        "ड़": "r", "ढ़": "rh", "फ़": "f", "य़": "y",
     },
     vowels={
         "अ": "a", "आ": "aa", "इ": "i", "ई": "ee", "उ": "u", "ऊ": "oo",
         "ए": "e", "ऐ": "ai", "ओ": "o", "औ": "au", "ऋ": "ri", "ॐ": "om",
+        "ऍ": "e", "ऑ": "o",
     },
     matras={
-        "ा": "a", "ि": "i", "ी": "ee", "ु": "u", "ू": "oo",
+        "ा": "aa", "ि": "i", "ी": "ee", "ु": "u", "ू": "oo",
         "े": "e", "ै": "ai", "ो": "o", "ौ": "au", "ृ": "ri",
+        "ॅ": "e", "ॉ": "o", "ॊ": "o", "ॆ": "e",
     },
-    signs={
-        "ं": "n", "ँ": "n", "ः": "h", "ॅ": "e", "ॉ": "o", "ॊ": "o",
-        "॥": "", "।": "",
-    },
+    nasals={"ं": "n", "ँ": "n"},
+    signs={"ः": "h", "॥": "", "।": "", "ऽ": "'"},
     halant="्",
-    vowel_signs=("ं", "ँ"),
-    script_range=("\u0900", "\u097F"),
+    nukta="़",
+    nukta_forms={
+        "क": "q", "ख": "kh", "ग": "gh", "ज": "z",
+        "ड": "r", "ढ": "rh", "फ": "f", "य": "y",
+    },
+    yu_vowel="उ",
+    labials="पबम",
+    gy=True,
 )
-_DV_MAPS.consonant_chars = set(_DV_MAPS.consonants.keys())
 
-_GG_MAPS = IndicMaps(
+_GG_MAPS = _make_script(
+    base=0x0A00,
     consonants={
         "ਕ": "k", "ਖ": "kh", "ਗ": "g", "ਘ": "gh", "ਙ": "ng",
         "ਚ": "ch", "ਛ": "chh", "ਜ": "j", "ਝ": "jh", "ਞ": "ny",
@@ -207,24 +454,28 @@ _GG_MAPS = IndicMaps(
         "ਪ": "p", "ਫ": "ph", "ਬ": "b", "ਭ": "bh", "ਮ": "m",
         "ਯ": "y", "ਰ": "r", "ਲ": "l", "ਵ": "v",
         "ਸ": "s", "ਹ": "h", "ੜ": "r",
+        "ਸ਼": "sh", "ਲ਼": "l",
+        "ਖ਼": "kh", "ਗ਼": "gh", "ਜ਼": "z", "ਫ਼": "f",
     },
     vowels={
         "ਅ": "a", "ਆ": "aa", "ਇ": "i", "ਈ": "ee", "ਉ": "u", "ਊ": "oo",
         "ਏ": "e", "ਐ": "ai", "ਓ": "o", "ਔ": "au", "ੴ": "ek onkar",
+        "ੳ": "u", "ੲ": "i",
     },
     matras={
-        "ਾ": "a", "ਿ": "i", "ੀ": "ee", "ੁ": "u", "ੂ": "oo",
+        "ਾ": "aa", "ਿ": "i", "ੀ": "ee", "ੁ": "u", "ੂ": "oo",
         "ੇ": "e", "ੈ": "ai", "ੋ": "o", "ੌ": "au",
     },
-    signs={"ਂ": "n", "ਃ": "h", "ੰ": "m", "ੱ": "", "॥": "", "।": ""},
+    nasals={"ਂ": "n", "ੰ": "n"},
+    signs={"ਃ": "h", "॥": "", "।": ""},
     halant="੍",
-    consonant_chars=set("ਕਖਗਘਙਚਛਜਝਞਟਠਡਢਣਤਥਦਧਨਪਫਬਭਮਯਰਲਵਸਹੜ"),
-    multi_consonants={
-        "ਸ਼": "sh", "ਖ਼": "kh", "ਗ਼": "gh", "ਜ਼": "z", "ਫ਼": "f",
-        "ਲ਼": "l",
+    nukta="਼",
+    addak="ੱ",
+    nukta_forms={
+        "ਸ": "sh", "ਖ": "kh", "ਗ": "gh", "ਜ": "z", "ਫ": "f", "ਲ": "l",
     },
-    vowel_signs=("ਂ", "ੰ"),
-    script_range=("\u0A00", "\u0A7F"),
+    yu_vowel="ਉ",
+    labials="ਪਬਮ",
 )
 
 
@@ -241,11 +492,14 @@ def transliterate_gurmukhi(text: str) -> str:
 # --- detection & dispatch ---
 
 def detect_script(text: str) -> str:
+    if not text or text.isascii():
+        return "latin"
     dv = gg = 0
     for ch in text:
-        if "\u0900" <= ch <= "\u097F":
+        o = ord(ch)
+        if 0x0900 <= o <= 0x097F:
             dv += 1
-        elif "\u0A00" <= ch <= "\u0A7F":
+        elif 0x0A00 <= o <= 0x0A7F:
             gg += 1
     if dv == 0 and gg == 0:
         return "latin"
@@ -260,6 +514,8 @@ def transliterate(text: str, force_mode: str | None = None) -> tuple[str, str]:
         return transliterate_devanagari(text), "hinglish"
     if force_mode == "gurmukhi":
         return transliterate_gurmukhi(text), "punglish"
+    if not text or text.isascii():
+        return text, "none"
     script = detect_script(text)
     if script == "devanagari":
         return transliterate_devanagari(text), "hinglish"
@@ -447,22 +703,36 @@ def fetch_lyrics(artist: str, title: str, album: str = "",
                  duration_s: float = 0,
                  providers: list[LyricsProvider] | None = None,
                  ) -> SyncedLyrics | None:
-    """Try providers in order; prefer synced, fall back to plain."""
-    provs = providers or ALL_PROVIDERS
-    best: SyncedLyrics | None = None
-    for p in provs:
+    """Fetch from all providers concurrently; prefer synced over plain.
+
+    A synced result wins (earlier provider breaks ties); otherwise the
+    first plain fallback in provider order is returned.
+    """
+    provs = providers if providers is not None else ALL_PROVIDERS
+    results: list[SyncedLyrics | None] = [None] * len(provs)
+
+    def run(i: int, p: LyricsProvider) -> None:
         try:
-            result = p.fetch(artist, title, album, duration_s)
+            results[i] = p.fetch(artist, title, album, duration_s)
         except Exception as exc:
             print(f"[{p.name}] fetch error: {exc}", file=sys.stderr)
-            continue
+
+    threads = [threading.Thread(target=run, args=(i, p), daemon=True)
+               for i, p in enumerate(provs)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+
+    first_plain: SyncedLyrics | None = None
+    for result in results:
         if result is None:
             continue
         if result.synced:
             return result
-        if best is None:
-            best = result
-    return best
+        if first_plain is None:
+            first_plain = result
+    return first_plain
 
 
 # ──────────────────────────── players ────────────────────────────────
@@ -743,25 +1013,15 @@ def _check_song_change(
     return info, changed, new_last
 
 
-def _fetch_for_player(
-    player: Player,
-    providers: list[LyricsProvider],
-    translit_mode: str | None,
-) -> SyncedLyrics | None:
-    """Fetch lyrics for whatever the player is currently playing."""
-    info = player.get_playback()
-    if info is None:
-        return None
-    dur_s = info.duration_ms / 1000
-    lyrics = fetch_lyrics(info.artist, info.title, info.album,
-                          dur_s, providers)
-    if lyrics is not None:
-        lyrics, _ = transliterate_lyrics(lyrics, translit_mode)
-    return lyrics
+_CACHE_MISS = object()
 
 
 class _PlaybackPoller:
-    """Shared state for live playback output modes."""
+    """Shared state for live playback output modes.
+
+    Lyric fetches on song change run in a background daemon thread so the
+    polling loop never blocks; finished results are applied on later polls.
+    """
 
     def __init__(self, player: Player, initial_lyrics: SyncedLyrics | None,
                  translit_mode: str | None,
@@ -770,19 +1030,73 @@ class _PlaybackPoller:
         self.translit_mode = translit_mode
         self.providers = providers or ALL_PROVIDERS
         self.lyrics = initial_lyrics
+        self.is_fetching = False
         self.last_key: tuple[str, str] = ("", "")
+        self._lock = threading.Lock()
+        self._pending_key: tuple[str, str] | None = None
+        self._done: tuple[tuple[str, str], SyncedLyrics | None] | None = None
+        self._cache: dict[tuple[str, str], SyncedLyrics | None] = {}
         if initial_lyrics and initial_lyrics.lines:
-            self.last_key = _song_key(PlaybackInfo(
+            key = _song_key(PlaybackInfo(
                 title=initial_lyrics.title, artist=initial_lyrics.artist))
+            self.last_key = key
+            if key != ("", ""):
+                self._cache[key] = initial_lyrics
 
     def poll(self) -> tuple[PlaybackInfo | None, bool]:
-        """Check for song changes, fetch if needed. Returns (info, changed)."""
+        """Check for song changes; start a background fetch when changed.
+
+        Returns (info, changed). Never blocks on network I/O.
+        """
         info, changed, self.last_key = _check_song_change(
             self.player, self.last_key)
-        if changed and info:
-            self.lyrics = _fetch_for_player(
-                self.player, self.providers, self.translit_mode)
+        if info is not None:
+            current_key = _song_key(info)
+            if changed:
+                cached = self._cache.get(current_key, _CACHE_MISS)
+                if cached is not _CACHE_MISS:
+                    self.lyrics = cached
+                    with self._lock:
+                        # Any still-running fetch is now stale; drop its
+                        # result when it lands.
+                        self._pending_key = None
+                        self._done = None
+                        self.is_fetching = False
+                else:
+                    self.lyrics = None
+                    self.is_fetching = True
+                    self._pending_key = current_key
+                    threading.Thread(
+                        target=self._fetch_worker,
+                        args=(info.artist, info.title, info.album,
+                              info.duration_ms / 1000, current_key),
+                        name="lyricsync-fetch", daemon=True,
+                    ).start()
+            self._collect(current_key)
         return info, changed
+
+    def _fetch_worker(self, artist: str, title: str, album: str,
+                      dur_s: float, key: tuple[str, str]) -> None:
+        try:
+            lyrics = fetch_lyrics(artist, title, album, dur_s, self.providers)
+            if lyrics is not None:
+                lyrics, _ = transliterate_lyrics(lyrics, self.translit_mode)
+        except Exception:
+            lyrics = None
+        with self._lock:
+            self._done = (key, lyrics)
+
+    def _collect(self, current_key: tuple[str, str]) -> None:
+        """Pick up a finished fetch; apply only if it matches current song."""
+        with self._lock:
+            done, pending = self._done, self._pending_key
+            self._done = None
+        if done is not None:
+            result_key, lyrics = done
+            self._cache[result_key] = lyrics
+            if result_key == current_key and pending == current_key:
+                self.lyrics = lyrics
+                self.is_fetching = False
 
     def current_line(self, position_ms: int) -> LyricLine | None:
         if not self.lyrics or not self.lyrics.lines:
@@ -818,6 +1132,9 @@ def output_plain(lyrics: SyncedLyrics | None, player: Player,
                 time.sleep(1)
                 continue
             was_playing = True
+            if poller.is_fetching:
+                time.sleep(0.25)
+                continue
             line = poller.current_line(info.position_ms)
             if line is None:
                 time.sleep(0.5 if not poller.lyrics else 0.3)
@@ -897,7 +1214,7 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
                 pass
 
         sel_idx = -1
-        _GRADIENT = [6, 7, 8, 9, 10, 11]
+        _GRADIENT = [7, 8, 9, 10, 11]
 
         def line_color(dist: int) -> int:
             idx = min(dist - 1, len(_GRADIENT) - 1)
@@ -1010,7 +1327,8 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
                 continue
             lyr = poller.lyrics
             if lyr is None or not lyr.lines:
-                msg = "No lyrics"
+                msg = "Fetching lyrics..." if poller.is_fetching \
+                    else "No lyrics"
                 try:
                     stdscr.addstr(h // 2, max(0, (w - len(msg)) // 2), msg)
                 except curses.error:
@@ -1105,6 +1423,9 @@ def output_notify(lyrics: SyncedLyrics | None, player: Player,
                 time.sleep(1)
                 continue
             line = poller.current_line(info.position_ms)
+            if poller.is_fetching:
+                time.sleep(0.3)
+                continue
             if line is None:
                 time.sleep(0.5)
                 continue
