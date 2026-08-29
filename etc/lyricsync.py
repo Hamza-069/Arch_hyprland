@@ -203,6 +203,14 @@ def _cons_has_matra(text: str, pos: int, n: int,
     return k == _MATRA
 
 
+def _final_aa(text: str, pos: int, n: int) -> bool:
+    """True if the aa matra at pos is word-final."""
+    j = pos + 1
+    while j < n and text[j] in _FORMAT_CHARS:
+        j += 1
+    return j >= n or text[j] in _WORD_BREAK or text[j].isspace()
+
+
 def _geminate(val: str) -> str:
     if len(val) == 1:
         return val + val
@@ -299,23 +307,10 @@ def transliterate_indic(text: str, script: _Script) -> str:
                     out.append("yu")
                     i += 2
                 else:
-                    # Casual Hinglish: drop word-final schwa (inherent "a")
-                    # after a consonant with matra ぁ. If the consonant+matra
-                    # sequence is at word end, output just the consonant without
-                    # the "aa" vowel. Otherwise keep the "aa" for medial position.
-                    if mval == "aa":
-                        # Check what follows the matra: if word end or word break,
-                        # this is word-final schwa → drop it. Otherwise keep "aa"
-                        # for medial vowels (e.g., किताब → kitaab).
-                        j = i + 1  # position of the matra itself
-                        after_matraj = j + 1  # position after matra
-                        if after_matraj >= n or text[after_matraj] in _WORD_BREAK \
-                                or text[after_matraj].isspace():
-                            # Word-final: drop the schwa → just the consonant
-                            pass  # don't append mval ("aa")
-                        else:
-                            # Medial: keep the "aa"
-                            out.append(mval)
+                    # Word-final explicit aa shortens to "a" (का → ka);
+                    # medial aa stays long (किताब → kitaab, हाँ → haan).
+                    if mval == "aa" and _final_aa(text, i, n):
+                        out.append("a")
                     else:
                         out.append(mval)
                     i += 1
@@ -361,7 +356,10 @@ def transliterate_indic(text: str, script: _Script) -> str:
                 out.append("yu")
                 i += 2
             else:
-                out.append(val)
+                if val == "aa" and _final_aa(text, i, n):
+                    out.append("a")
+                else:
+                    out.append(val)
                 i += 1
             seen_vowel = True
             continue
@@ -419,7 +417,7 @@ _DV_MAPS = _make_script(
         "य": "y", "र": "r", "ल": "l", "ळ": "l", "व": "v",
         "श": "sh", "ष": "sh", "स": "s", "ह": "h",
         "क़": "q", "ख़": "kh", "ग़": "gh", "ज़": "z",
-        "ड़": "r", "ढ़": "rh", "फ़": "f", "य़": "y",
+        "ड़": "d", "ढ़": "dh", "फ़": "f", "य़": "y",
     },
     vowels={
         "अ": "a", "आ": "aa", "इ": "i", "ई": "ee", "उ": "u", "ऊ": "oo",
@@ -437,7 +435,7 @@ _DV_MAPS = _make_script(
     nukta="़",
     nukta_forms={
         "क": "q", "ख": "kh", "ग": "gh", "ज": "z",
-        "ड": "r", "ढ": "rh", "फ": "f", "य": "y",
+        "ड": "d", "ढ": "dh", "फ": "f", "य": "y",
     },
     yu_vowel="उ",
     labials="पबम",
@@ -480,12 +478,12 @@ _GG_MAPS = _make_script(
 
 
 def transliterate_devanagari(text: str) -> str:
-    """Casual Hinglish transliteration of Devanagari text."""
+    """Casual Hindi (Latin) transliteration of Devanagari text."""
     return transliterate_indic(text, _DV_MAPS)
 
 
 def transliterate_gurmukhi(text: str) -> str:
-    """Casual Punglish transliteration of Gurmukhi text."""
+    """Casual Pungabi (Latin) transliteration of Gurmukhi text."""
     return transliterate_indic(text, _GG_MAPS)
 
 
@@ -510,17 +508,17 @@ def detect_script(text: str) -> str:
 
 def transliterate(text: str, force_mode: str | None = None) -> tuple[str, str]:
     """Returns (transliterated_text, mode_name)."""
-    if force_mode == "devanagari":
-        return transliterate_devanagari(text), "hinglish"
-    if force_mode == "gurmukhi":
-        return transliterate_gurmukhi(text), "punglish"
+    if force_mode == "hindi":
+        return transliterate_devanagari(text), "hindi"
+    if force_mode == "pungabi":
+        return transliterate_gurmukhi(text), "pungabi"
     if not text or text.isascii():
         return text, "none"
     script = detect_script(text)
     if script == "devanagari":
-        return transliterate_devanagari(text), "hinglish"
+        return transliterate_devanagari(text), "hindi"
     if script == "gurmukhi":
-        return transliterate_gurmukhi(text), "punglish"
+        return transliterate_gurmukhi(text), "pungabi"
     return text, "none"
 
 
@@ -1457,7 +1455,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--notify", action="store_true",
                    help="Show lyrics as desktop notifications")
     p.add_argument("--transliterate", type=str, default=None,
-                   choices=["devanagari", "gurmukhi"],
+                   choices=["hindi", "pungabi"],
                    help="Force transliteration mode")
     p.add_argument("--artist", type=str, default=None,
                    help="Artist name (for manual lookup)")
