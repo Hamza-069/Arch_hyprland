@@ -41,33 +41,9 @@ LOG_FILE="/tmp/arch_hyprland_install.log"
 
 echo "=== Arch Hyprland Install - $(date) ===" >"$LOG_FILE"
 
-spinner() {
-  local pid=$1
-  local msg=$2
-  local frames=("⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏")
-  local i=0
-  while kill -0 "$pid" 2>/dev/null; do
-    printf "\r  ${CYAN}${frames[$((i % ${#frames[@]}))]}${RESET} ${DIM}[$CURRENT_STEP/$TOTAL_STEPS]${RESET} $msg"
-    i=$((i + 1))
-    sleep 0.1
-  done
-  printf "\r"
-}
-
 run_step() {
-  local msg=$1
   shift
-  CURRENT_STEP=$((CURRENT_STEP + 1))
-  "$@" > >(sed 's/\x1b\[[0-9;]*m//g' >>"$LOG_FILE") 2>&1 &
-  local pid=$!
-  spinner "$pid" "$msg"
-  wait "$pid" 2>/dev/null
-  local status=$?
-  if [ "$status" -eq 0 ]; then
-    printf "  ${GREEN}✓${RESET} ${DIM}[$CURRENT_STEP/$TOTAL_STEPS]${RESET} $msg\n"
-  else
-    printf "  ${RED}✗${RESET} ${DIM}[$CURRENT_STEP/$TOTAL_STEPS]${RESET} ${RED}$msg${RESET} ${DIM}(exit code: %d)${RESET}\n" "$status"
-  fi
+  "$@" 2>&1 | tee -a "$LOG_FILE"
 }
 
 echo -e "${BOLD}${CYAN}Arch Hyprland Installer${RESET}"
