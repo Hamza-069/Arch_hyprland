@@ -1,10 +1,7 @@
 #!/bin/bash
+set -euo pipefail
 
-#set -e  # stop on error
-
-# ── Package Lists ────────────────────────────────────────────
-# To add a package, simply append it to the relevant array below.
-
+# Package Lists
 OFFICIAL_PACKAGES=(
   gnome-keyring rofi swaync nwg-look pavucontrol blueman
   ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-mono
@@ -26,95 +23,75 @@ AUR_PACKAGES=(
   rofi-calc
 )
 
-BOLD="\033[1m"
-DIM="\033[2m"
-RED="\033[31m"
-GREEN="\033[32m"
-YELLOW="\033[33m"
-BLUE="\033[34m"
-CYAN="\033[36m"
-RESET="\033[0m"
-
-TOTAL_STEPS=5
-CURRENT_STEP=0
 LOG_FILE="/tmp/arch_hyprland_install.log"
-
 echo "=== Arch Hyprland Install - $(date) ===" >"$LOG_FILE"
 
-run_step() {
-  shift
-  "$@" 2>&1 | tee -a "$LOG_FILE"
-}
-
-echo -e "${BOLD}${CYAN}Arch Hyprland Installer${RESET}"
+echo "Arch Hyprland Installer"
 echo
 
 sudo -v
 
-# ── Install ──────────────────────────────────────────────────
+# System update
+echo "Updating system..."
+sudo pacman -Syu --noconfirm 2>&1 | tee -a "$LOG_FILE"
 
-run_step "${YELLOW}Updating system${RESET}" sudo pacman -Syu --noconfirm
+# Official packages
+echo "Installing official repo packages..."
+sudo pacman -S --needed --noconfirm "${OFFICIAL_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"
 
-run_step "${YELLOW}Installing official repo packages${RESET}" sudo pacman -S --needed --noconfirm "${OFFICIAL_PACKAGES[@]}"
+# yay (AUR helper)
+if ! command -v yay &>/dev/null; then
+  echo "Installing yay..."
+  git clone https://aur.archlinux.org/yay.git --depth=1 /tmp/yay-install
+  cd /tmp/yay-install
+  makepkg -si --noconfirm 2>&1 | tee -a "$LOG_FILE"
+  cd /
+  rm -rf /tmp/yay-install
+fi
 
-run_step "${YELLOW}Installing yay (AUR helper)${RESET}" bash -c '
-  if ! command -v yay &>/dev/null; then
-    git clone https://aur.archlinux.org/yay.git --depth=1 /tmp/yay-install
-    cd /tmp/yay-install
-    makepkg -si --noconfirm
-    cd /
-    rm -rf /tmp/yay-install
-  fi
-'
+# AUR packages
+echo "Installing AUR packages..."
+yay -S --needed --noconfirm "${AUR_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"
 
-run_step "${YELLOW}Installing AUR packages${RESET}" yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
+# spotify-adblock
+echo "Building spotify-adblock..."
+cd ~
+git clone https://github.com/abba23/spotify-adblock.git
+cd spotify-adblock
+make 2>&1 | tee -a "$LOG_FILE"
+sudo make install 2>&1 | tee -a "$LOG_FILE"
+cd ..
+rm -rf spotify-adblock/
 
-run_step "${YELLOW}Building spotify-adblock${RESET}" bash -c '
-  cd ~
-  git clone https://github.com/abba23/spotify-adblock.git
-  cd spotify-adblock
-  make
-  sudo make install
-  cd ..
-  rm -rf spotify-adblock/
-'
-sudo sed -i \
-  -e 's/^#\?HandlePowerKey=.*/HandlePowerKey=ignore/' \
-  -e 's/^#\?HandlePowerKeyLongPress=.*/HandlePowerKeyLongPress=poweroff/' \
-  /etc/systemd/logind.conf
+# logind.conf - power key handling
+echo "Configuring power key handling..."
+sudo tee /etc/systemd/logind.conf.d/power-key.conf >/dev/null <<'CONF'
+[Login]
+HandlePowerKey=ignore
+HandlePowerKeyLongPress=poweroff
+CONF
 
-grep -q '^HandlePowerKey=' /etc/systemd/logind.conf ||
-  echo 'HandlePowerKey=ignore' | sudo tee -a /etc/systemd/logind.conf >/dev/null
+# Default applications
+echo "Setting default applications..."
 
-grep -q '^HandlePowerKeyLongPress=' /etc/systemd/logind.conf ||
-  echo 'HandlePowerKeyLongPress=poweroff' | sudo tee -a /etc/systemd/logind.conf >/dev/null
+# Text/Code -> nvim
+for mime in text/plain text/markdown text/x-c text/x-c++src text/x-python text/x-shellscript text/x-lua text/css text/html application/json application/xml; do
+  xdg-mime default nvim.desktop "$mime"
+done
 
-xdg-mime default nvim.desktop text/plain
-xdg-mime default nvim.desktop text/markdown
-xdg-mime default nvim.desktop text/x-c
-xdg-mime default nvim.desktop text/x-c++src
-xdg-mime default nvim.desktop text/x-python
-xdg-mime default nvim.desktop text/x-shellscript
-xdg-mime default nvim.desktop text/x-lua
-xdg-mime default nvim.desktop text/css
-xdg-mime default nvim.desktop text/html
+# Images -> imv
+for mime in image/jpeg image/png image/gif image/webp; do
+  xdg-mime default imv.desktop "$mime"
+done
 
-xdg-mime default nvim.desktop application/json
-xdg-mime default nvim.desktop application/xml
+# Video -> mpv
+for mime in video/mp4 video/x-matroska video/webm; do
+  xdg-mime default mpv.desktop "$mime"
+done
 
-xdg-mime default imv.desktop image/jpeg
-xdg-mime default imv.desktop image/png
-xdg-mime default imv.desktop image/gif
-xdg-mime default imv.desktop image/webp
-
-xdg-mime default mpv.desktop video/mp4
-xdg-mime default mpv.desktop video/x-matroska
-xdg-mime default mpv.desktop video/webm
-
+# KDE terminal
 kwriteconfig6 --file kdeglobals --group General --key TerminalApplication kitty
-
 XDG_MENU_PREFIX=plasma- kbuildsycoca6
 
-echo
-echo -e "Reloading Hyprland..."
+echo "Reloading Hyprland..."
 hyprctl reload

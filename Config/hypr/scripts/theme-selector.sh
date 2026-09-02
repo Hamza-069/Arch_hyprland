@@ -70,8 +70,6 @@ for key in "${!THEMES[@]}"; do
     sed -i "s|path = .*|path = $wallpaper|" "$HOME/.config/hypr/hyprpaper.conf"
   fi
 
-  pkill waybar 2>/dev/null || true
-  waybar &
   hyprctl reload
   notify-send -i /usr/share/icons/breeze-dark/status/64/dialog-positive.svg "Theme" "Switched to ${display#* }"
   break

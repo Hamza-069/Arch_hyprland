@@ -8,7 +8,6 @@ cleanup() {
 trap cleanup SIGINT SIGTERM
 
 echo "Starting system cleanup..."
-notify-send "SYSTEM" "Starting system cleanup..."
 
 echo "Cleaning journal logs..."
 sudo journalctl --rotate --vacuum-time=3d
@@ -17,9 +16,10 @@ sudo journalctl --rotate --vacuum-time=3d
 echo "Cleaning /tmp..."
 sudo find /tmp -mindepth 1 -atime +1 -delete 2>/dev/null || true
 
-echo "==="
+echo "=== pacman -Qtdq ==="
 echo "$(pacman -Qtdq)"
 echo "==="
+echo ""
 
 notify-send "SYSTEM" "Cleanup Complete!!"
 echo "Cleanup complete!"
