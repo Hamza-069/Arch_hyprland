@@ -1,4 +1,4 @@
-## :x: <ins>Don't</ins> Run `install.sh`
+## :x: <ins>Don't</ins> Run `install.sh` directly
 
 ## 📑 Table of Contents
 
@@ -10,7 +10,9 @@
 - [Feedback](#-feedback)
 
 ---
-> ⚠️ **Do not run `install.sh` unless you have reviewed the script and understand what it does.**
+> ⚠️ **Do not run `install.sh` directly unless you have reviewed the script and understand what it does.**
+> 
+> **Use `./setup.sh` instead** — it wraps `install.sh` with config deployment, shell setup, and safety features (backups, dry-run, selective install).
 
 These are my personal dotfiles, and the installation script is **not intended to be a universal Arch Linux installer**.
 
@@ -19,6 +21,23 @@ You can copy the configurations you want and adapt them to your own system.
 ---
 
 ## 🚀 Installation
+
+### Option A: Unified Setup Script (Recommended)
+
+```bash
+git clone https://github.com/Hamza-069/Arch_hyprland.git
+cd Arch_hyprland
+./setup.sh
+```
+
+The `setup.sh` script provides an interactive menu to:
+- Install packages (official + AUR via `install.sh`)
+- Deploy configs with automatic backups (selectable checklist)
+- Configure shell (zsh/fish/both)
+
+Run `./setup.sh --help` for options like `--packages-only`, `--configs-only`, `--shell-only`, `--dry-run`.
+
+### Option B: Manual Installation
 
 ### 1. Clone the repository
 
@@ -50,6 +69,7 @@ The main configurations included in this repository are:
 ├── fish/
 ├── hypr/
 ├── kitty/
+├── mpv/
 ├── nvim/
 ├── rofi/
 ├── swaync/
@@ -87,7 +107,7 @@ cp -r Config/* ~/.config/
 
 A simple script is included to reload Waybar and Hyprpaper:
 ```bash
-/Arch_hyprland/Config/hypr/scripts/reload.sh
+./Config/hypr/scripts/reload.sh
 ```
 
 
@@ -99,7 +119,15 @@ A simple script is included to reload Waybar and Hyprpaper:
 
 This repository includes separate setup scripts for **Zsh** and **Fish**.
 
-### Zsh
+### Via Unified Setup (Recommended)
+
+```bash
+./setup.sh --shell-only
+```
+
+### Manual
+
+#### Zsh
 
 ```bash
 ./install_zsh.sh
@@ -230,6 +258,7 @@ Config/
 ├── hypr/
 ├── waybar/
 ├── kitty/
+├── mpv/
 ├── yazi/
 └── ...
 ```
