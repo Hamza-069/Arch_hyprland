@@ -195,7 +195,7 @@ deploy_configs() {
     fi
 
     info "Copying $name -> $target"
-    run_cmd "cp -r \"$src\" \"$target\""
+    run_cmd "cp -r \"$src\"/. \"$target\""
   done
 
   info "Config deployment complete"
