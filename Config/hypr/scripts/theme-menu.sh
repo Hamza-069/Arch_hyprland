@@ -33,15 +33,9 @@ input_custom() {
   echo "$val"
 }
 
-backup_file() {
-  local file="$1"
-  [ -f "$file" ] && cp "$file" "${file}.bak.$(date +%s)"
-}
-
 apply_waybar() {
   local val="$1"
   [ -f "$WAYBAR_CSS" ] || return 0
-  backup_file "$WAYBAR_CSS"
   sed -i "s/border-radius: [0-9]*px;/border-radius: ${val}px;/g" "$WAYBAR_CSS"
   pkill -x waybar 2>/dev/null
   sleep 0.2
@@ -51,14 +45,12 @@ apply_waybar() {
 apply_rofi() {
   local val="$1"
   [ -f "$ROFI_THEME" ] || return 0
-  backup_file "$ROFI_THEME"
   sed -i -E "s/(border-radius:[[:space:]]*)[0-9]+px;/\1${val}px;/g" "$ROFI_THEME"
 }
 
 apply_hypr() {
   local val="$1"
   [ -f "$HYPR_LOOK" ] || return 0
-  backup_file "$HYPR_LOOK"
   sed -i -E "s/rounding = [0-9]+/rounding = ${val}/" "$HYPR_LOOK"
   hyprctl reload >/dev/null 2>&1 || true
 }
