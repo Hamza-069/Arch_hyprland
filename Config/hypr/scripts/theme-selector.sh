@@ -22,6 +22,7 @@ THEMES["rosepine"]="${icon} Rosé Pine|rosepine.css|c4a7e7|Rosé Pine|${WALLPAPE
 THEMES["gruvbox"]="${icon} Gruvbox|gruvbox.css|83a598|Gruvbox\ Dark\ Soft|${WALLPAPER_DIR}/gruvbox.png"
 THEMES["onedark"]="${icon} One Dark|onedark.css|61afef|One Dark|${WALLPAPER_DIR}/onedark.png"
 THEMES["solarized"]="${icon} Solarized|solarized.css|268bd2|Solarized Dark|${WALLPAPER_DIR}/solarized.jpg"
+THEMES["bw"]="${icon} Black & White|bw.css|FFFFFF|E-Ink\ Dark|${WALLPAPER_DIR}/black.jpg"
 
 # Build menu from rofi colors that have a matching waybar file
 names=()

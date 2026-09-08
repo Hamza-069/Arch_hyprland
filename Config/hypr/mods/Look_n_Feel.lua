@@ -6,7 +6,7 @@
 hl.config({
 	general = {
 		gaps_in = 2,
-		gaps_out = 1,
+		gaps_out = 2,
 
 		border_size = 2,
 
@@ -24,7 +24,7 @@ hl.config({
 		layout = "dwindle",
 	},
 	decoration = {
-		rounding = 5,
+		rounding = 0,
 		rounding_power = 2,
 
 		-- Change transparency of focused and unfocused windows

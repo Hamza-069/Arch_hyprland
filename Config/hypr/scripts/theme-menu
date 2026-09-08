@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+WAYBAR_CSS="$HOME/.config/waybar/style.css"
+ROFI_THEME="$HOME/.config/rofi/launchers/type-1/style-5.rasi"
+HYPR_LOOK="$HOME/.config/hypr/mods/Look_n_Feel.lua"
+
+choose_property() {
+  printf "border-radius\n" | rofi -dmenu -p "What do you want to change?" -theme-str 'window { width: 350px; }' -lines 1
+}
+
+choose_value() {
+  local presets=(
+    "0px (square)"
+    "5px (default)"
+    "10px (rounded)"
+    "Custom..."
+  )
+  printf "%s\n" "${presets[@]}" | rofi -dmenu -p "Select border-radius:" -theme-str 'window { width: 350px; }' -lines 4 -select "5px (default)"
+}
+
+input_custom() {
+  local val
+  val=$(printf "" | rofi -dmenu -p "Border-radius (px):" -theme-str 'window { width: 350px; }' -mesg "0 = square corners")
+  [ -z "$val" ] && exit 1
+  echo "$val" | grep -qE '^[0-9]+$' || {
+    rofi -e "Invalid value: $val"
+    exit 1
+  }
+  [ "$val" -gt 50 ] && {
+    rofi -e "Value too large (max 50)"
+    exit 1
+  }
+  echo "$val"
+}
+
+backup_file() {
+  local file="$1"
+  [ -f "$file" ] && cp "$file" "${file}.bak.$(date +%s)"
+}
+
+apply_waybar() {
+  local val="$1"
+  [ -f "$WAYBAR_CSS" ] || return 0
+  backup_file "$WAYBAR_CSS"
+  sed -i "s/border-radius: [0-9]*px;/border-radius: ${val}px;/g" "$WAYBAR_CSS"
+  pkill -x waybar 2>/dev/null
+  sleep 0.2
+  nohup waybar >/dev/null 2>&1 &
+}
+
+apply_rofi() {
+  local val="$1"
+  [ -f "$ROFI_THEME" ] || return 0
+  backup_file "$ROFI_THEME"
+  sed -i -E "s/(border-radius:[[:space:]]*)[0-9]+px;/\1${val}px;/g" "$ROFI_THEME"
+}
+
+apply_hypr() {
+  local val="$1"
+  [ -f "$HYPR_LOOK" ] || return 0
+  backup_file "$HYPR_LOOK"
+  sed -i -E "s/rounding = [0-9]+/rounding = ${val}/" "$HYPR_LOOK"
+  hyprctl reload >/dev/null 2>&1 || true
+}
+
+apply_all() {
+  local val="$1"
+  apply_waybar "$val"
+  apply_rofi "$val"
+  apply_hypr "$val"
+}
+
+property=$(choose_property)
+[ -z "$property" ] && exit 0
+
+case "$property" in
+*border-radius* | *border*radius*)
+  choice=$(choose_value)
+  ;;
+*)
+  rofi -e "Not supported yet: $property"
+  exit 0
+  ;;
+esac
+[ -z "$choice" ] && exit 0
+
+case "$choice" in
+*Custom*)
+  value=$(input_custom)
+  ;;
+*)
+  value=$(echo "$choice" | grep -oE '^[0-9]+')
+  ;;
+esac
+
+[ -z "$value" ] && exit 1
+
+apply_all "$value"
+
+command -v notify-send >/dev/null 2>&1 && notify-send "Border radius" "Set to ${value}px (waybar, rofi, hyprland)"
+

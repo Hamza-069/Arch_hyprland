@@ -4,7 +4,7 @@
   font-family: JetbrainsMono Nerd Font Propo;
   font-size: 10px;
   min-height: 0;
-  border-radius: 5px;
+  border-radius: 0px;
   margin: 0px 1px;
 }
 
@@ -25,14 +25,14 @@ button {
 
 #workspaces,
 #window {
-  border-radius: 5px;
+  border-radius: 0px;
   background: @bg;
   margin: 1px 0px;
 
 }
 
 #workspaces button {
-  border-radius: 10px;
+  border-radius: 0px;
   color: @ws_text;
   padding: 0.1rem 0.2rem;
   transition: all 150ms ease;
@@ -61,7 +61,7 @@ button {
 #custom-power,
 #tray {
   background: @bg;
-  border-radius: 5px;
+  border-radius: 0px;
   padding: 0rem 0.4rem;
   color: @module_text;
   margin: 1px;

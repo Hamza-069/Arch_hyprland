@@ -1,0 +1,15 @@
+/**
+ *
+ * Author : ham
+ *
+ * Colors
+ **/
+
+* {
+    background:     #000000FF;
+    background-alt: #1A1A1AFF;
+    foreground:     #FFFFFFFF;
+    selected:       #FFFFFFFF;
+    active:         #FFFFFFFF;
+    urgent:         #FFFFFFFF;
+}
