@@ -4,6 +4,8 @@ pkill waybar
 waybar &
 pkill hyprpaper
 hyprpaper &
+pkill hypridle
+hypridle &
 
 XDG_MENU_PREFIX=plasma- kbuildsycoca6
 fc-cache

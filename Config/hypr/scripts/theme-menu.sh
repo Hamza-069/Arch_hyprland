@@ -89,5 +89,4 @@ esac
 
 apply_all "$value"
 
-command -v notify-send >/dev/null 2>&1 && notify-send "Border radius" "Set to ${value}px (waybar, rofi, hyprland)"
-
+command -v notify-send >/dev/null 2>&1 && notify-send "Border radius" "Set to ${value}px"
