@@ -9,8 +9,8 @@
 
 @define-color module_text #ebdbb2;
 
-@define-color backlight_text #fabd2f;
-@define-color battery_text #b8bb26;
+@define-color backlight_text #d79921;
+@define-color battery_text #98971a;
 @define-color battery_warning #fb4934;
 
 @define-color clock_text #83a598;

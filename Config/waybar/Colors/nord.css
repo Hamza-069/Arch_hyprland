@@ -25,14 +25,14 @@
 
 /* Media */
 @define-color media_bg #3b4252;   /* Nord1 (Lighter Polar Night) */
-@define-color media_text #8fbcbb; /* Nord7 (Teal) */
+@define-color media_text #b48ead; /* Nord7 (Teal) */
 
 /* Profiles & Hardware Stats */
 @define-color power_profiles_text #d08770; /* Nord12 (Orange) */
 
 @define-color network_text #5e81ac; /* Nord10 (Deep Frost Blue) */
 @define-color cpu_text #bf616a;     /* Nord11 (Red) */
-@define-color memory_text #ebcb8b;  /* Nord13 (Yellow) */
+@define-color memory_text #d08770;  /* Nord13 (Yellow) */
 @define-color pulse_text #88c0d0;   /* Nord8 (Ice Blue) */
 
 /* Power Button */
