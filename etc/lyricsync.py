@@ -17,6 +17,7 @@ import re
 import shutil
 import subprocess
 import sys
+import textwrap
 import threading
 import time
 import urllib.error
@@ -993,6 +994,16 @@ def find_current_line(lines: list[LyricLine], position_ms: int) -> int:
     return idx if idx >= 0 else -1
 
 
+def wrap_lyric_line(text: str, width: int) -> list[str]:
+    """Wrap a lyric line to fit within the given width."""
+    text = text.strip()
+    if not text:
+        return ["♪"]
+    if len(text) <= width:
+        return [text]
+    return textwrap.wrap(text, width=width, break_long_words=True, break_on_hyphens=True)
+
+
 def _song_key(info: PlaybackInfo) -> tuple[str, str]:
     return (info.artist.lower().strip(), info.title.lower().strip())
 
@@ -1260,38 +1271,71 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
                 sel = sel_idx
             center = lyrics_h // 2
 
-            for row in range(lyrics_h):
-                line_idx = playing_idx + (row - center)
-                y = row + 1
-                if 0 <= line_idx < len(lyr.lines):
-                    text = lyr.lines[line_idx].text.strip() or "♪"
-                    is_playing = (line_idx == playing_idx)
-                    is_selected = (line_idx == sel)
-                    dist = abs(line_idx - playing_idx)
-                    prefix_w = 2 if is_selected else 0
-                    max_text = w - 1 - prefix_w - 3
-                    if len(text) > max_text:
-                        display = text[:max_text] + "..."
+            # Calculate wrapped lines for all visible lyrics
+            # We need to know how many visual rows each lyric takes
+            prefix_w = 2  # "▸ " prefix for selected line
+            max_text_width = w - 1 - prefix_w - 3  # leave some margin
+
+            # Build a list of (line_idx, wrapped_lines) for visible lyrics
+            visible_lines: list[tuple[int, list[str]]] = []
+            for line_idx in range(len(lyr.lines)):
+                text = lyr.lines[line_idx].text.strip() or "♪"
+                wrapped = wrap_lyric_line(text, max_text_width)
+                visible_lines.append((line_idx, wrapped))
+
+            # Calculate total visual rows needed and starting visual row
+            total_visual_rows = sum(len(wrapped) for _, wrapped in visible_lines)
+            
+            # Find visual row of the playing line (first wrapped line of playing_idx)
+            playing_visual_row = 0
+            for line_idx, wrapped in visible_lines:
+                if line_idx == playing_idx:
+                    break
+                playing_visual_row += len(wrapped)
+            
+            # Start rendering from visual row that centers the playing line
+            start_visual_row = playing_visual_row - center
+            if start_visual_row < 0:
+                start_visual_row = 0
+            elif start_visual_row + lyrics_h > total_visual_rows:
+                start_visual_row = max(0, total_visual_rows - lyrics_h)
+
+            # Render visible visual rows
+            visual_row = 0
+            for line_idx, wrapped in visible_lines:
+                is_playing = (line_idx == playing_idx)
+                is_selected = (line_idx == sel)
+                dist = abs(line_idx - playing_idx)
+                
+                for wrap_idx, wrap_text in enumerate(wrapped):
+                    if visual_row < start_visual_row:
+                        visual_row += 1
+                        continue
+                    if visual_row >= start_visual_row + lyrics_h:
+                        break
+                    
+                    y = visual_row - start_visual_row + 1  # +1 for header
+                    
+                    # Only first wrapped line gets prefix and playing indicator
+                    is_first_wrap = (wrap_idx == 0)
+                    display_prefix = "▸ " if (is_selected and is_first_wrap) else ""
+                    display = display_prefix + wrap_text
+                    
+                    if is_first_wrap and is_selected and is_playing:
+                        attr = (curses.A_BOLD | curses.A_UNDERLINE | curses.color_pair(5))
+                    elif is_first_wrap and is_selected:
+                        attr = curses.A_BOLD | curses.color_pair(5)
+                    elif is_first_wrap and is_playing:
+                        attr = (curses.A_BOLD | curses.A_UNDERLINE | curses.color_pair(12))
                     else:
-                        display = text
-                    if is_selected:
-                        display = "▸ " + display
+                        attr = line_color(dist)
+                    
                     try:
-                        if is_selected and is_playing:
-                            attr = (curses.A_BOLD | curses.A_UNDERLINE
-                                    | curses.color_pair(5))
-                        elif is_selected:
-                            attr = curses.A_BOLD | curses.color_pair(5)
-                        elif is_playing:
-                            attr = (curses.A_BOLD | curses.A_UNDERLINE
-                                    | curses.color_pair(12))
-                        else:
-                            attr = line_color(dist)
-                        stdscr.addstr(
-                            y, max(0, (w - len(display)) // 2),
-                            display, attr)
+                        stdscr.addstr(y, max(0, (w - len(display)) // 2), display, attr)
                     except curses.error:
                         pass
+                    
+                    visual_row += 1
 
         while True:
             info, changed = poller.poll()
