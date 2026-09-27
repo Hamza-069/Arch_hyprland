@@ -65,11 +65,16 @@ rm -rf spotify-adblock/
 
 # logind.conf - power key handling
 echo "Configuring power key handling..."
-sudo tee /etc/systemd/logind.conf.d/power-key.conf >/dev/null <<'CONF'
-[Login]
-HandlePowerKey=ignore
-HandlePowerKeyLongPress=poweroff
-CONF
+sudo sed -i \
+  -e 's/^#\?HandlePowerKey=.*/HandlePowerKey=ignore/' \
+  -e 's/^#\?HandlePowerKeyLongPress=.*/HandlePowerKeyLongPress=poweroff/' \
+  /etc/systemd/logind.conf
+
+grep -q '^HandlePowerKey=' /etc/systemd/logind.conf ||
+  echo 'HandlePowerKey=ignore' | sudo tee -a /etc/systemd/logind.conf >/dev/null
+
+grep -q '^HandlePowerKeyLongPress=' /etc/systemd/logind.conf ||
+  echo 'HandlePowerKeyLongPress=poweroff' | sudo tee -a /etc/systemd/logind.conf >/dev/null
 
 # Default applications
 echo "Setting default applications..."
