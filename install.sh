@@ -20,7 +20,7 @@ OFFICIAL_PACKAGES=(
 
 AUR_PACKAGES=(
   ttf-jetbrains-mono-nerd clipvault tree-sitter-cli qrc waybar-git localsend-bin
-  rofi-calc
+  rofi-calc peaclock
 )
 
 LOG_FILE="/tmp/arch_hyprland_install.log"
@@ -33,25 +33,25 @@ sudo -v
 
 # System update
 echo "Updating system..."
-sudo pacman -Syu --noconfirm 2>&1 | tee -a "$LOG_FILE"
+sudo pacman -Syu 2>&1 | tee -a "$LOG_FILE"
 
 # Official packages
 echo "Installing official repo packages..."
-sudo pacman -S --needed --noconfirm "${OFFICIAL_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"
+sudo pacman -S --needed "${OFFICIAL_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"
 
 # yay (AUR helper)
 if ! command -v yay &>/dev/null; then
   echo "Installing yay..."
   git clone https://aur.archlinux.org/yay.git --depth=1 /tmp/yay-install
   cd /tmp/yay-install
-  makepkg -si --noconfirm 2>&1 | tee -a "$LOG_FILE"
+  makepkg -si 2>&1 | tee -a "$LOG_FILE"
   cd /
   rm -rf /tmp/yay-install
 fi
 
 # AUR packages
 echo "Installing AUR packages..."
-yay -S --needed --noconfirm "${AUR_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"
+yay -S --needed "${AUR_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"
 
 # spotify-adblock
 echo "Building spotify-adblock..."

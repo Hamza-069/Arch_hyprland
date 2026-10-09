@@ -92,9 +92,9 @@ hl.bind("XF86FullScreen", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind("XF86Poweroff", hl.dsp.exec_cmd("~/.config/rofi/powermenu/type-2/powermenu.sh"))
 
 --Hyprshot
-hl.bind("XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m output --output-folder  ~/Screenshots/"))
-hl.bind(mainMod .. " + XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m region --output-folder  ~/Screenshots/"))
-hl.bind("CTRL + XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m window --output-folder  ~/Screenshots/"))
+hl.bind("XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m output --output-folder  ~/Pictures/Screenshots/"))
+hl.bind(mainMod .. " + XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m region --output-folder  ~/Pictures/Screenshots/"))
+hl.bind("CTRL + XF86LaunchA", hl.dsp.exec_cmd("hyprshot -m window --output-folder  ~/Pictures/Screenshots/"))
 
 --hyprpicker
 hl.bind(mainMod .. " + XF86FullScreen", hl.dsp.exec_cmd("hyprpicker -u 65 -s 9 -a -b -l -n"))
