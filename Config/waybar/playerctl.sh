@@ -1,80 +1,90 @@
 #!/bin/bash
+export LC_ALL=${LC_ALL:-en_US.UTF-8}
 
 max=22
-delay=0.03
+delay=0.07
 sep="  •  "
+US=$'\x1f' # field separator (non-whitespace so empty fields survive)
 
-# 🔥 Find the real active player
-get_active_player() {
-  for p in $(playerctl -l 2>/dev/null); do
-    status=$(playerctl -p "$p" status 2>/dev/null)
-    if [[ "$status" == "Playing" ]]; then
-      echo "$p"
-      return
+# open a fd once so we can "sleep" without forking
+exec {sleepfd}<> <(:)
+nap() { read -rt "$1" -u "$sleepfd" || :; }
+
+icon_play=$'\uf04c'
+icon_pause=$'\uf04b'
+icon_stop=$'\uf04d'
+
+icon="" text="" last_text="" last_out="" pos=0 last_poll=-1
+
+poll() {
+  local lines line name st title artist
+  local sp="" pl="" first=""
+
+  lines=$(playerctl -a metadata \
+    --format "{{playerName}}${US}{{status}}${US}{{title}}${US}{{artist}}" 2>/dev/null)
+
+  text="" icon=""
+  [[ -z "$lines" ]] && return
+
+  while IFS="$US" read -r name st title artist; do
+    [[ -z "$first" ]] && first="$name${US}$st${US}$title${US}$artist"
+    if [[ "$name" == spotify ]]; then
+      sp="$name${US}$st${US}$title${US}$artist"
+    elif [[ -z "$pl" && "$st" == Playing ]]; then
+      pl="$name${US}$st${US}$title${US}$artist"
     fi
-  done
+  done <<<"$lines"
 
-  # fallback: first available player
-  playerctl -l 2>/dev/null | head -n1
-}
+  # 1. Spotify  2. anything playing  3. first available
+  line=${sp:-${pl:-$first}}
+  IFS="$US" read -r name st title artist <<<"$line"
 
-get_icon() {
-  case "$1" in
-  Playing) echo "" ;;
-  Paused) echo "" ;;
-  *) echo "" ;;
+  # Stopped but has metadata -> treat as Playing
+  [[ "$st" == Stopped && -n "$title" ]] && st=Playing
+
+  [[ -z "$title" ]] && return
+  text="$title - $artist"
+
+  case "$st" in
+  Playing) icon=$icon_play ;;
+  Paused) icon=$icon_pause ;;
+  *) icon=$icon_stop ;;
   esac
 }
 
-last_text=""
-pos=0
+emit() {
+  [[ "$1" == "$last_out" ]] && return
+  last_out=$1
+  echo "$1"
+}
 
 while true; do
-  player=$(get_active_player)
-
-  status=$(playerctl -p "$player" status 2>/dev/null)
-  text=$(playerctl -p "$player" metadata --format '{{title}} - {{artist}}' 2>/dev/null)
-
-  # 🔥 Fix: Spotify bug (Stopped but actually playing)
-  if [[ "$status" == "Stopped" ]]; then
-    if playerctl -p "$player" metadata title &>/dev/null; then
-      status="Playing"
-    fi
+  if ((SECONDS != last_poll)); then
+    last_poll=$SECONDS
+    poll
   fi
 
-  # fallback if nothing at all
   if [[ -z "$text" ]]; then
-    echo " No Media Playing"
-    sleep 0.5
+    emit "$icon_stop No Media Playing"
+    nap 0.5
     continue
   fi
-
-  icon=$(get_icon "$status")
 
   if [[ "$text" != "$last_text" ]]; then
     pos=0
-    last_text="$text"
+    last_text=$text
   fi
 
-  if [ ${#text} -le $max ]; then
-    echo "$icon $text"
-    sleep 0.1
+  if ((${#text} <= max)); then
+    emit "$icon $text"
+    nap 0.25
     continue
   fi
 
-  scroll="$text$sep$text$sep"
+  scroll="$text$sep"
   len=${#scroll}
-
-  # 🔥 TRUE WRAP AROUND LOGIC
-  output=""
-  for ((i = 0; i < max; i++)); do
-    idx=$(((pos + i) % len))
-    output+="${scroll:$idx:1}"
-  done
-
-  echo "$icon $output"
-
+  doubled="$scroll$scroll"
+  emit "$icon ${doubled:pos:max}"
   pos=$(((pos + 1) % len))
-
-  sleep $delay
+  nap "$delay"
 done
