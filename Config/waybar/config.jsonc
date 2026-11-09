@@ -28,8 +28,9 @@
     "orientation": "inherit",
     "drawer": {
         "click-to-reveal": false,
-        "transition-duration": 250,
-        "reveal-delay": 100
+        "transition-duration": 800,
+        "reveal-delay": 100,
+        "hide-delay": 2000
     },
     "modules": [
         "custom/toggle",
@@ -219,7 +220,7 @@
   },
   "image#album-art": {
     "path": "/tmp/spotify_cover.jpg",
-    "size": 22,
+    "size": 20,
     "interval": 1,
     "on-click": "~/.config/hypr/scripts/spotify_hlock.sh"
   },
