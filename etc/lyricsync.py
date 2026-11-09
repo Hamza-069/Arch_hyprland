@@ -21,6 +21,7 @@ import sys
 import textwrap
 import threading
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -346,7 +347,7 @@ def transliterate_indic(text: str, script: _Script) -> str:
                 nxt = text[i]
                 nidx = ord(nxt) - base
                 if nidx < 0 or nidx >= _SCRIPT_SIZE:
-                    # Mixed romanization (ਫ਼iran): Latin already supplies the vowel.
+                    # Mixed romanization (ਫ਼iran): Latin already supplies the vowel.
                     if nxt.isalpha() or nxt.isdigit():
                         add_a = False
                     else:
@@ -1192,15 +1193,156 @@ def find_current_line(lines: list[LyricLine], position_ms: int) -> int:
     return idx if idx >= 0 else -1
 
 
+def _char_width(ch: str) -> int:
+    """Terminal columns used by one character (0, 1 or 2)."""
+    o = ord(ch)
+    if o < 0x300:
+        return 1
+    if unicodedata.category(ch) in ("Mn", "Me", "Cf"):
+        return 0
+    return 2 if unicodedata.east_asian_width(ch) in ("W", "F") else 1
+
+
+def display_width(s: str) -> int:
+    if s.isascii():
+        return len(s)
+    return sum(_char_width(c) for c in s)
+
+
+def _truncate_width(s: str, max_cols: int) -> str:
+    """Cut s so it occupies at most max_cols terminal columns."""
+    if max_cols <= 0:
+        return ""
+    if display_width(s) <= max_cols:
+        return s
+    out: list[str] = []
+    used = 0
+    for ch in s:
+        cw = _char_width(ch)
+        if used + cw > max_cols:
+            break
+        out.append(ch)
+        used += cw
+    return "".join(out)
+
+
+def _word_fragments(word: str) -> list[str]:
+    """Split a word at legal break points: after a hyphen that precedes
+    an alphanumeric, and around double-width (CJK) characters. Combining
+    marks and closing punctuation stay attached to what precedes them."""
+    frags: list[str] = []
+    buf: list[str] = []
+    n = len(word)
+    for i, ch in enumerate(word):
+        cw = _char_width(ch)
+        if cw == 0:
+            if buf:
+                buf.append(ch)
+            elif frags:
+                frags[-1] += ch
+            else:
+                buf.append(ch)
+            continue
+        if (not buf and frags
+                and unicodedata.category(ch) in ("Pe", "Pf", "Po")):
+            frags[-1] += ch
+            continue
+        if cw == 2:
+            if buf:
+                frags.append("".join(buf))
+                buf = []
+            frags.append(ch)
+        else:
+            buf.append(ch)
+            if ch == "-" and i + 1 < n and word[i + 1].isalnum():
+                frags.append("".join(buf))
+                buf = []
+    if buf:
+        frags.append("".join(buf))
+    return frags
+
+
+def _hard_split(frag: str, width: int) -> list[str]:
+    """Split an over-wide fragment into chunks of at most width columns."""
+    chunks: list[str] = []
+    buf: list[str] = []
+    used = 0
+    for ch in frag:
+        cw = _char_width(ch)
+        if buf and cw and used + cw > width:
+            chunks.append("".join(buf))
+            buf, used = [], 0
+        buf.append(ch)
+        used += cw
+    if buf:
+        chunks.append("".join(buf))
+    return chunks
+
+
+def _tokenize(text: str, width: int) -> list[tuple[str, int, int]]:
+    """Return (fragment, columns, space_before) tuples; every fragment
+    fits within width."""
+    tokens: list[tuple[str, int, int]] = []
+    for wi, word in enumerate(text.split()):
+        space = 1 if wi else 0
+        for frag in _word_fragments(word):
+            pieces = (_hard_split(frag, width)
+                      if display_width(frag) > width else [frag])
+            for piece in pieces:
+                tokens.append((piece, display_width(piece), space))
+                space = 0
+    return tokens
+
+
+def _greedy_wrap(tokens: list[tuple[str, int, int]], width: int) -> list[str]:
+    lines: list[str] = []
+    cur: list[str] = []
+    cur_w = 0
+    for frag, fw, sp in tokens:
+        if not cur:
+            cur, cur_w = [frag], fw
+        elif cur_w + sp + fw > width:
+            lines.append("".join(cur))
+            cur, cur_w = [frag], fw
+        else:
+            if sp:
+                cur.append(" ")
+            cur.append(frag)
+            cur_w += sp + fw
+    if cur:
+        lines.append("".join(cur))
+    return lines
+
+
 def wrap_lyric_line(text: str, width: int) -> list[str]:
-    """Wrap a lyric line to fit within the given width."""
+    """Wrap a lyric line to fit within `width` terminal columns.
+
+    Uses the minimum number of rows, then narrows the target width as far
+    as possible without adding a row, so the rows come out roughly equal
+    (no lone trailing word).
+    """
     text = text.strip()
     if not text:
         return ["♪"]
-    width = max(1, width)  # clamp so very narrow terminals can't raise
-    if len(text) <= width:
+    width = max(1, width)
+    if display_width(text) <= width:
         return [text]
-    return textwrap.wrap(text, width=width, break_long_words=True, break_on_hyphens=True)
+    tokens = _tokenize(text, width)
+    lines = _greedy_wrap(tokens, width)
+    n = len(lines)
+    if n > 1:
+        total = sum(fw + sp for _, fw, sp in tokens)
+        lo = max(max(fw for _, fw, _ in tokens), -(-(total - (n - 1)) // n))
+        hi = width
+        lo = min(lo, hi)
+        while lo < hi:  # smallest width that still fits in n rows
+            mid = (lo + hi) // 2
+            if len(_greedy_wrap(tokens, mid)) <= n:
+                hi = mid
+            else:
+                lo = mid + 1
+        lines = _greedy_wrap(tokens, lo)
+    return lines
 
 
 def _scroll_start(target_visual_row: int, total_rows: int, height: int) -> int:
@@ -1605,11 +1747,11 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
             ss_dur = (dur % 60000) // 1000
             header = (f" {info.artist} - {info.title}  "
                       f"[{mm_now:02d}:{ss_now:02d} / {mm_dur:02d}:{ss_dur:02d}] ")
-            if len(header) > w - 1:
-                header = header[: max(0, w - 4)] + "..."
-            x = max(0, (w - len(header)) // 2)
+            if display_width(header) > w - 1:
+                header = _truncate_width(header, max(0, w - 4)) + "..."
+            x = max(0, (w - display_width(header)) // 2)
             try:
-                stdscr.addstr(0, x, header[: max(0, w - 1 - x)],
+                stdscr.addstr(0, x, _truncate_width(header, max(0, w - 1 - x)),
                               curses.color_pair(2))
             except curses.error:
                 pass
@@ -1628,6 +1770,24 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
             except curses.error:
                 pass
 
+        # Wrapped rows are cached per lyrics object and width, so they are
+        # not recomputed every frame.
+        wrap_cache: dict = {"lyr": None, "width": -1,
+                            "wrapped": [], "starts": [], "total": 0}
+
+        def _wrapped_rows(lyr: SyncedLyrics, width: int):
+            c = wrap_cache
+            if c["lyr"] is not lyr or c["width"] != width:
+                wrapped = [wrap_lyric_line(l.text, width) for l in lyr.lines]
+                starts: list[int] = []
+                total = 0
+                for rows in wrapped:
+                    starts.append(total)
+                    total += len(rows)
+                c.update(lyr=lyr, width=width, wrapped=wrapped,
+                         starts=starts, total=total)
+            return c["wrapped"], c["starts"], c["total"]
+
         def draw_lyrics(stdscr: "curses.window", lyr: SyncedLyrics,
                         info: PlaybackInfo, sel: int, unsynced: bool) -> None:
             nonlocal view_offset
@@ -1637,15 +1797,11 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
                 return
             playing_idx = find_current_line(lyr.lines, info.position_ms)
 
-            # Build wrapped rows for every lyric line.
-            prefix_w = 2  # "▸ " prefix on the first row of the selected line
+            # Leave room on both sides for the "▸" marker.
+            prefix_w = 2
             max_text_width = max(1, w - 1 - prefix_w - 3)
-            visible_lines: list[tuple[int, list[str]]] = []
-            for line_idx in range(len(lyr.lines)):
-                text = lyr.lines[line_idx].text.strip() or "♪"
-                wrapped = wrap_lyric_line(text, max_text_width)
-                visible_lines.append((line_idx, wrapped))
-            total_visual_rows = sum(len(wrapped) for _, wrapped in visible_lines)
+            wrapped, starts, total_visual_rows = _wrapped_rows(
+                lyr, max_text_width)
 
             if unsynced:
                 # Static view from the top; no playing highlight.
@@ -1660,53 +1816,52 @@ def output_tui(lyrics: SyncedLyrics | None, player: Player,
                 if target_line < 0:
                     start_visual_row = 0
                 else:
-                    target_visual_row = 0
-                    for line_idx, wrapped in visible_lines:
-                        if line_idx == target_line:
-                            break
-                        target_visual_row += len(wrapped)
+                    target_line = min(target_line, len(wrapped) - 1)
+                    # Center on the middle of the (possibly multi-row) line.
+                    target_visual_row = (starts[target_line]
+                                         + (len(wrapped[target_line]) - 1) // 2)
                     start_visual_row = _scroll_start(target_visual_row,
                                                      total_visual_rows,
                                                      lyrics_h)
 
-            # Style every wrapped row of a line; keep the prefix on the
-            # first row only.
-            visual_row = 0
-            for line_idx, wrapped in visible_lines:
+            end_visual_row = start_visual_row + lyrics_h
+            first = max(0, bisect.bisect_right(starts, start_visual_row) - 1)
+            for line_idx in range(first, len(wrapped)):
+                line_start = starts[line_idx]
+                if line_start >= end_visual_row:
+                    break
                 is_playing = (not unsynced and playing_idx == line_idx)
                 is_selected = sel >= 0 and line_idx == sel
                 dist = abs(line_idx - max(playing_idx, 0))
-                for wrap_idx, wrap_text in enumerate(wrapped):
+                if unsynced:
+                    # One fixed readable attribute: no gradient, no
+                    # playing highlight (all timestamps are 0).
+                    attr = curses.color_pair(1)
+                elif is_selected and is_playing:
+                    attr = (curses.A_BOLD | curses.A_UNDERLINE
+                            | curses.color_pair(5))
+                elif is_selected:
+                    attr = curses.A_BOLD | curses.color_pair(5)
+                elif is_playing:
+                    attr = (curses.A_BOLD | curses.A_UNDERLINE
+                            | curses.color_pair(12))
+                else:
+                    attr = line_color(dist)
+                for wrap_idx, wrap_text in enumerate(wrapped[line_idx]):
+                    visual_row = line_start + wrap_idx
                     if visual_row < start_visual_row:
-                        visual_row += 1
                         continue
-                    if visual_row >= start_visual_row + lyrics_h:
+                    if visual_row >= end_visual_row:
                         break
                     y = visual_row - start_visual_row + 1  # +1 for header
-                    is_first_wrap = wrap_idx == 0
-                    display_prefix = ("▸ " if (is_selected and is_first_wrap)
-                                      else "")
-                    display = (display_prefix + wrap_text)[: max(0, w - 1)]
-                    x = max(0, (w - len(display)) // 2)
-                    if unsynced:
-                        # One fixed readable attribute: no gradient, no
-                        # playing highlight (all timestamps are 0).
-                        attr = curses.color_pair(1)
-                    elif is_selected and is_playing:
-                        attr = (curses.A_BOLD | curses.A_UNDERLINE
-                                | curses.color_pair(5))
-                    elif is_selected:
-                        attr = curses.A_BOLD | curses.color_pair(5)
-                    elif is_playing:
-                        attr = (curses.A_BOLD | curses.A_UNDERLINE
-                                | curses.color_pair(12))
-                    else:
-                        attr = line_color(dist)
+                    display = _truncate_width(wrap_text, w - 1)
+                    x = max(0, (w - display_width(display)) // 2)
                     try:
                         stdscr.addstr(y, x, display, attr)
+                        if is_selected and wrap_idx == 0 and x >= prefix_w:
+                            stdscr.addstr(y, x - prefix_w, "▸", attr)
                     except curses.error:
                         pass
-                    visual_row += 1
 
         while True:
             # Fall back to follow mode after about 5 s without input.

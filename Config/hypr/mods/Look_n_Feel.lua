@@ -24,7 +24,7 @@ hl.config({
 		layout = "dwindle",
 	},
 	decoration = {
-		rounding = 0,
+		rounding = 10,
 		rounding_power = 2,
 
 		-- Change transparency of focused and unfocused windows

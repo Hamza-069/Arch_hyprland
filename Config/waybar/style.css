@@ -4,7 +4,7 @@
   font-family: JetbrainsMono Nerd Font Propo;
   font-size: 10px;
   min-height: 0;
-  border-radius: 0px;
+  border-radius: 10px;
   margin: 0px 1px;
 }
 
@@ -25,14 +25,14 @@ button {
 
 #workspaces,
 #window {
-  border-radius: 0px;
+  border-radius: 10px;
   background: @bg;
   margin: 1px 0px;
 
 }
 
 #workspaces button {
-  border-radius: 0px;
+  border-radius: 10px;
   color: @ws_text;
   padding: 0.1rem 0.2rem;
   transition: all 150ms ease;
@@ -48,6 +48,8 @@ button {
   background: @ws_hover;
 }
 
+#custom-toggle,
+#custom-weather,
 #backlight,
 #battery,
 #clock,
@@ -61,8 +63,8 @@ button {
 #custom-power,
 #tray {
   background: @bg;
-  border-radius: 0px;
-  padding: 0rem 0.4rem;
+  border-radius: 10px;
+  padding: 0rem 0.3rem;
   color: @module_text;
   margin: 1px;
 }
@@ -108,6 +110,7 @@ button {
 
 #custom-notification.notification {
   color: @notification_text;
+  padding: 0rem 0.1rem;
   border: 1px solid @notification_text;
   text-shadow: 0 0 4px @notification_text;
 }
@@ -145,4 +148,12 @@ button {
 #custom-power {
   background-color: @bg;
   color: @power_text;
+}
+
+#custom-weather {
+ padding: 0rem;
+}
+
+#custom-toggle {
+    color: @clock;
 }

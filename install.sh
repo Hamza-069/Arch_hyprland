@@ -13,9 +13,9 @@ OFFICIAL_PACKAGES=(
   pyright lua-language-server ncdu impala gvfs gvfs-mtp gvfs-gphoto2
   gvfs-smb hyprshot hyprpicker neovim lsp-plugins lazygit luarocks lua51
   plasma-workspace kde-cli-tools btop eza imv tesseract tesseract-data-eng
-  grim slurp rofi-emoji wtype fastfetch bat bluetui
-  cmatrix calf mda.lv2 zam-plugins-lv2 x42-plugins-lv2 kio-admin kvantum-qt5 rust
-  kcolorchooser github-cli yazi mpv gimp Audacity obs-studio
+  grim slurp rofi-emoji wtype fastfetch bat bluetui vlc cmatrix calf
+  mda.lv2 zam-plugins-lv2 x42-plugins-lv2 kio-admin kvantum-qt5
+  kcolorchooser github-cli yazi mpv gimp audacity
 )
 
 AUR_PACKAGES=(
@@ -51,7 +51,7 @@ fi
 
 # AUR packages
 echo "Installing AUR packages..."
-yay -S --needed "${AUR_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"
+yay -S --needed --removemake --noconfirm --answerclean All "${AUR_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"
 
 # spotify-adblock
 echo "Building spotify-adblock..."

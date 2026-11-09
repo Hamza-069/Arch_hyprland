@@ -9,19 +9,35 @@
   ],
   "modules-center": [
     "clock",
+    "custom/weather",
   ],
   "modules-right": [
+    "group/toggleable",
     "pulseaudio",
-    "backlight",
+    // "backlight",
     // "power-profiles-daemon",
-    "network",
-    "cpu",
-    "memory",
+    // "network",
+    // "cpu",
+    // "memory",
     "battery",
     "custom/notification",
     "tray",
     "custom/power",
   ],
+  "group/toggleable": {
+    "orientation": "inherit",
+    "drawer": {
+        "click-to-reveal": false,
+        "transition-duration": 250,
+        "reveal-delay": 100
+    },
+    "modules": [
+        "custom/toggle",
+        "backlight",
+        "network",
+        "cpu",
+        "memory",
+        ]},
   "hyprland/workspaces": {
     "format": "{name}: {icon}",
     "format-icons": {
@@ -39,6 +55,10 @@
         "easyeffects": "com.github.wwmm.easyeffects-symbolic",
     }
   },
+     "custom/toggle": {
+        "format": "",
+        "tooltip": false
+    },
   "clock": {
     "timezone": "Europe/Stockholm",
     "interval": 1,
@@ -56,9 +76,16 @@
 		        "days":       "<span><b>{}</b></span>",
         }
     }
-},
+  },
+  "custom/weather": {
+    "format": "{text}",
+    "return-type": "json",
+    "exec": "~/.config/waybar/weather.sh",
+    "interval": 300,
+    "tooltip": true,
+  },
   "network": {
-    "format-wifi": "󰤢 {bandwidthTotalBits}",
+    "format-wifi": "󰤢 {bandwidthDownBytes:M}MBs",
     "format-ethernet": "󰈀 {bandwidthDownBits}",
     "format-disconnected": "󰤭 No Network",
     "on-click": "kitty -e impala",
