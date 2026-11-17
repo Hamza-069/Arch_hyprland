@@ -63,7 +63,7 @@
   "clock": {
     "timezone": "Europe/Stockholm",
     "interval": 1,
-    "format": "{:%d/%m • %I:%M:%S}",
+    "format": " {:%d/%m • %I:%M:%S} ",
     "tooltip-format": "<big><b>{:%A, %d/%m-%y}</b></big>\n\n<tt>{calendar}</tt>",
     "calendar": {
         "iso8601": true,
@@ -79,11 +79,12 @@
     }
   },
   "custom/weather": {
-    "format": "{text}",
+    "format": " {text} ",
     "return-type": "json",
     "exec": "~/.config/waybar/weather.sh",
-    "interval": 300,
+    "interval": 180,
     "tooltip": true,
+    "on-click": "~/.config/waybar/weather.sh"
   },
   "network": {
     "format-wifi": "󰤢 {bandwidthDownBytes:M}MBs",
@@ -98,7 +99,7 @@
   "cpu": {
     "interval": 1,
     "on-click": "kitty -e btop",
-    "format": "{icon} {usage}%",
+    "format": " {icon} {usage}% ",
     "format-icons": [
       "▁",
       "▂",
@@ -155,7 +156,7 @@
     },
     "tooltip": true,
     "tooltip-format": "{time}",
-    "format": "{icon}{capacity: >3}%",
+    "format": " {icon}{capacity: >3}% ",
     "format-charging": " {capacity}%",
     "format-plugged": " {capacity}%",
     "format-full": " {capacity}%",
@@ -187,7 +188,7 @@
   },
   "custom/notification": {
     "tooltip": true,
-    "format": "<span size='10pt'>{icon}</span>",
+    "format": "<span size='9pt'>{icon}</span>",
     "format-icons": {
       "notification": "󱅫",
       "none": "󰂜",

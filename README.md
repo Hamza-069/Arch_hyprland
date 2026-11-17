@@ -1,43 +1,35 @@
-## :x: <ins>Don't</ins> Run `install.sh` directly
+# Arch Hyprland Dotfiles
+
+My personal [Arch Linux](https://archlinux.org/) + [Hyprland](https://hypr.land/) setup, including Hyprland, Waybar, Rofi, Kitty, SwayNC, Hyprlock, Fastfetch, Yazi, Neovim, mpv, and Fish/Zsh.
+
+> **⚠️ This is not a universal Arch Linux installer.**
+>
+> These dotfiles are tailored to my hardware and workflow. They may contain personal paths, hardware-specific settings, and dependencies you don't have.
+>
+> **Review everything before running it.** `install.sh` installs packages, edits `/etc/systemd/logind.conf`, changes default applications, and reloads Hyprland. `setup.sh` only deploys configs, but it still overwrites files in `~/.config/`.
 
 ## 📑 Table of Contents
 
 - [Installation](#-installation)
 - [Shell Setup](#-shell-setup)
+- [Fonts](#-fonts-optional)
+- [Optional Extras](#️-optional-extras)
 - [Showcase](#-showcase)
+- [Keybindings](#️-keybindings)
 - [Customization](#️-customization)
-- [Credits](#-credits)
 - [Feedback](#-feedback)
-
----
-> ⚠️ **Do not run `install.sh` directly unless you have reviewed the script and understand what it does.**
-> 
-> **Use `./setup.sh` instead** — it wraps `install.sh` with config deployment, shell setup, and safety features (backups, dry-run, selective install).
-
-These are my personal dotfiles, and the installation script is **not intended to be a universal Arch Linux installer**.
-
-You can copy the configurations you want and adapt them to your own system.
+- [Credits](#-credits)
 
 ---
 
 ## 🚀 Installation
 
-### Option A: Unified Setup Script (Recommended)
+The repository has two main scripts:
 
-```bash
-git clone https://github.com/Hamza-069/Arch_hyprland.git
-cd Arch_hyprland
-./setup.sh
-```
+- **`install.sh`** — installs packages and makes system-wide changes.
+- **`setup.sh`** — deploys the configs to `~/.config/` with automatic backups.
 
-The `setup.sh` script provides an interactive menu to:
-- Install packages (official + AUR via `install.sh`)
-- Deploy configs with automatic backups (selectable checklist)
-- Configure shell (zsh/fish/both)
-
-Run `./setup.sh --help` for options like `--packages-only`, `--configs-only`, `--shell-only`, `--dry-run`.
-
-### Option B: Manual Installation
+For a full setup, follow the steps below in order.
 
 ### 1. Clone the repository
 
@@ -46,24 +38,76 @@ git clone https://github.com/Hamza-069/Arch_hyprland.git
 cd Arch_hyprland
 ```
 
-### 2. ⚠️ Review the configuration
+### 2. Review the configuration
 
-Before copying anything, inspect the configuration files and adjust:
+Before applying anything, inspect the scripts and configs and adjust:
 
-* Personal paths
-* Usernames
-* Hardware-specific settings
-* Package dependencies
-* Applications used by the configuration
+- Personal paths
+- Usernames
+- Hardware-specific settings
+- Package dependencies
+- Applications used by the configuration
 
-### 3. 💾 Back up your existing configuration
+### 3. Install packages (optional)
 
-Before replacing your current configuration, make a backup of the directories you plan to modify.
+```bash
+./install.sh
+```
 
-The main configurations included in this repository are:
+This script:
+
+- Updates the system with `pacman -Syu`
+- Installs the official repo packages listed in the script
+- Installs `yay` if needed, then installs the AUR packages
+- Builds and installs `spotify-adblock`
+- Configures power-key handling in `/etc/systemd/logind.conf`
+- Sets default applications for text, images, and video
+- Reloads Hyprland
+
+> **⚠️ Only run this after reading it.** It uses `sudo` and makes system-wide changes. The full package list is in [`install.sh`](install.sh).
+
+### 4. Deploy the configs (recommended)
+
+```bash
+./setup.sh --dry-run   # preview what will be copied
+./setup.sh             # deploy
+```
+
+`setup.sh` copies each directory from `Config/` into `~/.config/`, backs up any existing config to `~/.config-backup/<timestamp>/`, and reloads Hyprland when `hyprctl` is available. A log is written to `/tmp/arch_hyprland_setup.log`.
+
+Supported options:
 
 ```text
-~/.config/
+--dry-run    Show what would be done without copying anything
+-h, --help   Show help
+```
+
+### Manual deployment
+
+If you prefer to copy things yourself, back up what you are about to replace:
+
+```bash
+cp -r ~/.config/waybar ~/.config/waybar.backup
+```
+
+Then copy the configs you want:
+
+```bash
+cp -r Config/hypr ~/.config/
+cp -r Config/waybar ~/.config/
+cp -r Config/kitty ~/.config/
+```
+
+Or, if you know the entire configuration is compatible with your system:
+
+```bash
+cp -r Config/* ~/.config/
+```
+
+The included configs are:
+
+```text
+Config/
 ├── clipvault/
 ├── fastfetch/
 ├── fish/
@@ -78,60 +122,29 @@ The main configurations included in this repository are:
 └── zsh/
 ```
 
-For example:
+To restart Waybar, Hyprpaper, and Hypridle after copying:
 
-```bash
-cp -r ~/.config/waybar ~/.config/waybar.backup
-```
-
-Do the same for any other configuration you plan to replace.
-
-### 4. 📂 Apply the configuration
-
-You can copy the configurations you want individually.
-
-For example:
-
-```bash
-cp -r Config/hypr ~/.config/
-cp -r Config/waybar ~/.config/
-cp -r Config/kitty ~/.config/
-```
-
-Or, if you know that the entire configuration is compatible with your system:
-
-```bash
-cp -r Config/* ~/.config/
-```
-
-
-A simple script is included to reload Waybar and Hyprpaper:
 ```bash
 ./Config/hypr/scripts/reload.sh
 ```
 
-
-> **⚠️ Do not blindly copy everything.** Some configurations may depend on packages, hardware, or paths specific to my system.
+> **⚠️ Do not blindly copy everything.** Some configurations depend on packages, hardware, or paths specific to my system.
 
 ---
 
 ## 🐚 Shell Setup
 
-This repository includes separate setup scripts for **Zsh** and **Fish**.
+The shell configs live in `Config/zsh/` and `Config/fish/` and are deployed by `setup.sh`.
 
-### Via Unified Setup (Recommended)
-
-```bash
-./setup.sh --shell-only
-```
-
-### Manual
-
-#### Zsh
+### Zsh
 
 ```bash
 ./install_zsh.sh
 ```
+
+This installs Zsh with autosuggestions, syntax highlighting, completions, and history substring search, points `~/.zshrc` at `~/.config/zsh/.zshrc`, and sets Zsh as your login shell.
+
+> The script assumes the repository is cloned at `~/Downloads/arch_hyprland`. Adjust the path if you cloned it somewhere else.
 
 ### Fish
 
@@ -139,32 +152,45 @@ This repository includes separate setup scripts for **Zsh** and **Fish**.
 ./install_fish.sh
 ```
 
-> **⚠️ Review the scripts before running them** and make sure you understand what changes they make to your system.
+This installs Fish and sets it as your login shell. The Fish configuration is in `Config/fish/` and is deployed by `setup.sh`.
+
+> Both scripts run `chsh` and change your login shell. Review them first, and reboot or log out and back in afterwards.
 
 ---
 
-## ⚠️ Important
+## 🔤 Fonts (optional)
 
-This repository is **not a universal Arch Linux installer**.
+`install.sh` installs the Nerd Fonts used by the configs. My Hyprlock setup also uses Apple's SF Pro, which can be installed separately:
 
-These dotfiles are tailored to my personal system and may contain:
+```bash
+./install_apple-font.sh
+```
 
-* Hardware-specific settings
-* Personal paths
-* Package dependencies
-* Wayland-specific configuration
-* Hyprland-specific settings
-* Scripts that expect specific applications to be installed
-
-**Always review the configuration before applying it to your system.**
+This downloads SF Pro from Apple and installs it to `~/.local/share/fonts`. It requires `7z` (`sudo pacman -S p7zip`).
 
 ---
 
-# 📸 Showcase
+## 🗂️ Optional Extras
 
-I'm still working on the README, but here are some parts of my setup.
+The `etc/` directory contains files that are **not** deployed by `setup.sh`:
 
-## Waybar
+- `etc/environment` — Qt theme environment variable (`QT_QPA_PLATFORMTHEME=qt6ct`); copy it to `/etc/environment`
+- `etc/GIMP/` — GIMP 3.0/3.2 profiles; copy them into `~/.config/GIMP/`
+- `etc/Audio Presets/` — EasyEffects presets
+- `etc/sweather.py` — weather CLI used by the Waybar weather module; place it in your `PATH` (for example `~/.local/bin`)
+- `etc/lyricsync.py` — terminal lyrics synchronization tool
+- `etc/.peaclock/config` — peaclock configuration; copy it to `~/.peaclock/config`
+- `etc/Github_setup.txt` — my personal SSH/Git setup notes
+
+> The Waybar weather module uses a hardcoded location in `Config/waybar/weather.sh`. Change it to your own city.
+
+---
+
+## 📸 Showcase
+
+Here are some parts of my setup.
+
+### Waybar
 
 <img width="1366" height="35" alt="Waybar" src="https://github.com/user-attachments/assets/9302afbe-ef15-491e-9fef-8b9db7899f3c" />
 
@@ -172,7 +198,7 @@ I'm still working on the README, but here are some parts of my setup.
 
 <img width="1366" height="38" alt="Waybar" src="https://github.com/user-attachments/assets/78c0b252-d23e-489b-8f77-adcc378d0581" />
 
-## 🎵 Media Player
+### 🎵 Media Player
 
 A custom media player integrated directly into Waybar:
 
@@ -180,87 +206,98 @@ A custom media player integrated directly into Waybar:
 
 > *The GIF preview may appear a little slow on GitHub.*
 
----
-
-## 🚀 Fastfetch
+### 🚀 Fastfetch
 
 My customized Fastfetch setup:
 
 <img width="754" height="394" alt="Fastfetch" src="https://github.com/user-attachments/assets/0018d127-0cf4-42e8-a388-41b69302ec68" />
 
----
-
-## 🔎 Rofi
+### 🔎 Rofi
 
 My customized Rofi launcher:
 
 <img width="605" height="369" alt="Rofi" src="https://github.com/user-attachments/assets/accb27d3-08af-434d-8334-cdc41c4347ed" />
 
----
+### Powermenu (Rofi)
 
+<img width="978" height="334" alt="Powermenu" src="https://github.com/user-attachments/assets/39d9b660-76d1-46dc-924e-d5ea36e70dc1" />
 
-## Powermenu (Rofi)
-
-<img width="978" height="334" alt="image" src="https://github.com/user-attachments/assets/39d9b660-76d1-46dc-924e-d5ea36e70dc1" />
-
-## Hyprlock
+### Hyprlock
 
 My customized Hyprlock:
 
-<img width="598" height="400" alt="image" src="https://github.com/user-attachments/assets/f0103005-1dd1-4aa0-83b7-d81582483f00" />
+<img width="598" height="400" alt="Hyprlock" src="https://github.com/user-attachments/assets/f0103005-1dd1-4aa0-83b7-d81582483f00" />
 
-## Theme-Selector
+### Theme Selector
 
-<img width="612" height="369" alt="image" src="https://github.com/user-attachments/assets/d5cc78e6-a8fc-4824-b8ee-546a182d09c5" />
-  
-  
-⚠️ Check this Script before use:
+<img width="612" height="369" alt="Theme Selector" src="https://github.com/user-attachments/assets/d5cc78e6-a8fc-4824-b8ee-546a182d09c5" />
 
-```bash
-./Config/hypr/scripts/theme-selector.sh
-```
+> ⚠️ Check the script before using it:
+>
+> ```bash
+> ./Config/hypr/scripts/theme-selector.sh
+> ```
 
-
-## ⌨️ Shortcuts
-
-Here are some of the main keyboard shortcuts configured in my Hyprland setup:
-
-| Shortcut                     | Action                    |
-| ---------------------------- | ------------------------- |
-| `SUPER + Q`                  | Open terminal             |
-| `SUPER + W`                  | Close active window       |
-| `SUPER + E`                  | Open file manager         |
-| `SUPER + R`                  | Open application launcher |
-| `SUPER + F`                  | Toggle floating mode      |
-| `SUPER + Fullscreen`                  | Toggle fullscreen         |
-| `SUPER + M`                  | Exit Hyprland             |
-| `SUPER + L`                  | Lock screen               |
-| `SUPER + 1–9`                | Switch workspace          |
-| `SUPER + SHIFT + 1–9`        | Move window to workspace  |
-| `SUPER + Arrow Keys`         | Move focus                |
-| `SUPER + SHIFT + Arrow Keys` | Move window               |
-| `SUPER + Mouse Drag`         | Move / resize windows     |
-
-> **Note:** Shortcuts may change as the configuration evolves. Check the Hyprland configuration files in [`Config/hypr/mods/binds`](https://github.com/Hamza-069/Arch_hyprland/tree/main/Config/hypr/mods/binds.lua) for the latest keybindings.
-
-  
 ---
+
+## ⌨️ Keybindings
+
+Here are some of the main keyboard shortcuts in my Hyprland setup:
+
+| Shortcut | Action |
+| --- | --- |
+| `SUPER + Q` | Open terminal (Kitty) |
+| `SUPER + D` | Open file manager (Dolphin) |
+| `SUPER + E` | Open Yazi in Kitty |
+| `SUPER + X` | Open Neovim in Kitty |
+| `SUPER + B` | Open browser (Firefox) |
+| `SUPER + R` | Open application launcher (Rofi) |
+| `SUPER + C` | Open calculator (Rofi) |
+| `SUPER + V` | Open clipboard history |
+| `SUPER + W` | Close active window |
+| `SUPER + F` | Toggle floating and center the window |
+| `SUPER + P` | Pin a floating window |
+| `Fullscreen` key | Toggle fullscreen |
+| `SUPER + M` | Open Spotify |
+| `SUPER + Space` | Play / pause Spotify |
+| `SUPER + L` | Lock the screen |
+| `SUPER + SHIFT + M` | Exit Hyprland |
+| `SUPER + 1–9 / 0` | Switch workspace |
+| `SUPER + SHIFT + 1–9 / 0` | Move window to workspace |
+| `SUPER + Arrow Keys` | Move focus |
+| `SUPER + SHIFT + Arrow Keys` | Move window |
+| `SUPER + Mouse Drag` | Move window |
+| `SUPER + Right Mouse Drag` | Resize window |
+| `SUPER + S` | Toggle scratchpad |
+| `SUPER + SHIFT + S` | Move window to scratchpad |
+| `SUPER + T` | Open theme selector |
+| `SUPER + SHIFT + T` | Open wallpaper selector |
+| `SUPER + SHIFT + R` | Reload Waybar, Hyprpaper, and Hypridle |
+| `SUPER + J` | Toggle split (dwindle layout) |
+| `SUPER + SHIFT + J` | Rotate split (dwindle layout) |
+
+> **Note:** Shortcuts may change as the configuration evolves. Check [`Config/hypr/mods/binds.lua`](https://github.com/Hamza-069/Arch_hyprland/blob/main/Config/hypr/mods/binds.lua) for the latest keybindings.
+
+---
+
 ## 🛠️ Customization
 
-Feel free to take inspiration from anything in this repository.
-
-You don't need to use the entire setup. You can copy individual configurations and adapt them to your own workflow.
-
-For example:
+Feel free to take inspiration from anything in this repository. You don't need to use the entire setup — copy individual configurations and adapt them to your own workflow.
 
 ```text
 Config/
+├── clipvault/
+├── fastfetch/
+├── fish/
 ├── hypr/
-├── waybar/
 ├── kitty/
 ├── mpv/
+├── nvim/
+├── rofi/
+├── swaync/
+├── waybar/
 ├── yazi/
-└── ...
+└── zsh/
 ```
 
 Take what you like, change what you don't, and make it your own.
@@ -277,8 +314,7 @@ If you find something that could be improved, feel free to [open an issue](https
 
 ## 🙏 Credits
 
-* **Rofi configuration:** [Aditya Shakya (adi1090x)](https://github.com/adi1090x/rofi) — thank you for the inspiration and work!
-
+- **Rofi configuration:** [Aditya Shakya (adi1090x)](https://github.com/adi1090x/rofi) — thank you for the inspiration and work!
 
 <p align="center">
   Made with ❤️ and way too much time spent tweaking configs.

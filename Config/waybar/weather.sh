@@ -6,7 +6,9 @@ out=$(sweather.py fittja --json --compact 2>/dev/null) || {
   exit 0
 }
 
-jq -c '
+updated=$(date -d "$(jq -r '.timestamp // empty' <<<"$out")" '+%H:%M' 2>/dev/null)
+
+jq -c --arg updated "$updated" '
   def fmt1: if . == null then "—" else ((. * 10 | round) / 10 | tostring) end;
   def fmt0: if . == null then "—" else (. | round | tostring) end;
 
@@ -55,6 +57,7 @@ jq -c '
       row("Rain";     ($a.precipitation | fmt1); " mm"; $s.precipitation.stdev; "") + "\n\n" +
 
       "<span foreground=\"\($src_color)\">Sources \($w.sources_ok)/\($w.sources_total)</span>" +
+      (if $updated != "" then "\n" + dim("Updated \($updated)") else "" end) +
       "</span>"
     ),
 

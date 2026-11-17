@@ -1,14 +1,11 @@
 #!/bin/bash
 
+pkill hyprpaper &
+pkill hypridle &
 pkill waybar
-waybar &
-pkill hyprpaper
 hyprpaper &
-pkill hypridle
 hypridle &
-
-XDG_MENU_PREFIX=plasma- kbuildsycoca6
-fc-cache
+waybar &
 
 sleep 1
 if pgrep waybar >/dev/null && pgrep hyprpaper >/dev/null; then
@@ -16,3 +13,6 @@ if pgrep waybar >/dev/null && pgrep hyprpaper >/dev/null; then
 else
   notify-send -i dialog-error "SYSTEM" "Error: one or both processes failed to start"
 fi
+XDG_MENU_PREFIX=plasma- kbuildsycoca6
+
+fc-cache -fv
