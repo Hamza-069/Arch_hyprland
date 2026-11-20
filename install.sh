@@ -15,12 +15,12 @@ OFFICIAL_PACKAGES=(
   plasma-workspace kde-cli-tools btop eza imv tesseract tesseract-data-eng
   grim slurp rofi-emoji wtype fastfetch bat bluetui vlc cmatrix calf
   mda.lv2 zam-plugins-lv2 x42-plugins-lv2 kio-admin kvantum-qt5
-  kcolorchooser github-cli yazi mpv gimp audacity
+  kcolorchooser github-cli yazi mpv audacity
 )
 
 AUR_PACKAGES=(
   ttf-jetbrains-mono-nerd clipvault tree-sitter-cli qrc waybar-git localsend-bin
-  rofi-calc peaclock
+  rofi-calc peaclock keybase-bin
 )
 
 LOG_FILE="/tmp/arch_hyprland_install.log"
