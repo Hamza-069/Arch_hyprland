@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -o pipefail
 
+# Waybar may be started from Hyprland/reload.sh, which does not source
+# ~/.bashrc. Add the user-local bin directory so sweather.py is found.
+export PATH="$HOME/.local/bin:$PATH"
+
 out=$(sweather.py fittja --json --compact 2>/dev/null) || {
   echo '{"text":"󰖪","tooltip":"Weather unavailable","class":"error"}'
   exit 0
